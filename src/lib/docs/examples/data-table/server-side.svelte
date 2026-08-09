@@ -43,7 +43,11 @@
 		{ accessorKey: 'title', header: 'Title', meta: { class: 'font-medium' } },
 		{ accessorKey: 'scholar', header: 'Scholar' },
 		{ accessorKey: 'city', header: 'City' },
-		{ accessorKey: 'folios', header: 'Folios', meta: { class: 'text-right tabular-nums' } }
+		{
+			accessorKey: 'folios',
+			header: 'Folios',
+			meta: { class: 'text-right tabular-nums', headerClass: 'text-end' }
+		}
 	];
 
 	let rows = $state<Manuscript[]>([]);

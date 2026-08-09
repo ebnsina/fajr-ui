@@ -12,7 +12,7 @@
 		rowSortingFeature,
 		tableFeatures,
 		filterFn_includesString,
-		filterFn_arrIncludesSome,
+		filterFn_arrHas,
 		sortFns,
 		type ColumnDef,
 		type PaginationState,
@@ -39,9 +39,17 @@
 		filteredRowModel: createFilteredRowModel(),
 		sortedRowModel: createSortedRowModel(),
 		paginatedRowModel: createPaginatedRowModel(),
+		/*
+		 * `arrHas`, not `arrIncludesSome`. Both take a list of selected values, but
+		 * `arrIncludesSome` asks whether the *row's* value is an array containing
+		 * one of them and bails on anything else — against a plain string cell it
+		 * returns false for every row, so picking a discipline emptied the table.
+		 * `arrHas` is the scalar counterpart: keep the row when its value equals
+		 * any selected value, which is what a multi-select facet means.
+		 */
 		filterFns: {
 			includesString: filterFn_includesString,
-			arrIncludesSome: filterFn_arrIncludesSome
+			arrHas: filterFn_arrHas
 		},
 		sortFns
 	});
@@ -51,9 +59,13 @@
 		{ accessorKey: 'title', header: 'Title', meta: { class: 'font-medium' } },
 		{ accessorKey: 'scholar', header: 'Scholar' },
 		{ accessorKey: 'city', header: 'City' },
-		{ accessorKey: 'discipline', header: 'Discipline', filterFn: 'arrIncludesSome' },
-		{ accessorKey: 'status', header: 'Status', filterFn: 'arrIncludesSome' },
-		{ accessorKey: 'folios', header: 'Folios', meta: { class: 'text-right tabular-nums' } }
+		{ accessorKey: 'discipline', header: 'Discipline', filterFn: 'arrHas' },
+		{ accessorKey: 'status', header: 'Status', filterFn: 'arrHas' },
+		{
+			accessorKey: 'folios',
+			header: 'Folios',
+			meta: { class: 'text-right tabular-nums', headerClass: 'text-end' }
+		}
 	];
 
 	let search = $state('');

@@ -1137,7 +1137,9 @@ export const docs: Record<string, ComponentDoc> = {
 			'TanStack Table v9 is a different API from v8: features are composed with `tableFeatures`, and a feature only acts on the rows if you also register its row model. Registering `rowSortingFeature` without `createSortedRowModel()` gives you sorting state and no sorting.',
 			'`aria-sort` sits on the `<th>` while the toggle is a `<button>` inside it, so the column state is announced from the header cell rather than from the control.',
 			'There is no row virtualisation, on purpose. Pagination already bounds what is in the DOM, so windowing would render the same ten rows through much more machinery — and it forces the table into a CSS grid, giving up the column sizing a real `<table>` does for free. It is worth adding the day a genuinely unpaginated view exists, and not before.',
-			'Search is debounced rather than throttled: you want the query that was finished typing, not a sample taken part-way through it.'
+			'Search is debounced rather than throttled: you want the query that was finished typing, not a sample taken part-way through it.',
+			"A column's `meta.class` styles its body cells; `meta.headerClass` styles its header cell. They are separate because a face chosen for the data — `font-mono` on a reference code — should not be the face the column is labelled in, while alignment usually wants to be set on both.",
+			"A multi-select facet like `DataTableFilter` wants the `arrHas` filter function, not `arrIncludesSome`. Both are handed the list of selected values, but `arrIncludesSome` asks whether the *row's* value is an array containing one of them and returns false for anything else — against a plain string column it matches no row at all. `arrHas` is the scalar counterpart: keep the row when its value equals any selected value."
 		],
 		examples: [
 			{

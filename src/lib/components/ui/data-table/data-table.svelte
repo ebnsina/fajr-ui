@@ -41,6 +41,13 @@
 			{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
 				<TableRow>
 					{#each headerGroup.headers as header (header.id)}
+						<!--
+							`meta.class` dresses the body cells and stops there. A column that
+							sets its data in another face — `font-mono` on a reference code —
+							had that face leak into the heading, so one column's label was
+							typeset differently from every other. `meta.headerClass` is the
+							separate opt-in; alignment is the case that usually wants both.
+						-->
 						<TableHead
 							colspan={header.colSpan > 1 ? header.colSpan : undefined}
 							aria-sort={header.column.getCanSort()
@@ -50,7 +57,7 @@
 										? 'descending'
 										: 'none'
 								: undefined}
-							class={header.column.columnDef.meta?.class}
+							class={header.column.columnDef.meta?.headerClass}
 						>
 							{#if !header.isPlaceholder}
 								<!--
