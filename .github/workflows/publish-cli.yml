@@ -17,6 +17,13 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+
+    # Read once at the job level so the step below can branch on whether it is
+    # set. A secret referenced only inside a step is not visible to that step's
+    # own `if`, which is the trap this avoids.
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     steps:
       - uses: actions/checkout@v5
 
@@ -25,7 +32,6 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 24
-          registry-url: 'https://registry.npmjs.org'
           # Deliberately uncached: a release should resolve dependencies from
           # the lockfile, not from whatever a previous run happened to leave.
           cache: ''
@@ -53,6 +59,21 @@ jobs:
             exit 1
           fi
           echo "publishing $declared"
+
+      # Trusted publishing cannot create a package that does not exist yet, so
+      # the very first release is authenticated with a short-lived token
+      # instead. Once the package exists and a trusted publisher is registered,
+      # delete the NPM_TOKEN secret: this step then writes nothing, npm finds no
+      # credential, and falls through to OIDC on its own.
+      #
+      # The line is written only when the token is non-empty on purpose. An
+      # empty `_authToken` in .npmrc is worse than none — npm sends it, the
+      # registry rejects it, and OIDC is never attempted.
+      - name: Authenticate for the bootstrap publish
+        if: env.NPM_TOKEN != ''
+        run: |
+          echo "::warning::Publishing with a stored token. Register a trusted publisher and delete the NPM_TOKEN secret."
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
 
       - run: npm publish
         working-directory: cli
