@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Badge, Button } from '$lib/components/ui';
 	import { ArrowRightIcon, Icon } from '$lib/icons';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
@@ -60,10 +61,10 @@
 	<h2 id="demo">Demo</h2>
 	<p>It takes the whole viewport, so it opens on its own.</p>
 	<div class="not-prose flex flex-wrap gap-2">
-		<Button href="/examples/dashboard/app?layout=inset">
+		<Button href="{base}/examples/dashboard/app?layout=inset">
 			Inset layout<Icon icon={ArrowRightIcon} />
 		</Button>
-		<Button href="/examples/dashboard/app?layout=sidebar" variant="outline">
+		<Button href="{base}/examples/dashboard/app?layout=sidebar" variant="outline">
 			Full-width layout<Icon icon={ArrowRightIcon} />
 		</Button>
 	</div>
@@ -193,11 +194,13 @@
 	<h2 id="built-from">What it is built from</h2>
 	<div class="not-prose flex flex-wrap gap-1.5">
 		{#each built as component (component)}
-			<Badge variant="outline" href="/docs/components/{component.toLowerCase()}">{component}</Badge>
+			<Badge variant="outline" href="{base}/docs/components/{component.toLowerCase()}"
+				>{component}</Badge
+			>
 		{/each}
 	</div>
 	<div class="not-prose pt-2 pb-2">
-		<Button href="/examples/dashboard/app" variant="outline">
+		<Button href="{base}/examples/dashboard/app" variant="outline">
 			Open the dashboard<Icon icon={ArrowRightIcon} />
 		</Button>
 	</div>

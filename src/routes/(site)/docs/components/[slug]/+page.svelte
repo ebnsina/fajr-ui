@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Badge, Button, Tabs, TabsList, TabsPanel, TabsTrigger } from '$lib/components/ui';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
 	import DocsExample from '$lib/components/site/docs-example.svelte';
@@ -90,7 +91,7 @@
 				yet. Components are added in dependency order — primitives first, then the pieces that compose
 				them.
 			</p>
-			<Button href="/docs" variant="outline" size="sm">
+			<Button href="{base}/docs" variant="outline" size="sm">
 				Back to the introduction<Icon icon={ArrowRightIcon} />
 			</Button>
 		</div>

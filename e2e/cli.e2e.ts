@@ -15,7 +15,10 @@ import { dirname, join, resolve } from 'node:path';
  */
 
 const CLI = resolve(dirname(fileURLToPath(import.meta.url)), '../cli/index.js');
-const REGISTRY = 'http://localhost:4173/r';
+// Includes the base path the site is deployed under, because that is what the
+// CLI's own default carries — a registry URL that worked here without it would
+// be testing an address nobody is ever served from.
+const REGISTRY = 'http://localhost:4173/fajr-ui/r';
 
 function project() {
 	const dir = mkdtempSync(join(tmpdir(), 'fajr-e2e-'));

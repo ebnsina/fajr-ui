@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
 	import PackageManagerTabs from '$lib/components/site/package-manager-tabs.svelte';
 	import { addCommand, execCommand, packageManager } from '$lib/package-manager.svelte';
@@ -72,8 +73,8 @@
 	/>
 	<CodeBlock
 		code={`{
-  "$schema": "https://fajr-ui.dev/r/schema.json",
-  "registry": "https://fajr-ui.dev/r",
+  "$schema": "https://ebnsina.github.io/fajr-ui/r/schema.json",
+  "registry": "https://ebnsina.github.io/fajr-ui/r",
   "aliases": {
     "components": "src/lib/components/ui",
     "lib": "src/lib"
@@ -194,7 +195,7 @@ scroll-area        up to date`}
 	<p>
 		<code>AGENTS.md</code> is yours, so it is edited between markers rather than overwritten — run
 		it again and only the block between them is refreshed. See
-		<a href="/docs/ai">For AI agents</a> for what the files contain.
+		<a href="{base}/docs/ai">For AI agents</a> for what the files contain.
 	</p>
 
 	<h2 id="safety">How updates stay safe</h2>

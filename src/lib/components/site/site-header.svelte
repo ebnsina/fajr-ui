@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { GithubIcon, Icon, ManuscriptIcon, MenuIcon, SearchIcon } from '$lib/icons';
@@ -18,8 +19,8 @@
 	import ModeSwitcher from './mode-switcher.svelte';
 
 	const navItems = [
-		{ href: '/docs', label: 'Docs' },
-		{ href: '/examples', label: 'Examples' }
+		{ href: `${base}/docs`, label: 'Docs' },
+		{ href: `${base}/examples`, label: 'Examples' }
 	];
 
 	let mobileNavOpen = $state(false);
@@ -35,7 +36,7 @@
 	 */
 	let activeKey = $state<string | undefined>();
 	const activeComponent = $derived(
-		activeKey?.startsWith('/docs/components/')
+		activeKey?.startsWith(`${base}/docs/components/`)
 			? getComponent(activeKey.split('/').pop() ?? '')
 			: undefined
 	);
@@ -137,7 +138,7 @@
 		<div
 			class="flex shrink-0 items-center gap-1.5 font-heading text-[1.375em] font-bold [font-variation-settings:'GEOM'_50,'opsz'_32] sm:text-2xl"
 		>
-			<a href="/" aria-label="Home">Fajr UI</a>
+			<a href="{base}/" aria-label="Home">Fajr UI</a>
 		</div>
 
 		<div class="ms-auto flex items-center gap-2 md:flex-1 md:justify-end">

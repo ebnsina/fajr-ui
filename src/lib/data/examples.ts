@@ -1,3 +1,4 @@
+import { base } from '$app/paths';
 export type ExampleEntry = {
 	slug: string;
 	name: string;
@@ -18,7 +19,7 @@ export const examples: ExampleEntry[] = [
 		name: 'Calendar',
 		description:
 			'Month, week, day and agenda views, overlapping events, drag to reschedule, and a full write-up of how it is put together.',
-		href: '/examples/calendar',
+		href: `${base}/examples/calendar`,
 		uses: ['Calendar', 'Popover', 'Toggle Group', 'Badge', 'Button', 'Separator', 'Label']
 	},
 	{
@@ -26,7 +27,7 @@ export const examples: ExampleEntry[] = [
 		name: 'Dashboard',
 		description:
 			'A House of Wisdom workspace: collapsible sidebar, stat cards and a work queue, in a full-width or inset layout.',
-		href: '/examples/dashboard',
+		href: `${base}/examples/dashboard`,
 		uses: ['Sidebar', 'Card', 'Chart', 'Badge', 'Avatar', 'Separator', 'Input', 'Button']
 	},
 	{
@@ -34,7 +35,7 @@ export const examples: ExampleEntry[] = [
 		name: 'SaaS landing page',
 		description:
 			'A marketing page for a manuscript archive: hero, product preview, feature grid, pricing with a billing toggle, testimonials and an FAQ.',
-		href: '/examples/landing',
+		href: `${base}/examples/landing`,
 		uses: ['Tabs', 'Accordion', 'Switch', 'Sheet', 'Badge', 'Avatar', 'Input', 'Button']
 	}
 ];

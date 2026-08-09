@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
 	import DocsPage from '$lib/components/site/docs-page.svelte';
 	import SiteFooter from '$lib/components/site/site-footer.svelte';
@@ -12,12 +13,18 @@
 	];
 
 	const endpoints = [
-		['/llms.txt', 'Index: what this is, the rules, and a link per component. ~11 KB.'],
-		['/llms-full.txt', 'Every component’s API, examples and notes inline. ~150 KB.'],
-		['/docs/components/<slug>.md', 'One component. What you want before writing a single import.'],
-		['/skill.md', 'The agent skill, as installed by the CLI.'],
-		['/agents.md', 'The same rules as a block for AGENTS.md.'],
-		['/r/index.json', 'Machine-readable registry: files, and dependencies with exact versions.']
+		[`${base}/llms.txt`, 'Index: what this is, the rules, and a link per component. ~11 KB.'],
+		[`${base}/llms-full.txt`, 'Every component’s API, examples and notes inline. ~150 KB.'],
+		[
+			`${base}/docs/components/<slug>.md`,
+			'One component. What you want before writing a single import.'
+		],
+		[`${base}/skill.md`, 'The agent skill, as installed by the CLI.'],
+		[`${base}/agents.md`, 'The same rules as a block for AGENTS.md.'],
+		[
+			`${base}/r/index.json`,
+			'Machine-readable registry: files, and dependencies with exact versions.'
+		]
 	];
 </script>
 
@@ -103,7 +110,7 @@
 		guesses first. It costs one request instead of the whole catalogue.
 	</p>
 	<CodeBlock
-		code="curl https://fajr-ui.dev/docs/components/dialog.md"
+		code="curl https://ebnsina.github.io/fajr-ui/docs/components/dialog.md"
 		language="sh"
 		title="Terminal"
 	/>

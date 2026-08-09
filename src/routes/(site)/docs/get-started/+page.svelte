@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
 	import PackageManagerTabs from '$lib/components/site/package-manager-tabs.svelte';
 	import { addCommand, execCommand, packageManager } from '$lib/package-manager.svelte';
@@ -52,7 +53,7 @@
 	<p>
 		Because the files are yours once copied, updating is the interesting part — the CLI records what
 		it wrote and refuses to overwrite anything you have since edited. See
-		<a href="/docs/cli">the CLI reference</a> for <code>outdated</code>, <code>diff</code> and
+		<a href="{base}/docs/cli">the CLI reference</a> for <code>outdated</code>, <code>diff</code> and
 		<code>update</code>.
 	</p>
 
@@ -86,7 +87,7 @@
 	<p>
 		Copy <code>src/lib/styles/theme.css</code> into your project and import it after Tailwind. It
 		defines every colour, radius, font and motion curve the components read, in both light and dark
-		— see <a href="/docs/theming">Theming</a> for what each one does.
+		— see <a href="{base}/docs/theming">Theming</a> for what each one does.
 	</p>
 	<CodeBlock
 		code={`@import 'tailwindcss';

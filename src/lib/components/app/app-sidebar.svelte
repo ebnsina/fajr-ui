@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import { ChevronsUpDownIcon, Icon } from '$lib/icons';
 	import {
@@ -66,7 +67,7 @@
 	<SidebarHeader>
 		<SidebarMenu>
 			<SidebarMenuItem>
-				<SidebarMenuButton size="lg" href="/examples/dashboard/app">
+				<SidebarMenuButton size="lg" href="{base}/examples/dashboard/app">
 					<span
 						class="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground"
 					>

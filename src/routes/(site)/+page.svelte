@@ -1,4 +1,6 @@
 <script lang="ts">
+	import PageMeta from '$lib/components/site/page-meta.svelte';
+	import { base } from '$app/paths';
 	import { Badge, Button } from '$lib/components/ui';
 	import { cn } from '$lib/utils';
 	import ComponentThumbnail from '$lib/components/site/component-thumbnail.svelte';
@@ -26,10 +28,7 @@
 	]);
 </script>
 
-<svelte:head>
-	<title>A modern Svelte UI component library — Fajr UI</title>
-	<meta name="description" content={description} />
-</svelte:head>
+<PageMeta title="A modern Svelte UI component library" {description} />
 
 <main id="main-content" tabindex="-1" class="outline-none">
 	<div class="container w-full">
@@ -39,8 +38,8 @@
 			</h1>
 			<p class="text-muted-foreground lg:text-lg">{description}</p>
 			<div class="mt-2 flex gap-2">
-				<Button href="/docs" size="lg">Get started</Button>
-				<Button href="/examples" size="lg" variant="outline">View Examples</Button>
+				<Button href="{base}/docs" size="lg">Get started</Button>
+				<Button href="{base}/examples" size="lg" variant="outline">View Examples</Button>
 			</div>
 		</PageHeader>
 	</div>
@@ -106,7 +105,7 @@
 							<h2 class="text-sm font-medium">
 								<a
 									class="outline-none before:absolute before:inset-0 before:rounded-xl"
-									href="/docs/components/{component.slug}"
+									href="{base}/docs/components/{component.slug}"
 								>
 									{component.name}
 								</a>

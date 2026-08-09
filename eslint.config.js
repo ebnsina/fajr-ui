@@ -37,16 +37,21 @@ export default defineConfig(
 		rules: {
 			/*
 			 * `resolve()` exists so links keep working under a configured base path.
-			 * This app has none — there is no `svelte.config.js`, the Kit options are
-			 * inline in `vite.config.ts`, and nothing sets `paths.base`.
+			 * There now is one — `paths.base` in `vite.config.ts`, because the site
+			 * is served from a GitHub Pages project path — and every link in the app
+			 * carries `base` explicitly.
 			 *
-			 * More to the point, the rule is unsatisfiable in the library itself.
-			 * Button, Badge and SidebarMenuButton take `href` as a pass-through prop
-			 * from whoever uses them; a component cannot resolve a route it has never
-			 * been told. Turning it on would mean either a suppression on every one
-			 * of those, or a `resolve()` call that cannot be written.
+			 * The rule stays off all the same, because it is unsatisfiable in the
+			 * library itself. Button, Badge and SidebarMenuButton take `href` as a
+			 * pass-through prop from whoever uses them; a component cannot resolve a
+			 * route it has never been told. Turning it on would mean either a
+			 * suppression on every one of those, or a `resolve()` call that cannot be
+			 * written.
 			 *
-			 * Configure a base path and this should come back on.
+			 * What actually catches a missed prefix is the build: prerendering
+			 * crawls every link and fails on one that does not begin with `base`.
+			 * That is a stronger check than the rule, and it covers the
+			 * pass-through props the rule cannot see.
 			 */
 			'svelte/no-navigation-without-resolve': 'off'
 		}

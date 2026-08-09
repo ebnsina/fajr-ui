@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import DocsPage from '$lib/components/site/docs-page.svelte';
 	import SiteFooter from '$lib/components/site/site-footer.svelte';
 	import { builtComponents, components } from '$lib/data/components';
@@ -51,8 +52,9 @@
 			and a component when the body needs markup.
 		</li>
 		<li>
-			<strong>Virtualisation</strong> via <a href="/docs/components/virtual-list">Virtual List</a>,
-			which renders only the rows in view.
+			<strong>Virtualisation</strong> via
+			<a href="{base}/docs/components/virtual-list">Virtual List</a>, which renders only the rows in
+			view.
 		</li>
 		<li>
 			<strong>A documentation site</strong>, with a live example and props table for every
@@ -72,7 +74,7 @@
 		<li>
 			<strong>Right to left</strong> throughout — one <code>dir</code> attribute, with mirrored
 			glyphs and direction-aware arrow keys, shown in Arabic, Hebrew and Persian. See
-			<a href="/docs/rtl">Right to left</a>.
+			<a href="{base}/docs/rtl">Right to left</a>.
 		</li>
 		<li>
 			<strong>Three full screens</strong>: a dashboard, a calendar and a marketing page, each with a
@@ -123,9 +125,10 @@
 		<li>
 			<strong>Charts lean on a pre-alpha dependency.</strong> A charting grammar is a library in its
 			own right, so
-			<a href="/docs/components/chart">Chart</a> wraps TanStack Charts rather than inventing one. That
-			package is pre-alpha and its API still moves, so every import of it sits behind a single file and
-			the version is pinned exactly — but it is the one component whose upstream could change under you.
+			<a href="{base}/docs/components/chart">Chart</a> wraps TanStack Charts rather than inventing one.
+			That package is pre-alpha and its API still moves, so every import of it sits behind a single file
+			and the version is pinned exactly — but it is the one component whose upstream could change under
+			you.
 		</li>
 	</ul>
 </DocsPage>

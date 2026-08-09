@@ -83,6 +83,6 @@ This project uses Fajr UI. Components live in `src/lib/components/ui` and were c
 - Every interactive component already handles its own keyboard, focus and ARIA. Do not add `role`, `tabindex` or `aria-*` on top unless the docs for that component say to.
 - A chart needs a `label` prop: a sentence describing what it shows. It is the accessible name and is required.
 
-Component documentation: `https://fajr-ui.dev/docs/components/<slug>.md`. Full index: `https://fajr-ui.dev/llms.txt`.
+Component documentation: `https://ebnsina.github.io/fajr-ui/docs/components/<slug>.md`. Full index: `https://ebnsina.github.io/fajr-ui/llms.txt`.
 Add a component with `npx fajr-ui add <slug>`; update with `npx fajr-ui update`.
 <!-- fajr-ui:end -->

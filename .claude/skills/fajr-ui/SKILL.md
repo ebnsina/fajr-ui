@@ -24,10 +24,10 @@ Components live in `src/lib/components/ui` in **this** repository — they were 
 Fetch its documentation rather than guessing the props:
 
 ```text
-https://fajr-ui.dev/docs/components/<slug>.md
+https://ebnsina.github.io/fajr-ui/docs/components/<slug>.md
 ```
 
-Slugs are kebab-case: `alert-dialog`, `data-table`, `number-field`. The full list is at https://fajr-ui.dev/llms.txt.
+Slugs are kebab-case: `alert-dialog`, `data-table`, `number-field`. The full list is at https://ebnsina.github.io/fajr-ui/llms.txt.
 
 ## Adding a component that is not in the project yet
 

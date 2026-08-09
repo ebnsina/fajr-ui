@@ -41,9 +41,9 @@ pnpm cli:publish               # npm publish ./cli
   Unescaped, the parser ends the component's own script block there. The two samples on the
   get-started page carry a scoped `eslint-disable` for this.
 
-`svelte/no-navigation-without-resolve` is off, with the reasoning in `eslint.config.js`: this app has
-no base path, and the rule is unsatisfiable in `Button`/`Badge`/`SidebarMenuButton`, which take `href`
-as a pass-through prop and cannot resolve a route they were never told.
+`svelte/no-navigation-without-resolve` is off, with the reasoning in `eslint.config.js`: the rule is
+unsatisfiable in `Button`/`Badge`/`SidebarMenuButton`, which take `href` as a pass-through prop and
+cannot resolve a route they were never told. The build catches missed prefixes instead.
 
 ## The three things this repository is
 
@@ -127,7 +127,25 @@ add a `*.fixture.svelte` beside the component.
 
 - `src/routes/(site)/` is the marketing and docs shell; `src/routes/examples/<name>/app/` are
   standalone full-screen apps with their own layout, linked from a write-up page under `(site)`.
-- `src/routes/r/`, `llms.txt`, `skill.md`, `agents.md` are prerendered endpoints. A component that
-  fails to resolve breaks `pnpm build`, not just the page — which is deliberate.
+- `src/routes/r/`, `llms.txt`, `skill.md`, `agents.md`, `sitemap.xml` are prerendered endpoints. A
+  component that fails to resolve breaks `pnpm build`, not just the page — which is deliberate.
 - Every `{#each}` over documentation data must key on something genuinely unique. Duplicate keys have
   twice silently blanked a whole page rather than erroring visibly.
+
+## Deployment
+
+The site is static files on GitHub Pages, published by `.github/workflows/deploy.yml` on a push to
+`main`. Three things follow from that, and each has bitten already:
+
+- **Everything prerenders.** `src/routes/+layout.ts` sets `prerender = true` for the whole app, so a
+  route that needs a request — a cookie, a header, a query string, an endpoint answering live — is a
+  build failure rather than a runtime one. There is no server to fall back to.
+- **Every internal link carries `base`.** The site lives under `/fajr-ui`, and `paths.base` is set
+  unconditionally so dev and production agree. Write `href="{base}/docs"`, never `href="/docs"`; the
+  prerenderer crawls links and fails on one without the prefix. Assets imported through the bundler
+  are rewritten for you, which is why the fonts moved out of `static/`.
+- **URLs are written down in three places** and must agree: `SITE` in `src/lib/llms/rules.ts`, the
+  registry default in `cli/index.js`, and `base` in `vite.config.ts`.
+
+`prerender.handleHttpError` in `vite.config.ts` allows 404s under the dashboard example's app, whose
+sidebar describes more of a product than is built. Nothing else is allowed to 404.

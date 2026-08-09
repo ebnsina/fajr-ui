@@ -1,4 +1,6 @@
 <script lang="ts">
+	import PageMeta from '$lib/components/site/page-meta.svelte';
+	import { base } from '$app/paths';
 	import {
 		Badge,
 		Button,
@@ -298,14 +300,17 @@
 	}
 </script>
 
-<svelte:head><title>Calendar — Fajr UI</title></svelte:head>
+<PageMeta
+	title="Calendar"
+	description="A month view with keyboard navigation, built from the library's calendar and popover."
+/>
 <svelte:window {onkeydown} />
 
 <!-- Logical properties throughout mean an RTL locale needs only `dir`. -->
 <div dir={rtl ? 'rtl' : 'ltr'} class="flex h-svh flex-col bg-sidebar">
 	<header class="flex h-14 shrink-0 items-center gap-2 border-b bg-background px-4">
 		<a
-			href="/examples/calendar"
+			href="{base}/examples/calendar"
 			class="font-heading font-bold [font-variation-settings:'GEOM'_50,'opsz'_32]"
 		>
 			Fajr UI

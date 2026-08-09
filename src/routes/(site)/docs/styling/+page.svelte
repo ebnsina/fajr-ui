@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
 	import DocsPage from '$lib/components/site/docs-page.svelte';
 	import SiteFooter from '$lib/components/site/site-footer.svelte';
@@ -13,8 +14,8 @@
 
 <DocsPage title="Styling" description="Changing a component once it is in your project." {toc}>
 	<p>
-		Colours, radii and typefaces come from <a href="/docs/theming">tokens</a>. This page is about
-		the other half: reaching into a component you have copied.
+		Colours, radii and typefaces come from <a href="{base}/docs/theming">tokens</a>. This page is
+		about the other half: reaching into a component you have copied.
 	</p>
 
 	<h2 id="overriding">Overriding a component</h2>
@@ -40,7 +41,7 @@
 	<CodeBlock
 		code={`import { buttonVariants } from '$lib/components/ui';
 
-<a href="/docs" class={buttonVariants({ variant: 'outline', size: 'sm' })}>
+<a href="{base}/docs" class={buttonVariants({ variant: 'outline', size: 'sm' })}>
   Styled like a button
 </a>`}
 	/>

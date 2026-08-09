@@ -12,7 +12,7 @@ export const prerender = true;
  */
 const SCHEMA = {
 	$schema: 'https://json-schema.org/draft/2020-12/schema',
-	$id: 'https://fajr-ui.dev/r/schema.json',
+	$id: 'https://ebnsina.github.io/fajr-ui/r/schema.json',
 	title: 'Fajr UI configuration',
 	description: 'Where the CLI writes components, and which registry it reads.',
 	type: 'object',
@@ -22,7 +22,7 @@ const SCHEMA = {
 			type: 'string',
 			format: 'uri',
 			description: 'Base URL the CLI reads components from.',
-			default: 'https://fajr-ui.dev/r'
+			default: 'https://ebnsina.github.io/fajr-ui/r'
 		},
 		aliases: {
 			type: 'object',

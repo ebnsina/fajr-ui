@@ -10,7 +10,11 @@
 
 	The `(detail)` group keeps the URLs at /examples/<name> while letting the
 	gallery index at /examples keep its own full-bleed layout.
+
+	It is a `<main id="main-content">` because the site layout's skip link targets
+	that id and these pages are the only ones that never rendered one — the link
+	was present in the header, focusable, and landed nowhere.
 -->
-<div class="container w-full py-4">
+<main id="main-content" tabindex="-1" class="container w-full py-4 outline-none">
 	{@render children()}
-</div>
+</main>

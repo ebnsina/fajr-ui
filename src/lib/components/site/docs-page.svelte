@@ -14,6 +14,7 @@
 <script lang="ts">
 	import { untrack } from 'svelte';
 	import { cn } from '$lib/utils';
+	import PageMeta from './page-meta.svelte';
 
 	let { title, description, toc = [], children }: DocsPageProps = $props();
 
@@ -100,10 +101,7 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{title} — Fajr UI</title>
-	{#if description}<meta name="description" content={description} />{/if}
-</svelte:head>
+<PageMeta {title} {description} />
 
 <div class="flex items-stretch text-[1.05rem] sm:text-[15px] xl:w-full">
 	<!--

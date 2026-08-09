@@ -1,3 +1,4 @@
+import { base } from '$app/paths';
 import { components } from './components';
 import { examples } from './examples';
 
@@ -17,15 +18,15 @@ export const docsNav: DocsNavSection[] = [
 	{
 		title: 'Overview',
 		items: [
-			{ title: 'Introduction', href: '/docs' },
-			{ title: 'Get Started', href: '/docs/get-started' },
-			{ title: 'CLI', href: '/docs/cli' },
-			{ title: 'Theming', href: '/docs/theming' },
-			{ title: 'Styling', href: '/docs/styling' },
-			{ title: 'Right to left', href: '/docs/rtl' },
-			{ title: 'For AI agents', href: '/docs/ai' },
-			{ title: 'Changelog', href: '/docs/changelog' },
-			{ title: 'Roadmap', href: '/docs/roadmap' }
+			{ title: 'Introduction', href: `${base}/docs` },
+			{ title: 'Get Started', href: `${base}/docs/get-started` },
+			{ title: 'CLI', href: `${base}/docs/cli` },
+			{ title: 'Theming', href: `${base}/docs/theming` },
+			{ title: 'Styling', href: `${base}/docs/styling` },
+			{ title: 'Right to left', href: `${base}/docs/rtl` },
+			{ title: 'For AI agents', href: `${base}/docs/ai` },
+			{ title: 'Changelog', href: `${base}/docs/changelog` },
+			{ title: 'Roadmap', href: `${base}/docs/roadmap` }
 		]
 	},
 	{
@@ -33,7 +34,7 @@ export const docsNav: DocsNavSection[] = [
 		// Derived from the gallery rather than repeated, so a new example appears
 		// in the sidebar the moment it is added to `examples`.
 		items: [
-			{ title: 'All examples', href: '/examples' },
+			{ title: 'All examples', href: `${base}/examples` },
 			...examples.map((entry) => ({ title: entry.name, href: entry.href }))
 		]
 	},
@@ -41,7 +42,7 @@ export const docsNav: DocsNavSection[] = [
 		title: 'Components',
 		items: components.map((entry) => ({
 			title: entry.name,
-			href: `/docs/components/${entry.slug}`,
+			href: `${base}/docs/components/${entry.slug}`,
 			badge: entry.isNew ? 'New' : undefined
 		}))
 	}

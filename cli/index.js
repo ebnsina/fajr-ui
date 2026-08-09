@@ -7,7 +7,7 @@ import { stdin, stdout } from 'node:process';
 import { fileURLToPath } from 'node:url';
 import { addCommand, hash, keyOf, packageManager, rootsOf, statusOf, unifiedDiff } from './lib.js';
 
-const DEFAULT_REGISTRY = process.env.FAJR_UI_REGISTRY ?? 'https://fajr-ui.dev/r';
+const DEFAULT_REGISTRY = process.env.FAJR_UI_REGISTRY ?? 'https://ebnsina.github.io/fajr-ui/r';
 const CONFIG_FILE = 'fajr-ui.json';
 const LOCK_FILE = 'fajr-ui.lock.json';
 

@@ -8,19 +8,16 @@
  * `.dark` overrides take effect.
  */
 
-@font-face {
-	font-family: 'Fajr Display';
-	src: url('/fonts/fajr-display.woff2') format('woff2');
-	font-weight: 300 700;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: 'Fajr Mono';
-	src: url('/fonts/fajr-mono.woff2') format('woff2');
-	font-weight: 400;
-	font-display: swap;
-}
+/*
+ * The `@font-face` rules that load these two families live in the site's own
+ * `routes/layout.css`, not here.
+ *
+ * A URL is the one thing in this file that cannot be copied without knowing
+ * where it is going: it has to resolve against the base path a project is
+ * served from, and against wherever that project keeps its fonts. Tokens have
+ * no such dependency, which is what keeps this file portable — a project
+ * bringing its own typefaces just declares them alongside.
+ */
 
 @custom-variant dark (&:is(.dark *));
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Badge, Button } from '$lib/components/ui';
 	import { ArrowRightIcon, Icon } from '$lib/icons';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
@@ -90,7 +91,8 @@
 	<h2 id="demo">Demo</h2>
 	<p>It is a full page, so it opens on its own.</p>
 	<div class="not-prose flex flex-wrap gap-2">
-		<Button href="/examples/landing/app">Open the landing page<Icon icon={ArrowRightIcon} /></Button
+		<Button href="{base}/examples/landing/app"
+			>Open the landing page<Icon icon={ArrowRightIcon} /></Button
 		>
 	</div>
 
@@ -304,9 +306,9 @@
 
 	<h2 id="pricing">Pricing</h2>
 	<p>
-		The monthly/annual control is a <a href="/docs/components/switch">Switch</a>, not two buttons:
-		it is one setting with two states, and <code>role="switch"</code> is announced as on or off rather
-		than as a pair of choices where one happens to be pressed.
+		The monthly/annual control is a <a href="{base}/docs/components/switch">Switch</a>, not two
+		buttons: it is one setting with two states, and <code>role="switch"</code> is announced as on or off
+		rather than as a pair of choices where one happens to be pressed.
 	</p>
 	<p>
 		The figure and the note beneath it both sit in a box of fixed height. The price changes with the
@@ -372,7 +374,9 @@
 	<h2 id="built-from">What it is built from</h2>
 	<div class="not-prose flex flex-wrap gap-1.5">
 		{#each built as component (component)}
-			<Badge variant="outline" href="/docs/components/{component.toLowerCase()}">{component}</Badge>
+			<Badge variant="outline" href="{base}/docs/components/{component.toLowerCase()}"
+				>{component}</Badge
+			>
 		{/each}
 	</div>
 	<p>
@@ -380,7 +384,7 @@
 		page needed a page builder, and nothing on it is hidden behind one.
 	</p>
 	<div class="not-prose pt-2 pb-2">
-		<Button href="/examples/landing/app" variant="outline">
+		<Button href="{base}/examples/landing/app" variant="outline">
 			Open the landing page<Icon icon={ArrowRightIcon} />
 		</Button>
 	</div>

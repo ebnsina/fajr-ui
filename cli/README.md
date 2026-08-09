@@ -1,6 +1,6 @@
 # fajr-ui
 
-Copy [Fajr UI](https://fajr-ui.dev) components into your project and keep them up to date.
+Copy [Fajr UI](https://ebnsina.github.io/fajr-ui) components into your project and keep them up to date.
 
 Nothing is installed at runtime. `fajr-ui add` writes real files into your source tree, which you
 then own outright — read them, edit them, delete the parts you do not want. The CLI's job is to get
@@ -24,18 +24,18 @@ out of three gets you all four.
 
 ## Commands
 
-| Command              | What it does                                                  |
-| -------------------- | ------------------------------------------------------------- |
-| `init`               | Write `fajr-ui.json` with the paths to install into            |
-| `add <name...>`      | Copy components in, with whatever they compose                 |
-| `list`               | Show every component, and which you have installed             |
-| `outdated [name...]` | Show what has changed upstream since you installed             |
-| `diff [name...]`     | Show those changes line by line                                |
-| `update [name...]`   | Apply them, leaving files you have edited alone                |
-| `skill`              | Write the agent instructions into this project                 |
+| Command              | What it does                                        |
+| -------------------- | --------------------------------------------------- |
+| `init`               | Write `fajr-ui.json` with the paths to install into |
+| `add <name...>`      | Copy components in, with whatever they compose      |
+| `list`               | Show every component, and which you have installed  |
+| `outdated [name...]` | Show what has changed upstream since you installed  |
+| `diff [name...]`     | Show those changes line by line                     |
+| `update [name...]`   | Apply them, leaving files you have edited alone     |
+| `skill`              | Write the agent instructions into this project      |
 
-| Option             | What it does                          |
-| ------------------ | ------------------------------------- |
+| Option             | What it does                            |
+| ------------------ | --------------------------------------- |
 | `--dry-run`        | Report what would happen, write nothing |
 | `--force`          | Replace files you have edited too       |
 | `-y`, `--yes`      | Skip prompts                            |
@@ -57,8 +57,8 @@ Use `outdated` to see which components have moved, and `diff` to read the change
 ## Working with agents
 
 `npx fajr-ui skill` writes the component instructions into your project so a coding agent has the
-API in front of it. The same content is served at [`/llms.txt`](https://fajr-ui.dev/llms.txt), with
-every component inline at [`/llms-full.txt`](https://fajr-ui.dev/llms-full.txt).
+API in front of it. The same content is served at [`/llms.txt`](https://ebnsina.github.io/fajr-ui/llms.txt), with
+every component inline at [`/llms-full.txt`](https://ebnsina.github.io/fajr-ui/llms-full.txt).
 
 ## Configuration
 

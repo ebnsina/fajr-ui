@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui';
-	import {
-		DASHBOARD_LAYOUT_COOKIE,
-		DASHBOARD_LAYOUT_MAX_AGE,
-		type DashboardLayout
-	} from '$lib/data/dashboard-layout';
+	import type { DashboardLayout } from '$lib/data/dashboard-layout';
 	import { Icon, LayoutFullIcon, LayoutInsetIcon } from '$lib/icons';
 
 	let { layout = $bindable() }: { layout: DashboardLayout } = $props();
@@ -14,9 +10,17 @@
 		next === 'inset' ? 'Switch to inset layout' : 'Switch to full-width layout'
 	);
 
+	/*
+	 * The choice lasts for the visit and is not persisted.
+	 *
+	 * It used to be stored in a cookie and read back on the server so the first
+	 * paint was already right. The site is prerendered now, so there is no
+	 * server to read it — restoring a saved choice could only happen after
+	 * hydration, which means watching the layout jump. A `?layout=` link still
+	 * pins either variant, so both remain directly shareable.
+	 */
 	function toggle() {
 		layout = next;
-		document.cookie = `${DASHBOARD_LAYOUT_COOKIE}=${layout}; path=/; max-age=${DASHBOARD_LAYOUT_MAX_AGE}`;
 	}
 </script>
 

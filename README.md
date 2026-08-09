@@ -20,10 +20,10 @@ Documentation, every component and the live examples: **https://ebnsina.github.i
 One SvelteKit app serves all three of these, which is the point — none of them can drift from the
 others.
 
-| Path                   | What it is                                                             |
-| ---------------------- | ---------------------------------------------------------------------- |
-| `src/lib/components/ui` | The library. The components users copy.                               |
-| `src/routes/(site)`     | The documentation site, plus full example apps under `src/routes/examples`. |
+| Path                    | What it is                                                                                          |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| `src/lib/components/ui` | The library. The components users copy.                                                             |
+| `src/routes/(site)`     | The documentation site, plus full example apps under `src/routes/examples`.                         |
 | `cli/`                  | The CLI, published to npm as [`fajr-ui`](https://www.npmjs.com/package/fajr-ui). Zero dependencies. |
 
 The registry the CLI reads from is generated at build time from the same component sources the site

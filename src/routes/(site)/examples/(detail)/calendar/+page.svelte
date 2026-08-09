@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Badge, Button } from '$lib/components/ui';
 	import { ArrowRightIcon, Icon } from '$lib/icons';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
@@ -63,7 +64,9 @@
 	<h2 id="demo">Demo</h2>
 	<p>It wants the whole viewport, so it opens on its own.</p>
 	<div class="not-prose flex flex-wrap gap-2">
-		<Button href="/examples/calendar/app">Open the calendar<Icon icon={ArrowRightIcon} /></Button>
+		<Button href="{base}/examples/calendar/app"
+			>Open the calendar<Icon icon={ArrowRightIcon} /></Button
+		>
 	</div>
 
 	<h2 id="anatomy">Anatomy</h2>
@@ -243,7 +246,10 @@ const height = Math.max(22, (event.minutes / 60) * HOUR_HEIGHT);`}
 	<h2 id="built-from">What it is built from</h2>
 	<div class="not-prose flex flex-wrap gap-1.5">
 		{#each built as component (component)}
-			<Badge variant="outline" href="/docs/components/{component.toLowerCase().replace(' ', '-')}">
+			<Badge
+				variant="outline"
+				href="{base}/docs/components/{component.toLowerCase().replace(' ', '-')}"
+			>
 				{component}
 			</Badge>
 		{/each}
@@ -254,7 +260,7 @@ const height = Math.max(22, (event.minutes / 60) * HOUR_HEIGHT);`}
 		one.
 	</p>
 	<div class="not-prose pt-2 pb-2">
-		<Button href="/examples/calendar/app" variant="outline">
+		<Button href="{base}/examples/calendar/app" variant="outline">
 			Open the calendar<Icon icon={ArrowRightIcon} />
 		</Button>
 	</div>

@@ -7,6 +7,8 @@
 	import AppSidebar from '$lib/components/app/app-sidebar.svelte';
 	import LayoutSwitcher from '$lib/components/app/layout-switcher.svelte';
 	import { navMain, navSecondary } from '$lib/components/app/nav-data';
+	import { browser } from '$app/environment';
+	import { DEFAULT_DASHBOARD_LAYOUT, parseDashboardLayout } from '$lib/data/dashboard-layout';
 	import {
 		Input,
 		Separator,
@@ -16,11 +18,22 @@
 	} from '$lib/components/ui';
 	import type { LayoutProps } from './$types';
 
-	let { children, data }: LayoutProps = $props();
+	let { children }: LayoutProps = $props();
 
-	// Seeded from the cookie on the server, so the first paint already matches.
-	// Afterwards the switcher owns it, hence the deliberate one-time read.
-	let layout = $state(untrack(() => data.dashboardLayout));
+	/*
+	 * `?layout=` pins a variant, which is what makes each one directly linkable.
+	 * After that the switcher owns it, hence the deliberate one-time read.
+	 *
+	 * The read is guarded because this page is prerendered, and a prerendered
+	 * page has no query string to speak of — reading one is an error rather than
+	 * an empty result, precisely so that a build cannot bake in an answer that
+	 * only held for whichever URL happened to be rendered.
+	 */
+	let layout = $state(
+		untrack(() =>
+			browser ? parseDashboardLayout(page.url.searchParams.get('layout')) : DEFAULT_DASHBOARD_LAYOUT
+		)
+	);
 
 	// Derive the page title from the nav data so the header stays in step with routing.
 	const title = $derived(

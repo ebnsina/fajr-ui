@@ -1,4 +1,6 @@
 <script lang="ts">
+	import PageMeta from '$lib/components/site/page-meta.svelte';
+	import { base } from '$app/paths';
 	import { Badge, buttonVariants } from '$lib/components/ui';
 	import { ArrowRightIcon, Icon } from '$lib/icons';
 	import PageHeader from '$lib/components/site/page-header.svelte';
@@ -8,10 +10,7 @@
 	const description = 'Complete screens built from the library, not one component at a time.';
 </script>
 
-<svelte:head>
-	<title>Examples — Fajr UI</title>
-	<meta name="description" content={description} />
-</svelte:head>
+<PageMeta title="Examples" {description} />
 
 <main id="main-content" tabindex="-1" class="outline-none">
 	<div class="container w-full">
@@ -71,7 +70,7 @@
 			<p class="pb-8 text-sm text-muted-foreground">
 				More screens are on the way — see the <a
 					class="text-foreground underline underline-offset-4"
-					href="/docs/roadmap">roadmap</a
+					href="{base}/docs/roadmap">roadmap</a
 				>.
 			</p>
 		</div>

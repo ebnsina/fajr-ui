@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Separator } from '$lib/components/ui';
 </script>
 
@@ -10,10 +11,11 @@
 	<Separator decorative class="my-4" />
 	<!-- A vertical rule with no height of its own stretches to the row. -->
 	<div class="flex h-5 items-center gap-3">
-		<a class="text-muted-foreground hover:text-foreground" href="/docs">Docs</a>
+		<a class="text-muted-foreground hover:text-foreground" href="{base}/docs">Docs</a>
 		<Separator orientation="vertical" decorative />
-		<a class="text-muted-foreground hover:text-foreground" href="/docs/roadmap">Roadmap</a>
+		<a class="text-muted-foreground hover:text-foreground" href="{base}/docs/roadmap">Roadmap</a>
 		<Separator orientation="vertical" decorative />
-		<a class="text-muted-foreground hover:text-foreground" href="/docs/changelog">Changelog</a>
+		<a class="text-muted-foreground hover:text-foreground" href="{base}/docs/changelog">Changelog</a
+		>
 	</div>
 </div>

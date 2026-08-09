@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import {
 		Breadcrumb,
 		BreadcrumbItem,
@@ -11,9 +12,9 @@
 
 <Breadcrumb>
 	<BreadcrumbList>
-		<BreadcrumbItem><BreadcrumbLink href="/">Home</BreadcrumbLink></BreadcrumbItem>
+		<BreadcrumbItem><BreadcrumbLink href="{base}/">Home</BreadcrumbLink></BreadcrumbItem>
 		<BreadcrumbSeparator />
-		<BreadcrumbItem><BreadcrumbLink href="/docs">Docs</BreadcrumbLink></BreadcrumbItem>
+		<BreadcrumbItem><BreadcrumbLink href="{base}/docs">Docs</BreadcrumbLink></BreadcrumbItem>
 		<BreadcrumbSeparator />
 		<BreadcrumbItem><BreadcrumbPage>Breadcrumb</BreadcrumbPage></BreadcrumbItem>
 	</BreadcrumbList>

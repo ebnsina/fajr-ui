@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Button } from '$lib/components/ui';
 	import { ArrowRightIcon, Icon } from '$lib/icons';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
@@ -17,14 +18,22 @@
 	];
 
 	const next = [
-		['Get started', 'Install the dependencies and add your first component.', '/docs/get-started'],
+		[
+			'Get started',
+			'Install the dependencies and add your first component.',
+			`${base}/docs/get-started`
+		],
 		[
 			'The CLI',
 			'Add components, see what changed upstream, and update without losing your edits.',
-			'/docs/cli'
+			`${base}/docs/cli`
 		],
-		['Theming', 'Light, dark and three accents, from one token file.', '/docs/theming'],
-		['Examples', 'Complete screens — a dashboard, a calendar and a marketing page.', '/examples']
+		['Theming', 'Light, dark and three accents, from one token file.', `${base}/docs/theming`],
+		[
+			'Examples',
+			'Complete screens — a dashboard, a calendar and a marketing page.',
+			`${base}/examples`
+		]
 	];
 </script>
 
@@ -47,8 +56,8 @@
 	</p>
 	<p>
 		That is also the trade. Copying means you do not get fixes for free — so the
-		<a href="/docs/cli">CLI</a> exists to tell you what has changed upstream and merge it in without touching
-		the lines you edited.
+		<a href="{base}/docs/cli">CLI</a> exists to tell you what has changed upstream and merge it in without
+		touching the lines you edited.
 	</p>
 
 	<h2 id="getting-a-component">Getting a component</h2>
@@ -60,7 +69,8 @@
 	/>
 	<p>
 		Or open the component's page, copy the source, and paste it in. Every page shows the whole file,
-		not an excerpt — see <a href="/docs/get-started">Get started</a> for what has to be in place first.
+		not an excerpt — see <a href="{base}/docs/get-started">Get started</a> for what has to be in place
+		first.
 	</p>
 
 	<h2 id="aria-first">Hand-rolled, ARIA first</h2>
@@ -91,7 +101,7 @@
 		Colours, radii and typography all resolve from CSS custom properties defined once, in light and
 		dark. Every value is literal rather than a reference to a palette, so the token file stands
 		alone and a whole scheme can be swapped in one place. Three accents ship with it; see
-		<a href="/docs/theming">Theming</a> for how to add your own.
+		<a href="{base}/docs/theming">Theming</a> for how to add your own.
 	</p>
 
 	<h2 id="next">Where to go next</h2>
@@ -119,7 +129,7 @@
 		page and grew a line longer with each one added.
 	-->
 	<div class="not-prose pt-2 pb-2">
-		<Button href="/" variant="outline">
+		<Button href="{base}/" variant="outline">
 			See all {builtComponents.length} components<Icon icon={ArrowRightIcon} />
 		</Button>
 	</div>

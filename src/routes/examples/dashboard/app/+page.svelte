@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageMeta from '$lib/components/site/page-meta.svelte';
 	import { Icon, PlusIcon, TrendingDownIcon, TrendingUpIcon } from '$lib/icons';
 	import {
 		Avatar,
@@ -105,6 +106,11 @@
 			.toUpperCase();
 	}
 </script>
+
+<PageMeta
+	title="Dashboard"
+	description="An application shell: collapsible sidebar, data table, charts and the two layout variants."
+/>
 
 <div class="flex flex-col gap-6">
 	<div class="flex flex-wrap items-center justify-between gap-3">

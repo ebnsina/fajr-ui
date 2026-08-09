@@ -1,4 +1,6 @@
 <script lang="ts">
+	import PageMeta from '$lib/components/site/page-meta.svelte';
+	import { base } from '$app/paths';
 	import {
 		Accordion,
 		AccordionContent,
@@ -113,13 +115,10 @@
 	}
 </script>
 
-<svelte:head>
-	<title>{PRODUCT} — a SaaS landing page — Fajr UI</title>
-	<meta
-		name="description"
-		content="A marketing page built from the library: hero, feature grid, pricing with a billing toggle, testimonials and an FAQ."
-	/>
-</svelte:head>
+<PageMeta
+	title="{PRODUCT} — a SaaS landing page"
+	description="A marketing page built from the library: hero, feature grid, pricing with a billing toggle, testimonials and an FAQ."
+/>
 
 <svelte:window bind:scrollY />
 
@@ -145,7 +144,7 @@
 	>
 		<div class="mx-auto flex h-16 w-full max-w-6xl items-center gap-3 px-4 lg:px-6">
 			<a
-				href="/examples/landing"
+				href="{base}/examples/landing"
 				class="flex items-center gap-2 rounded-md font-heading text-lg font-bold outline-none [font-variation-settings:'GEOM'_50,'opsz'_32] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
 			>
 				<span

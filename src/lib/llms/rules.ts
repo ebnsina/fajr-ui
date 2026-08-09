@@ -7,7 +7,7 @@
  */
 
 /** Must match the registry host the CLI defaults to — see `cli/index.js`. */
-export const SITE = 'https://fajr-ui.dev';
+export const SITE = 'https://ebnsina.github.io/fajr-ui';
 
 /** The things an agent gets wrong if nobody tells it. Kept first, and short. */
 export const RULES = [

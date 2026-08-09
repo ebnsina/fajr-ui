@@ -2,6 +2,13 @@
 User-agent: *
 Disallow:
 
+Sitemap: https://ebnsina.github.io/fajr-ui/sitemap.xml
+
+# Note: the site is served from a project path, so this file lives at
+# /fajr-ui/robots.txt. Crawlers only read the one at the origin root, which
+# belongs to the user site — this copy documents the intent and is where the
+# rules move to if the site ever gets its own domain.
+
 # Plain-text documentation for language models, per the llms.txt convention.
 # /llms.txt is an index; /llms-full.txt has every component inline; each
 # component is also at /docs/components/<slug>.md. See /docs/ai.

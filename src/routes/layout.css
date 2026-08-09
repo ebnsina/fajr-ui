@@ -1,5 +1,26 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
-/* Design tokens, fonts and base layer. */
+/* Design tokens and base layer. */
 @import '../lib/styles/theme.css';
+
+/*
+ * The faces themselves, kept with the site rather than with the tokens.
+ *
+ * The paths are relative so the bundler resolves them: it fingerprints each
+ * file and rewrites the URL against whatever base the site is served from,
+ * which an absolute `/fonts/…` could not do once the site moved off the root.
+ */
+@font-face {
+	font-family: 'Fajr Display';
+	src: url('../lib/assets/fonts/fajr-display.woff2') format('woff2');
+	font-weight: 300 700;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Fajr Mono';
+	src: url('../lib/assets/fonts/fajr-mono.woff2') format('woff2');
+	font-weight: 400;
+	font-display: swap;
+}
