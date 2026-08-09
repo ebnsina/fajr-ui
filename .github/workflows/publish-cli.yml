@@ -1,0 +1,58 @@
+name: Publish CLI
+
+# Tagged releases only, plus a manual button for a re-run. The tag is what
+# names the release; `cli-` prefixes it because the CLI's version is its own
+# and does not track the site's.
+on:
+  push:
+    tags: ['cli-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  # Lets the job mint the OIDC token npm exchanges for publish rights. Without
+  # it there is no credential at all — this is the whole mechanism.
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+          # Deliberately uncached: a release should resolve dependencies from
+          # the lockfile, not from whatever a previous run happened to leave.
+          cache: ''
+
+      # setup-node pins an npm that may predate trusted publishing. Publishing
+      # would then fall back to looking for a token, find none, and fail with an
+      # authentication error that says nothing about the real cause.
+      - run: npm install -g npm@latest
+
+      - run: pnpm install --frozen-lockfile
+
+      # The published tarball is the artefact, so the test that checks what npm
+      # was told to ship matters more here than anywhere else.
+      - run: npx vitest run --project cli
+
+      # A tag that disagrees with the manifest publishes a version nobody asked
+      # for, under a name that now means something else. Cheaper to stop here.
+      - name: Check the tag matches the manifest
+        if: github.event_name == 'push'
+        run: |
+          tagged="${GITHUB_REF_NAME#cli-v}"
+          declared=$(node -p "require('./cli/package.json').version")
+          if [ "$tagged" != "$declared" ]; then
+            echo "::error::tag cli-v$tagged does not match cli/package.json version $declared"
+            exit 1
+          fi
+          echo "publishing $declared"
+
+      - run: npm publish
+        working-directory: cli
