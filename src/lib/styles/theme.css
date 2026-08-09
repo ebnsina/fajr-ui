@@ -1,0 +1,446 @@
+/**
+ * Fajr UI design tokens.
+ *
+ * Every token is a literal value — no reference to Tailwind's own palette — so
+ * this file can be copied into a project on its own, and a whole theme can be
+ * swapped by replacing the two blocks below. `@theme inline` is what makes the
+ * utilities read `var(--token)` at runtime rather than baking the value in, so
+ * `.dark` overrides take effect.
+ */
+
+@font-face {
+	font-family: 'Fajr Display';
+	src: url('/fonts/fajr-display.woff2') format('woff2');
+	font-weight: 300 700;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Fajr Mono';
+	src: url('/fonts/fajr-mono.woff2') format('woff2');
+	font-weight: 400;
+	font-display: swap;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@custom-variant fixed (&:is(.layout-fixed *));
+
+@theme inline {
+	--breakpoint-3xl: 1600px;
+	--breakpoint-4xl: 2000px;
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--font-sans: var(--font-sans);
+	--font-heading: var(--font-sans);
+	--font-mono: var(--font-mono);
+	--color-sidebar-ring: var(--sidebar-ring);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar: var(--sidebar);
+	--color-chart-5: var(--chart-5);
+	--color-chart-4: var(--chart-4);
+	--color-chart-3: var(--chart-3);
+	--color-chart-2: var(--chart-2);
+	--color-chart-1: var(--chart-1);
+	--color-ring: var(--ring);
+	--color-input: var(--input);
+	--color-border: var(--border);
+	--color-destructive: var(--destructive);
+	--color-destructive-surface: var(--destructive-surface);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-info: var(--info);
+	--color-info-foreground: var(--info-foreground);
+	--color-success: var(--success);
+	--color-success-foreground: var(--success-foreground);
+	--color-warning: var(--warning);
+	--color-warning-foreground: var(--warning-foreground);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-accent: var(--accent);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-muted: var(--muted);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-secondary: var(--secondary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-primary: var(--primary);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-popover: var(--popover);
+	--color-card-foreground: var(--card-foreground);
+	--color-card: var(--card);
+	--color-code: var(--code);
+	--color-code-foreground: var(--code-foreground);
+	--color-code-highlight: var(--code-highlight);
+	--color-code-keyword: var(--code-keyword);
+	--color-code-string: var(--code-string);
+	--color-code-number: var(--code-number);
+	--color-code-function: var(--code-function);
+	--color-code-tag: var(--code-tag);
+	--color-code-attr: var(--code-attr);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--animate-skeleton: skeleton 2s -1s infinite linear;
+	--animate-caret-blink: 1s ease-out infinite caret-blink;
+	--tw-shadow-color: #000;
+
+	/*
+	 * Motion curves. These deliberately override Tailwind's `ease-out` and
+	 * `ease-in-out`: the built-in curves are too gentle to read as intentional.
+	 * `ease-in` is never used for UI — it withholds movement at the exact moment
+	 * the user is watching, so it feels slower than ease-out at equal duration.
+	 */
+	--ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+	--ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+	--ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+	/* Durations, kept under 300ms for anything the user triggers directly. */
+	--duration-press: 160ms;
+	--duration-popover: 180ms;
+	--duration-drawer: 280ms;
+
+	--animate-progress-indeterminate: progress-indeterminate 1.4s var(--ease-in-out) infinite;
+	--animate-fade-in: fade-in 150ms var(--ease-out);
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+	}
+
+	@keyframes progress-indeterminate {
+		0% {
+			transform: translateX(-100%);
+		}
+		100% {
+			transform: translateX(350%);
+		}
+	}
+	@keyframes skeleton {
+		to {
+			background-position: -200% 0;
+		}
+	}
+	@keyframes caret-blink {
+		0%,
+		70%,
+		to {
+			opacity: 1;
+		}
+		20%,
+		50% {
+			opacity: 0;
+		}
+	}
+}
+
+:root {
+	/*
+	 * Declared so the browser's own surfaces follow the theme: native scrollbars,
+	 * form controls, and the `canvas`/`canvastext` system colours. The chart
+	 * tooltip is drawn in those system colours, so without this it stayed white
+	 * in dark mode — the theme class alone does not reach them.
+	 */
+	color-scheme: light;
+	--radius: 0.625rem;
+	/*
+	 * Fajr Display carries no Arabic, so Arabic falls through to the next family
+	 * that does. Naming them explicitly makes that choice ours rather than the
+	 * operating system's — otherwise the same page is Geeza Pro on a Mac, Tahoma
+	 * on Windows and whatever Fontconfig decides on Linux. Latin still resolves
+	 * to Fajr Display, because fallback is per glyph, not per string.
+	 */
+	--font-sans:
+		'Fajr Display', ui-sans-serif, system-ui, -apple-system, 'Noto Sans Arabic',
+		'Noto Naskh Arabic', 'Geeza Pro', 'Segoe UI', Tahoma, Roboto, sans-serif;
+	--font-mono: 'Fajr Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	--background: #fff;
+	--foreground: oklch(26.9% 0 0);
+	--card: #fff;
+	--card-foreground: oklch(26.9% 0 0);
+	--popover: #fff;
+	--popover-foreground: oklch(26.9% 0 0);
+	--primary: oklch(26.9% 0 0);
+	--primary-foreground: oklch(98.5% 0 0);
+	--secondary: color-mix(in oklab, #000 4%, transparent);
+	--secondary-foreground: oklch(26.9% 0 0);
+	--muted: color-mix(in oklab, #000 4%, transparent);
+	--muted-foreground: color-mix(in srgb, oklch(55.6% 0 0) 90%, #000);
+	--accent: color-mix(in oklab, #000 4%, transparent);
+	--accent-foreground: oklch(26.9% 0 0);
+	--destructive: oklch(63.7% 0.237 25.331);
+	/*
+	 * A step darker than `--destructive`, and only for surfaces that carry white
+	 * text. White on red-500 measures 3.81:1, under the 4.5 floor — and a
+	 * destructive button is the last place to be guessing at a label. The tints
+	 * and borders keep using `--destructive`, where the lighter red is correct.
+	 */
+	--destructive-surface: oklch(57.7% 0.245 27.325);
+	--destructive-foreground: oklch(50.5% 0.213 27.518);
+	--info: oklch(62.3% 0.214 259.815);
+	--info-foreground: oklch(48.8% 0.243 264.376);
+	--success: oklch(69.6% 0.17 162.48);
+	--success-foreground: oklch(50.8% 0.118 165.612);
+	--warning: oklch(76.9% 0.188 70.08);
+	--warning-foreground: oklch(55.5% 0.163 48.998);
+	--border: color-mix(in oklab, #000 8%, transparent);
+	--input: color-mix(in oklab, #000 10%, transparent);
+	--ring: oklch(70.8% 0 0);
+	/*
+	 * The categorical series palette.
+	 *
+	 * Series 1 and 2 are one colour at two lightnesses — under black, two greys;
+	 * under an accent, the accent and a light tint of it. Colour only arrives at
+	 * series 3. Most charts show one or two series, and those should look like
+	 * part of the page rather than like a pie chart; a palette that opens with a
+	 * saturated blue beside a flat grey is the thing that reads as generated.
+	 *
+	 * Series 3-5 are muted — chroma 0.10 rather than the 0.17 this started at —
+	 * and sit 90°, 180° and 270° from the accent's hue. Keeping them a quarter
+	 * turn clear of the base matters: an earlier arrangement put one only 60°
+	 * away, so under the blue accent series 5 came out teal beside a blue series
+	 * 1. Ninety degrees is the spacing that maximises the smallest gap between
+	 * any two of the five.
+	 *
+	 * Every slot clears the 3:1 that WCAG 1.4.11 asks of anything non-text, on
+	 * the card it is drawn on, in both themes and under every accent. Lightness
+	 * is fixed per slot rather than per palette, so that holds whichever hue the
+	 * accent supplies — in OKLCH equal L is equal perceived lightness.
+	 */
+	--chart-hue: 100;
+	--chart-l-1: 44%;
+	--chart-l-2: 60%;
+	--chart-l: 52%;
+	--chart-c: 0.1;
+	/*
+	 * Chroma for the leading pair. Zero here, so black gets two greys; each
+	 * accent sets it to `--chart-c` so the pair takes the accent's colour. Series
+	 * 2 carries a fraction of it, which is what makes it read as a tint rather
+	 * than as a second colour.
+	 */
+	--chart-c-1: 0;
+	--chart-1: oklch(var(--chart-l-1) var(--chart-c-1) var(--chart-hue));
+	--chart-2: oklch(var(--chart-l-2) calc(var(--chart-c-1) * 0.4) var(--chart-hue));
+	--chart-3: oklch(var(--chart-l) var(--chart-c) calc(var(--chart-hue) + 90));
+	--chart-4: oklch(var(--chart-l) var(--chart-c) calc(var(--chart-hue) + 180));
+	--chart-5: oklch(var(--chart-l) var(--chart-c) calc(var(--chart-hue) + 270));
+	--sidebar: oklch(98.5% 0 0);
+	--sidebar-foreground: color-mix(in srgb, oklch(26.9% 0 0) 64%, var(--sidebar));
+	--sidebar-primary: oklch(26.9% 0 0);
+	--sidebar-primary-foreground: oklch(98.5% 0 0);
+	--sidebar-accent: color-mix(in oklab, #000 4%, transparent);
+	--sidebar-accent-foreground: oklch(26.9% 0 0);
+	--sidebar-border: color-mix(in oklab, #000 6%, transparent);
+	--sidebar-ring: oklch(70.8% 0 0);
+	--code: #fff;
+	--code-foreground: var(--foreground);
+	--code-highlight: color-mix(in oklab, #000 4%, transparent);
+	--code-keyword: oklch(49.1% 0.27 292.581);
+	--code-string: oklch(50.8% 0.118 165.612);
+	--code-number: oklch(55.3% 0.195 38.402);
+	--code-function: oklch(48.8% 0.243 264.376);
+	--code-tag: oklch(51.4% 0.222 16.935);
+	--code-attr: oklch(55.5% 0.163 48.998);
+}
+
+.dark {
+	color-scheme: dark;
+	--background: color-mix(in srgb, oklch(14.5% 0 0) 96%, #fff);
+	--foreground: oklch(97% 0 0);
+	--card: color-mix(in srgb, var(--background) 98%, #fff);
+	--card-foreground: oklch(97% 0 0);
+	--popover: color-mix(in srgb, var(--background) 96%, #fff);
+	--popover-foreground: oklch(97% 0 0);
+	--primary: oklch(97% 0 0);
+	--primary-foreground: oklch(26.9% 0 0);
+	--secondary: color-mix(in oklab, #fff 4%, transparent);
+	--secondary-foreground: oklch(97% 0 0);
+	--muted: color-mix(in oklab, #fff 4%, transparent);
+	/* Mixed further toward white than the light theme's counterpart: at 90% it
+	   measured 4.33:1 on `muted`, under the 4.5 floor for body text. */
+	--muted-foreground: color-mix(in srgb, oklch(55.6% 0 0) 74%, #fff);
+	--accent: color-mix(in oklab, #fff 4%, transparent);
+	--accent-foreground: oklch(97% 0 0);
+	--destructive: color-mix(in srgb, oklch(63.7% 0.237 25.331) 90%, #fff);
+	--destructive-surface: oklch(57.7% 0.245 27.325);
+	--destructive-foreground: oklch(70.4% 0.191 22.216);
+	--info: oklch(62.3% 0.214 259.815);
+	--info-foreground: oklch(70.7% 0.165 254.624);
+	--success: oklch(69.6% 0.17 162.48);
+	--success-foreground: oklch(76.5% 0.177 163.223);
+	--warning: oklch(76.9% 0.188 70.08);
+	--warning-foreground: oklch(82.8% 0.189 84.429);
+	--border: color-mix(in oklab, #fff 6%, transparent);
+	--input: color-mix(in oklab, #fff 8%, transparent);
+	--ring: oklch(55.6% 0 0);
+	/*
+	 * Only the lightnesses change for the dark surface — the hues, the chroma and
+	 * the series definitions above are shared, so there is one palette rule rather
+	 * than two that can drift apart. The leading pair inverts: on a dark ground
+	 * the brighter of the two reads as the primary series.
+	 */
+	--chart-l-1: 78%;
+	--chart-l-2: 58%;
+	--chart-l: 72%;
+	--sidebar: color-mix(in srgb, oklch(14.5% 0 0) 97%, #fff);
+	--sidebar-foreground: color-mix(in srgb, oklch(97% 0 0) 64%, var(--sidebar));
+	--sidebar-primary: oklch(97% 0 0);
+	--sidebar-primary-foreground: oklch(26.9% 0 0);
+	--sidebar-accent: color-mix(in oklab, #fff 4%, transparent);
+	--sidebar-accent-foreground: oklch(97% 0 0);
+	--sidebar-border: color-mix(in oklab, #fff 5%, transparent);
+	--sidebar-ring: oklch(70.8% 0 0);
+	--code: color-mix(in srgb, var(--background) 98%, #fff);
+	--code-foreground: var(--foreground);
+	--code-highlight: color-mix(in oklab, #fff 4%, transparent);
+	--code-keyword: oklch(81.1% 0.111 293.571);
+	--code-string: oklch(84.5% 0.143 164.978);
+	--code-number: oklch(83.7% 0.128 66.29);
+	--code-function: oklch(80.9% 0.105 251.813);
+	--code-tag: oklch(81% 0.117 11.638);
+	--code-attr: oklch(87.9% 0.169 91.605);
+}
+
+/*
+ * Accents.
+ *
+ * A theme changes only what carries the brand — the primary surface, its text
+ * and the focus ring. Everything else stays neutral, so switching accent cannot
+ * disturb contrast elsewhere. `black` needs no block: it is what :root already
+ * declares, so the absence of an accent is a valid state rather than a special
+ * case.
+ *
+ * Three accents. A longer list was tried — burgundy, violet-red,
+ * rose, olive — and it bought variety at the cost of every one of them needing
+ * its own contrast argument. Two that work everywhere are worth more than six
+ * that each need a footnote.
+ *
+ * Each was measured twice: its label against its own surface (4.5:1) and the
+ * surface against the page (3:1, so the control has a visible edge). In light
+ * mode both carry white text; in dark mode both are lightened and carry
+ * near-black. No accent needs a special case.
+ *
+ * The orange started at #ff3e00, which carries white text at only 3.53:1 and so
+ * had to take dark text while every other accent took white. Deepened one step
+ * to #d63200 it clears 4.87:1, and the exception goes away. The hue is unchanged
+ * at 34°, so it reads the same.
+ */
+
+[data-accent='orange'] {
+	--chart-hue: 34;
+	--chart-c-1: var(--chart-c);
+	--primary: #d63200;
+	--primary-foreground: #fff;
+	--ring: #d63200;
+	--sidebar-primary: #d63200;
+	--sidebar-primary-foreground: #fff;
+	--sidebar-ring: #d63200;
+}
+
+.dark[data-accent='orange'] {
+	--primary: #ff5c26;
+	--primary-foreground: oklch(16% 0 0);
+	--ring: #ff5c26;
+	--sidebar-primary: #ff5c26;
+	--sidebar-primary-foreground: oklch(16% 0 0);
+	--sidebar-ring: #ff5c26;
+}
+
+[data-accent='blue'] {
+	--chart-hue: 238;
+	--chart-c-1: var(--chart-c);
+	--primary: #00679b;
+	--primary-foreground: #fff;
+	--ring: #00679b;
+	--sidebar-primary: #00679b;
+	--sidebar-primary-foreground: #fff;
+	--sidebar-ring: #00679b;
+}
+
+.dark[data-accent='blue'] {
+	--primary: #38a8e0;
+	--primary-foreground: oklch(16% 0 0);
+	--ring: #38a8e0;
+	--sidebar-primary: #38a8e0;
+	--sidebar-primary-foreground: oklch(16% 0 0);
+	--sidebar-ring: #38a8e0;
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+
+	/*
+	 * Code is read left-to-right whatever the surrounding document does. In a
+	 * right-to-left page an unmarked block starts its scroll at the right edge
+	 * and runs its long lines off to the left, and inline identifiers get their
+	 * punctuation reordered — `foo();` renders as `;()foo`.
+	 *
+	 * `isolate` rather than plain `direction` so an inline snippet does not drag
+	 * the bidi algorithm across the Arabic sentence it sits inside.
+	 */
+	code,
+	pre,
+	kbd,
+	samp {
+		direction: ltr;
+		unicode-bidi: isolate;
+	}
+
+	/*
+	 * Documentation is mixed-language: English prose, Arabic examples, and the
+	 * page direction may be either. `plaintext` lets each block take its own
+	 * direction from its first strong character, so an English paragraph reads
+	 * left-to-right even on a right-to-left page and an Arabic one reads
+	 * right-to-left on an English page.
+	 *
+	 * Without it the bidi algorithm applies the container's direction to every
+	 * block, and trailing punctuation migrates to the wrong end — a full stop
+	 * appearing before the sentence it closes.
+	 */
+	.prose :is(p, li, blockquote, h1, h2, h3, h4) {
+		unicode-bidi: plaintext;
+	}
+
+	/*
+	 * Suppress the grey flash WebKit and Blink paint over a tapped control. Every
+	 * interactive component here already draws its own pressed state, so the
+	 * platform's rectangle only ever lands on top of it and reads as a glitch.
+	 * Focus and active styles are untouched.
+	 */
+	html {
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	/*
+	 * Anchor navigation glides instead of teleporting, and stops clear of the
+	 * sticky header rather than under it. Honouring the user's motion preference
+	 * is not optional here: a full-page scroll is exactly the kind of movement
+	 * that triggers motion sickness.
+	 */
+	html {
+		scroll-padding-top: calc(var(--header-height, 4rem) + 1.5rem);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
+	}
+
+	code,
+	kbd,
+	samp,
+	pre {
+		font-family: var(--font-mono);
+	}
+}
+
+@utility container {
+	@apply mx-auto max-w-[1416px] px-4 lg:px-6;
+}

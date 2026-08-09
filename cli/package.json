@@ -1,0 +1,35 @@
+{
+	"name": "fajr-ui",
+	"version": "1.0.0",
+	"type": "module",
+	"description": "Copy Fajr UI components into your project and keep them up to date.",
+	"keywords": [
+		"svelte",
+		"components",
+		"ui",
+		"accessible",
+		"tailwind"
+	],
+	"license": "MIT",
+	"author": "Fajr Labs",
+	"homepage": "https://fajr-ui.dev",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ebnsina/fajr-ui.git",
+		"directory": "cli"
+	},
+	"bugs": "https://github.com/ebnsina/fajr-ui/issues",
+	"bin": {
+		"fajr-ui": "./index.js"
+	},
+	"files": [
+		"index.js",
+		"lib.js"
+	],
+	"engines": {
+		"node": ">=20"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
+}

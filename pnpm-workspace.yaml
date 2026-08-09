@@ -1,0 +1,7 @@
+allowBuilds:
+  '@hugeicons/svelte': set this to true or false
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@tanstack/charts@0.7.2'
+  - '@tanstack/svelte-charts@0.7.2'
+  - '@tanstack/charts-scales@0.7.2'

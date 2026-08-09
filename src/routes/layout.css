@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+/* Design tokens, fonts and base layer. */
+@import '../lib/styles/theme.css';

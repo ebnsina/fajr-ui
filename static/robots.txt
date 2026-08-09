@@ -1,0 +1,7 @@
+# allow crawling everything by default
+User-agent: *
+Disallow:
+
+# Plain-text documentation for language models, per the llms.txt convention.
+# /llms.txt is an index; /llms-full.txt has every component inline; each
+# component is also at /docs/components/<slug>.md. See /docs/ai.

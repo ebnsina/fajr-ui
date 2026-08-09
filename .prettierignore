@@ -1,0 +1,13 @@
+# Package Managers
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lock
+bun.lockb
+
+# Miscellaneous
+/static/
+
+# Vendored agent skills — someone else's files, and their templates contain
+# deliberate placeholder syntax that Prettier cannot parse.
+/.agents/
