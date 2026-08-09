@@ -1,5 +1,8 @@
 allowBuilds:
-  '@hugeicons/svelte': set this to true or false
+  # Its postinstall only prints a thank-you message and a link — nothing the
+  # package needs in order to work. Left undecided, pnpm refuses to install at
+  # all on a clean checkout, which is what broke the first CI run.
+  '@hugeicons/svelte': false
   esbuild: true
 minimumReleaseAgeExclude:
   - '@tanstack/charts@0.7.2'
