@@ -19,6 +19,18 @@ export function hash(content) {
 	return createHash('sha256').update(content).digest('hex').slice(0, 16);
 }
 
+/**
+ * How long something took, in the coarsest unit that still says something.
+ *
+ * Milliseconds below a second, because that is the range where the difference
+ * between 40ms and 400ms is the interesting part; one decimal of a second
+ * above it, because nobody reads the third digit of `12480ms`.
+ */
+export function elapsed(since, now = Date.now()) {
+	const ms = Math.max(0, now - since);
+	return ms < 1000 ? `${Math.round(ms)}ms` : `${(ms / 1000).toFixed(1)}s`;
+}
+
 /** Where each kind of file lands, from the project's `fajr-ui.json`. */
 export function rootsOf(cwd, config) {
 	return {

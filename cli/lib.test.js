@@ -2,7 +2,16 @@ import { describe, expect, it } from 'vitest';
 import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, sep } from 'node:path';
-import { addCommand, hash, keyOf, packageManager, rootsOf, statusOf, unifiedDiff } from './lib.js';
+import {
+	addCommand,
+	elapsed,
+	hash,
+	keyOf,
+	packageManager,
+	rootsOf,
+	statusOf,
+	unifiedDiff
+} from './lib.js';
 
 const plain = { add: (s) => s, del: (s) => s, ctx: (s) => s, head: (s) => s };
 const scratch = () => mkdtempSync(join(tmpdir(), 'fajr-cli-'));
@@ -16,6 +25,22 @@ describe('hash', () => {
 		// The whole edit-detection scheme rests on this. A hash that ignored
 		// whitespace would report a reformatted file as untouched and overwrite it.
 		expect(hash('const a = 1;')).not.toBe(hash('const a = 1; '));
+	});
+});
+
+describe('elapsed', () => {
+	it('reports milliseconds below a second', () => {
+		expect(elapsed(0, 420)).toBe('420ms');
+	});
+
+	it('reports one decimal of a second above it', () => {
+		expect(elapsed(0, 12_480)).toBe('12.5s');
+	});
+
+	it('never reports a negative duration', () => {
+		// A clock that steps backwards mid-command should read as instant, not as
+		// a command that finished before it started.
+		expect(elapsed(500, 100)).toBe('0ms');
 	});
 });
 

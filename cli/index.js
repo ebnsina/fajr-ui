@@ -5,7 +5,16 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { createInterface } from 'node:readline/promises';
 import { stdin, stdout } from 'node:process';
 import { fileURLToPath } from 'node:url';
-import { addCommand, hash, keyOf, packageManager, rootsOf, statusOf, unifiedDiff } from './lib.js';
+import {
+	addCommand,
+	elapsed,
+	hash,
+	keyOf,
+	packageManager,
+	rootsOf,
+	statusOf,
+	unifiedDiff
+} from './lib.js';
 
 const DEFAULT_REGISTRY = process.env.FAJR_UI_REGISTRY ?? 'https://ebnsina.github.io/fajr-ui/r';
 const CONFIG_FILE = 'fajr-ui.json';
@@ -29,7 +38,70 @@ const red = colour(31);
 const yellow = colour(33);
 const cyan = colour(36);
 
+/*
+ * A spinner, and the conditions under which there should not be one.
+ *
+ * Every command here spends its time on the network — resolving a component's
+ * dependency graph is one request per item — and until now that time was spent
+ * in silence, which reads as a hang. The animation is a terminal affordance
+ * though: written to a pipe it is thousands of carriage returns, and in CI it
+ * is thousands of log lines. Both fall back to a single static line, so the
+ * transcript still says what was happening without redrawing it.
+ *
+ * Frames are erased rather than left behind. What the command has to say is
+ * said by the summary it prints afterwards.
+ */
+const FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
+const ANIMATE = Boolean(stdout.isTTY) && !process.env.CI && !process.env.NO_COLOR;
+
+// The one in flight, so an error can wipe it before printing over the top.
+let spinning = null;
+
+function spinner(text) {
+	if (!ANIMATE) {
+		console.log(`  ${text}…`);
+		return { update() {}, stop() {} };
+	}
+
+	let label = text;
+	let frame = 0;
+
+	const draw = () => {
+		// Carriage return and erase-line: no scrollback for a transient state.
+		stdout.write(`\r[2K  ${cyan(FRAMES[frame])} ${label}`);
+		frame = (frame + 1) % FRAMES.length;
+	};
+
+	stdout.write('[?25l');
+	draw();
+	const timer = setInterval(draw, 80);
+	// Unreferenced so a forgotten spinner cannot be the reason the process stays
+	// alive — the worst case is a stray line, not a CLI that never exits.
+	timer.unref();
+
+	const handle = {
+		update(next) {
+			label = next;
+		},
+		stop() {
+			if (spinning !== handle) return;
+			clearInterval(timer);
+			stdout.write('\r[2K[?25h');
+			spinning = null;
+		}
+	};
+	spinning = handle;
+	return handle;
+}
+
+// Ctrl-C mid-spin would otherwise leave the cursor hidden in the user's shell.
+process.on('SIGINT', () => {
+	spinning?.stop();
+	process.exit(130);
+});
+
 function fail(message) {
+	spinning?.stop();
 	console.error(`${red('error')} ${message}`);
 	process.exit(1);
 }
@@ -68,12 +140,13 @@ async function fetchItem(registry, name) {
  * composes with it. Visited names are tracked because the graph has diamonds —
  * half the library imports Button.
  */
-async function collect(registry, names, seen = new Map()) {
+async function collect(registry, names, seen = new Map(), onFetch) {
 	for (const name of names) {
 		if (seen.has(name)) continue;
+		onFetch?.(name, seen.size);
 		const item = await fetchItem(registry, name);
 		seen.set(name, item);
-		await collect(registry, item.registryDependencies ?? [], seen);
+		await collect(registry, item.registryDependencies ?? [], seen, onFetch);
 	}
 	return seen;
 }
@@ -186,19 +259,31 @@ async function add(cwd, args) {
 	const registry = config.registry ?? DEFAULT_REGISTRY;
 	const lock = await readLock(cwd);
 
-	const items = await collect(registry, names);
+	const started = Date.now();
+	const spin = spinner(`Resolving ${names.join(', ')}`);
+
+	// The dependency graph is walked one request at a time, so the count is what
+	// says the CLI is making progress rather than stuck on a slow response.
+	const items = await collect(registry, names, new Map(), (name, done) =>
+		spin.update(`Resolving ${bold(name)}${done ? dim(` · ${done} fetched`) : ''}`)
+	);
+
 	const requested = new Set(names);
 	const packages = new Set();
 	const blocked = [];
+	const planned = [];
 	let totalWritten = 0;
 
 	for (const item of items.values()) {
 		for (const dependency of item.dependencies ?? []) packages.add(dependency);
+		spin.update(`${dryRun ? 'Checking' : 'Writing'} ${bold(item.name)}`);
 		const files = await inspect(cwd, config, item, lock);
 
 		if (dryRun) {
+			// Held rather than printed: a line written now would land in the middle
+			// of the spinner's own line and be erased by the next frame.
 			const counts = summarise(files);
-			console.log(
+			planned.push(
 				`  ${bold(item.name.padEnd(18))} ${dim(
 					`${counts.missing} new, ${counts.outdated} to update, ${counts.modified} edited locally`
 				)}`
@@ -212,7 +297,10 @@ async function add(cwd, args) {
 		recordLock(lock, item, files, written);
 	}
 
+	spin.stop();
+
 	if (dryRun) {
+		for (const line of planned) console.log(line);
 		console.log();
 		console.log(`  ${dim('Nothing written — this was a dry run.')}`);
 		console.log();
@@ -223,7 +311,9 @@ async function add(cwd, args) {
 
 	const pulled = [...items.keys()].filter((name) => !requested.has(name));
 	console.log();
-	console.log(`${green('added')} ${totalWritten} file${totalWritten === 1 ? '' : 's'}`);
+	console.log(
+		`${green('added')} ${totalWritten} file${totalWritten === 1 ? '' : 's'} ${dim(`from ${items.size} component${items.size === 1 ? '' : 's'} in ${elapsed(started)}`)}`
+	);
 	if (pulled.length) {
 		console.log(`  ${dim('Also added, because the above compose them:')} ${pulled.join(', ')}`);
 	}
@@ -260,10 +350,14 @@ async function outdated(cwd, args) {
 		return;
 	}
 
-	console.log();
+	// Every line is built before any is printed: one request per component, and
+	// a half-drawn table interleaved with the spinner is worse than a wait.
+	const spin = spinner('Checking components');
+	const lines = [];
 	let stale = 0;
 	let edited = 0;
-	for (const name of installed) {
+	for (const [index, name] of installed.entries()) {
+		spin.update(`Checking ${bold(name)} ${dim(`· ${index + 1} of ${installed.length}`)}`);
 		const item = await fetchItem(registry, name);
 		const counts = summarise(await inspect(cwd, config, item, lock));
 		const parts = [];
@@ -272,10 +366,14 @@ async function outdated(cwd, args) {
 		if (counts.modified) parts.push(dim(`${counts.modified} edited locally`));
 		stale += counts.outdated + counts.missing;
 		edited += counts.modified;
-		console.log(
+		lines.push(
 			`  ${bold(name.padEnd(18))} ${parts.length ? parts.join(dim(' · ')) : green('up to date')}`
 		);
 	}
+	spin.stop();
+
+	console.log();
+	for (const line of lines) console.log(line);
 	console.log();
 	if (stale) console.log(`  ${dim('Update with')} ${cyan('npx fajr-ui update')}${dim('.')}`);
 	if (edited) console.log(`  ${dim('Your edits are never replaced without --force.')}`);
@@ -289,8 +387,10 @@ async function diff(cwd, args) {
 	const names = args.filter((arg) => !arg.startsWith('-'));
 	const installed = names.length ? names : Object.keys(lock.items ?? {});
 
-	let shown = 0;
-	for (const name of installed) {
+	const spin = spinner('Comparing against the registry');
+	const diffs = [];
+	for (const [index, name] of installed.entries()) {
+		spin.update(`Comparing ${bold(name)} ${dim(`· ${index + 1} of ${installed.length}`)}`);
 		const item = await fetchItem(registry, name);
 		for (const file of await inspect(cwd, config, item, lock)) {
 			if (file.status === 'current' || file.status === 'missing') continue;
@@ -301,10 +401,15 @@ async function diff(cwd, args) {
 				head: bold
 			});
 			if (!text) continue;
-			console.log();
-			console.log(text);
-			shown++;
+			diffs.push(text);
 		}
+	}
+	spin.stop();
+
+	const shown = diffs.length;
+	for (const text of diffs) {
+		console.log();
+		console.log(text);
 	}
 	console.log();
 	console.log(
@@ -327,9 +432,14 @@ async function update(cwd, args) {
 		return;
 	}
 
+	const started = Date.now();
+	const spin = spinner(dryRun ? 'Checking for updates' : 'Updating components');
 	const updated = [];
 	const blocked = [];
-	for (const name of installed) {
+	for (const [index, name] of installed.entries()) {
+		spin.update(
+			`${dryRun ? 'Checking' : 'Updating'} ${bold(name)} ${dim(`· ${index + 1} of ${installed.length}`)}`
+		);
 		const item = await fetchItem(registry, name);
 		const files = await inspect(cwd, config, item, lock);
 
@@ -351,10 +461,13 @@ async function update(cwd, args) {
 	}
 
 	if (!dryRun) await writeLock(cwd, lock);
+	spin.stop();
 
 	console.log();
 	if (updated.length) {
-		console.log(`${green(dryRun ? 'would update' : 'updated')} ${updated.length} file(s)`);
+		console.log(
+			`${green(dryRun ? 'would update' : 'updated')} ${updated.length} file(s) ${dim(`in ${elapsed(started)}`)}`
+		);
 		for (const path of updated) console.log(`  ${dim(path)}`);
 	} else {
 		console.log(`  ${green('Everything is already up to date.')}`);
@@ -380,10 +493,12 @@ async function list(cwd, args) {
 			? ((await readConfig(cwd)).registry ?? DEFAULT_REGISTRY)
 			: DEFAULT_REGISTRY;
 
+	const spin = spinner('Reading the registry');
 	const response = await fetch(`${registry}/index.json`).catch(() => null);
 	if (!response?.ok) fail(`Could not read the registry at ${registry}.`);
 	const { items } = await response.json();
 	const lock = await readLock(cwd);
+	spin.stop();
 
 	console.log();
 	for (const item of items) {
@@ -421,12 +536,14 @@ async function skill(cwd, args) {
 	};
 
 	const written = [];
+	const spin = spinner(`Fetching the instructions from ${cyan(site)}`);
 
 	const skillPath = join(cwd, '.claude', 'skills', 'fajr-ui', 'SKILL.md');
 	await mkdir(dirname(skillPath), { recursive: true });
 	await writeFile(skillPath, await get('/skill.md'), 'utf8');
 	written.push('.claude/skills/fajr-ui/SKILL.md');
 
+	spin.update('Writing AGENTS.md');
 	const block = await get('/agents.md');
 	const agentsPath = join(cwd, 'AGENTS.md');
 	const existing = existsSync(agentsPath) ? await readFile(agentsPath, 'utf8') : '';
@@ -444,6 +561,7 @@ async function skill(cwd, args) {
 	}
 	await writeFile(agentsPath, next, 'utf8');
 	written.push(existing.includes(START) ? 'AGENTS.md (refreshed)' : 'AGENTS.md');
+	spin.stop();
 
 	console.log();
 	console.log(`${green('wrote')} ${written.length} file${written.length === 1 ? '' : 's'}`);
