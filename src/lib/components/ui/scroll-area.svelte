@@ -84,7 +84,7 @@
 			? `--scroll-start: ${startOffset}px; --scroll-end: ${endOffset}px`
 			: undefined}
 		class={cn(
-			'min-h-0 flex-1 rounded-[inherit] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background',
+			'min-h-0 flex-1 rounded-[inherit] outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
 			orientation === 'vertical' && 'overflow-x-hidden overflow-y-auto',
 			orientation === 'horizontal' && 'overflow-x-auto overflow-y-hidden',
 			orientation === 'both' && 'overflow-auto',

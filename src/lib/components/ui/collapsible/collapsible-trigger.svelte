@@ -27,7 +27,7 @@
 		if (!event.defaultPrevented) collapsible.toggle();
 	}}
 	class={cn(
-		'cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64',
+		'cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64',
 		className
 	)}
 	{...rest}

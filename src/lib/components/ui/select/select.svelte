@@ -133,7 +133,7 @@
 	onclick={() => (open = !open)}
 	onkeydown={ontriggerkeydown}
 	class={cn(
-		'flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border border-input bg-background px-[calc(--spacing(3)-1px)] text-base shadow-xs/5 ring-ring/24 transition-shadow outline-none not-dark:bg-clip-padding focus-visible:border-ring focus-visible:ring-[3px] disabled:opacity-64 aria-invalid:border-destructive/36 data-placeholder:text-muted-foreground sm:text-sm dark:bg-input/32 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:opacity-64',
+		'flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border border-input bg-background px-[calc(--spacing(3)-1px)] text-base shadow-xs/5 ring-ring ring-offset-background transition-shadow outline-none not-dark:bg-clip-padding focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-64 aria-invalid:border-destructive/36 data-placeholder:text-muted-foreground sm:text-sm dark:bg-input/32 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:opacity-64',
 		size === 'sm' && 'h-7.5 sm:h-6.5',
 		size === 'default' && 'h-8.5 sm:h-7.5',
 		size === 'lg' && 'h-9.5 sm:h-8.5',

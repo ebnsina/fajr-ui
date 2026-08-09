@@ -57,7 +57,7 @@
 		}}
 		onkeydown={handleKeydown}
 		class={cn(
-			'flex flex-1 cursor-pointer items-start justify-between gap-4 rounded-lg py-4 text-start text-base font-medium transition-colors outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64 sm:text-sm',
+			'flex flex-1 cursor-pointer items-start justify-between gap-4 rounded-lg py-4 text-start text-base font-medium transition-colors outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64 sm:text-sm',
 			className
 		)}
 		{...rest}
