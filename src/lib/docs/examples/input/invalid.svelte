@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Input aria-invalid="true" value="ibn.sina.bayt" />
+	<Input aria-invalid="true" aria-label="Contributor handle" value="ibn.sina.bayt" />
 </div>

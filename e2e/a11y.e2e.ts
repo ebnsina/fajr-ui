@@ -23,6 +23,14 @@ const BASE = 'http://localhost:4173/fajr-ui';
 
 const TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice'];
 
+/*
+ * The list is a sample, and it grew because the sample missed things. A sweep
+ * over all 70 routes in both themes found two failures none of the original
+ * twelve covered: an unlabelled input on its own docs page, and an event chip
+ * whose muted ink fell under the floor against its tinted ground. The pages
+ * added here are the ones those lived on — the rule being that anything a
+ * one-off sweep catches earns a permanent seat.
+ */
 const PAGES = [
 	'/',
 	'/docs',
@@ -34,8 +42,13 @@ const PAGES = [
 	'/docs/components/data-table',
 	'/docs/components/calendar',
 	'/docs/components/accordion',
+	'/docs/components/input',
+	'/docs/components/tabs',
+	'/docs/components/alert',
 	'/examples',
-	'/examples/dashboard/app'
+	'/examples/dashboard/app',
+	'/examples/calendar/app',
+	'/examples/landing/app'
 ];
 
 for (const path of PAGES) {

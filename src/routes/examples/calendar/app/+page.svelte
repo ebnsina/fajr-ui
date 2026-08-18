@@ -645,7 +645,14 @@
 												></span>
 												<span class="truncate font-medium">{event.title}</span>
 											</span>
-											<span class="w-full truncate ps-3 text-muted-foreground">
+											<!--
+												Full foreground, not muted. This chip is painted on a 12%
+												tint of its calendar's colour rather than on the page, and
+												`--muted-foreground` measured under 4.5:1 against that
+												ground in the light theme. The title above it carries the
+												weight, so the hierarchy survives without the lighter ink.
+											-->
+											<span class="w-full truncate ps-3 text-foreground">
 												{time(event.start ?? 0)}
 											</span>
 										</PopoverTrigger>

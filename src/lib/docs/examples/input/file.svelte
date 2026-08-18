@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Input type="file" />
+	<Input type="file" aria-label="Manuscript scan" />
 </div>
