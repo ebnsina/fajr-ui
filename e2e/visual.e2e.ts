@@ -35,14 +35,34 @@ const AUDIT = `() => {
 	// A token written in oklch() is *reported* as oklch(), whose numbers are
 	// lightness/chroma/hue. Forcing it back through an sRGB mix makes the browser
 	// serialise real channels.
+	//
+	// The number pattern has to allow a sign and an exponent, and the reason is
+	// this exact audit failing in CI while passing on every local run. Converting
+	// an oklab colour to sRGB lands slightly outside the gamut, and a channel
+	// comes back as \`5.96046e-8\` or \`-0.00012\` rather than as a plain decimal.
+	// A digits-and-dots pattern tears \`5.96046e-8\` into two numbers, everything
+	// after it shifts one place, and the alpha read is really a channel — so a
+	// 3%-opaque fill was taken for an opaque one. The border above it was then
+	// measured against white instead of against the page, which reported a
+	// perfectly visible line as invisible.
+	//
+	// Which serialisation arrives is also not guaranteed, so both are handled:
+	// \`color(srgb …)\` is 0–1 per channel, \`rgb()\` is 0–255.
+	const NUMBER = /-?\\d*\\.?\\d+(?:e[-+]?\\d+)?/gi;
 	const parse = (value) => {
 		if (!value || value === 'transparent' || value === 'none') return null;
 		probe.style.color = 'rgb(1, 2, 3)';
 		probe.style.color = 'color-mix(in srgb, ' + value + ' 100%, transparent)';
-		const n = getComputedStyle(probe).color.match(/[\\d.]+/g)?.map(Number);
+		const serialised = getComputedStyle(probe).color;
+		const n = serialised.match(NUMBER)?.map(Number);
 		if (!n || n.length < 3) return null;
 		const alpha = n.length > 3 ? n[3] : 1;
-		return alpha <= 0.001 ? null : [n[0] * 255, n[1] * 255, n[2] * 255, alpha];
+		if (alpha <= 0.001) return null;
+		const scale = serialised.startsWith('color(') ? 255 : 1;
+		// Out-of-gamut conversions overshoot either end; the luminance maths below
+		// is only defined on a real channel.
+		const clamp = (v) => Math.min(255, Math.max(0, v * scale));
+		return [clamp(n[0]), clamp(n[1]), clamp(n[2]), alpha];
 	};
 	const lum = ([r, g, b]) => {
 		const f = (v) => { v /= 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; };
