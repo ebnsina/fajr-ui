@@ -4,29 +4,30 @@
 	import type { Snippet } from 'svelte';
 
 	/*
-	 * The outline variants are a border and nothing else — no drop shadow, no
-	 * faked inner hairline. An outlined control is defined by its line; adding
-	 * elevation underneath makes it compete with the filled buttons it is meant
-	 * to sit quietly beside.
+	 * Every variant is flat. No gradient, no faked inner hairline, no drop
+	 * shadow — a button is a filled rectangle with a label on it.
 	 *
-	 * Secondary is flat for the same reason: no gradient and no highlight. It is the quiet option, and gloss is emphasis — a raised
-	 * treatment on the button that means "not this one"was arguing with itself.
-	 * Its states shift the fill toward `--color-foreground` rather than toward
-	 * black, so the press reads as deeper in both themes instead of only in one.
+	 * The filled variants carried a gloss for a while and it was removed in
+	 * stages: outline first, then secondary, then these. Each removal was asked
+	 * for on its own and the reasoning turned out to be the same one every time,
+	 * so it is worth writing down once. Gloss is emphasis, and a set where every
+	 * button is emphasised has no emphasis in it. What separates `default` from
+	 * `secondary` from `ghost` is which fill they carry, and a raised treatment
+	 * on all three only blurs that.
 	 *
-	 * The rest of the filled variants are a gradient, and it always runs base →
-	 * darker, never lighter → base.
+	 * The states are the fill, mixed:
 	 *
-	 * A gloss normally lightens the top, and the first version did. But the
-	 * lightest pixel of a filled button is where its label contrast is worst,
-	 * and lightening the top of `destructive` measured 4.48:1 against white —
-	 * under the floor, on hover 4.21. `--destructive-surface` exists precisely
-	 * because the lighter red failed this test once already.
+	 * `default` and `secondary` mix toward `--color-foreground`. That direction
+	 * is chosen for contrast, not for looks — the label is the inverse token, so
+	 * moving the fill toward the foreground can only hold or widen the gap
+	 * against it, in either theme. Mixing toward the background would close it
+	 * in both.
 	 *
-	 * Anchoring the top at the token and darkening downward reads the same — lit
-	 * from above — while making the brightest point exactly the colour whose
-	 * contrast was verified. No variant can break the floor by gradient alone,
-	 * including any accent added later.
+	 * `destructive` mixes toward black instead, and cannot be allowed to
+	 * lighten. Its label is white, its lightest pixel is where that contrast is
+	 * worst, and the lighter red measured 4.48:1 — under the floor — which is
+	 * why `--destructive-surface` exists at all. Darkening is the only safe
+	 * direction there, and it applies to any accent added later too.
 	 */
 	export const buttonVariants = cva(
 		"relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap border font-medium text-base outline-none transition-[box-shadow,transform] duration-(--duration-press) ease-out active:scale-[0.97] data-pressed:scale-[0.97] motion-reduce:active:scale-100 motion-reduce:data-pressed:scale-100 pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-64 data-loading:select-none data-loading:text-transparent sm:text-sm [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:-mx-0.5 [&_svg]:shrink-0",
@@ -77,9 +78,9 @@
 				},
 				variant: {
 					default:
-						'not-disabled:inset-shadow-[0_1px_--theme(--color-white/14%)] border-primary bg-linear-to-b from-primary to-[color-mix(in_oklab,var(--color-primary),#000_7%)] text-primary-foreground shadow-[0_1px_2px_--theme(--color-black/8%)] hover:to-[color-mix(in_oklab,var(--color-primary),#000_2%)] hover:shadow-[0_2px_5px_--theme(--color-black/10%)] *:data-[slot=button-loading-indicator]:text-primary-foreground [:active,[data-pressed]]:inset-shadow-[0_1px_--theme(--color-black/10%)] [:active,[data-pressed]]:to-[color-mix(in_oklab,var(--color-primary),#000_11%)] [:disabled,:active,[data-pressed]]:shadow-none',
+						'border-transparent bg-primary text-primary-foreground hover:bg-[color-mix(in_oklab,var(--color-primary),var(--color-foreground)_10%)] *:data-[slot=button-loading-indicator]:text-primary-foreground [:active,[data-pressed]]:bg-[color-mix(in_oklab,var(--color-primary),var(--color-foreground)_16%)]',
 					destructive:
-						'not-disabled:inset-shadow-[0_1px_--theme(--color-white/16%)] border-destructive-surface bg-linear-to-b from-destructive-surface to-[color-mix(in_oklab,var(--color-destructive-surface),#000_8%)] text-white shadow-[0_1px_2px_--theme(--color-black/8%)] hover:to-[color-mix(in_oklab,var(--color-destructive-surface),#000_2%)] hover:shadow-[0_2px_5px_--theme(--color-black/10%)] *:data-[slot=button-loading-indicator]:text-white [:active,[data-pressed]]:inset-shadow-[0_1px_--theme(--color-black/10%)] [:active,[data-pressed]]:to-[color-mix(in_oklab,var(--color-destructive-surface),#000_12%)] [:disabled,:active,[data-pressed]]:shadow-none',
+						'border-transparent bg-destructive-surface text-white hover:bg-[color-mix(in_oklab,var(--color-destructive-surface),#000_8%)] *:data-[slot=button-loading-indicator]:text-white [:active,[data-pressed]]:bg-[color-mix(in_oklab,var(--color-destructive-surface),#000_14%)]',
 					'destructive-outline':
 						'border-input bg-popover not-dark:bg-clip-padding text-destructive-foreground hover:border-destructive/32 hover:bg-destructive/4 data-pressed:border-destructive/32 data-pressed:bg-destructive/4 *:data-[slot=button-loading-indicator]:text-foreground dark:bg-input/32',
 					ghost:
