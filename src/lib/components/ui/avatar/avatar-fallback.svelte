@@ -24,7 +24,15 @@
 	<span
 		aria-hidden="true"
 		data-slot="avatar-fallback"
-		class={cn('flex size-full items-center justify-center rounded-full bg-muted', className)}
+		class={cn(
+			// `inherit`, not `full`. The root owns the shape — it is what takes a
+			// `rounded-lg` for a squared avatar — and a hardcoded circle here drew a
+			// round fill inside a square frame, leaving the root's own background
+			// showing in the four corners. The clip hid it for images but not for
+			// this, because this one paints.
+			'flex size-full items-center justify-center rounded-[inherit] bg-muted',
+			className
+		)}
 		{...rest}
 	>
 		{@render children?.()}

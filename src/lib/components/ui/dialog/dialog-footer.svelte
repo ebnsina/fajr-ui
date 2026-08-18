@@ -13,7 +13,7 @@
 <div
 	data-slot="dialog-footer"
 	class={cn(
-		'flex flex-col-reverse gap-2 border-t bg-muted/72 px-6 py-4 sm:flex-row sm:justify-end',
+		'flex flex-col-reverse gap-2 bg-muted/40 px-6 py-4 sm:flex-row sm:justify-end',
 		className
 	)}
 	{...rest}

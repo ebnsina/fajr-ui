@@ -86,7 +86,7 @@
 			data-active={active ? '' : undefined}
 			aria-hidden="true"
 			class={cn(
-				'relative flex size-10 items-center justify-center rounded-lg border border-input bg-background text-base shadow-xs/5 transition-[border-color,box-shadow] not-dark:bg-clip-padding before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] sm:size-9 sm:text-sm dark:bg-input/32 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+				'relative flex size-10 items-center justify-center rounded-lg border border-input bg-background text-base transition-[border-color,box-shadow] not-dark:bg-clip-padding sm:size-9 sm:text-sm dark:bg-input/32',
 				active && 'z-10 ring-2 ring-ring ring-offset-2 ring-offset-background',
 				isDisabled && 'opacity-64'
 			)}

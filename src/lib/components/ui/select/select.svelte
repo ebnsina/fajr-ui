@@ -9,6 +9,16 @@
 		value?: string;
 		open?: boolean;
 		placeholder?: string;
+		/**
+		 * The accessible name, when the select is not inside a `Field`.
+		 *
+		 * `role="combobox"` does not take its name from its contents the way a
+		 * button does — the text inside is announced as the *value*. So a select
+		 * with only a placeholder had no name at all: screen readers reached it
+		 * and said "combobox" with nothing else. Inside a `Field` the label
+		 * supplies it; standalone, this does, falling back to the placeholder.
+		 */
+		label?: string;
 		size?: SelectSize;
 		side?: Side;
 		align?: Align;
@@ -31,6 +41,7 @@
 		value = $bindable(),
 		open = $bindable(false),
 		placeholder = 'Select…',
+		label,
 		size = 'default',
 		side = 'bottom',
 		align = 'start',
@@ -123,6 +134,7 @@
 	aria-expanded={open}
 	aria-haspopup="listbox"
 	aria-controls={open ? `${baseId}-listbox` : undefined}
+	aria-label={label ?? (field ? undefined : placeholder)}
 	id={field?.controlId}
 	aria-describedby={field?.describedBy}
 	aria-invalid={field?.invalid ? 'true' : undefined}
@@ -133,7 +145,7 @@
 	onclick={() => (open = !open)}
 	onkeydown={ontriggerkeydown}
 	class={cn(
-		'flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border border-input bg-background px-[calc(--spacing(3)-1px)] text-base shadow-xs/5 ring-ring ring-offset-background transition-shadow outline-none not-dark:bg-clip-padding focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-64 aria-invalid:border-destructive/36 data-placeholder:text-muted-foreground sm:text-sm dark:bg-input/32 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:opacity-64',
+		'flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg border border-input bg-background px-[calc(--spacing(3)-1px)] text-base ring-ring ring-offset-background transition-shadow outline-none not-dark:bg-clip-padding focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-64 aria-invalid:border-destructive/36 data-placeholder:text-muted-foreground data-[size=lg]:rounded-lg data-[size=sm]:rounded-md sm:rounded-md sm:text-sm data-[size=lg]:sm:rounded-lg data-[size=sm]:sm:rounded-md dark:bg-input/32 [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:opacity-64',
 		size === 'sm' && 'h-7.5 sm:h-6.5',
 		size === 'default' && 'h-8.5 sm:h-7.5',
 		size === 'lg' && 'h-9.5 sm:h-8.5',

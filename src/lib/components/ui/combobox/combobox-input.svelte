@@ -100,7 +100,7 @@
 			tabindex={-1}
 			aria-label="Clear"
 			onclick={() => combobox.clear()}
-			class="absolute end-1 top-1/2 z-10 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground hover:text-foreground"
+			class="absolute end-1 top-1/2 z-10 flex size-6 -translate-y-1/2 items-center justify-center rounded-sm text-muted-foreground hover:text-foreground"
 		>
 			<svg
 				aria-hidden="true"
@@ -120,7 +120,7 @@
 			tabindex={-1}
 			aria-label="Show options"
 			onclick={() => combobox.setOpen(!combobox.open)}
-			class="absolute end-1 top-1/2 z-10 flex size-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground opacity-64 hover:opacity-100"
+			class="absolute end-1 top-1/2 z-10 flex size-6 -translate-y-1/2 items-center justify-center rounded-sm text-muted-foreground opacity-64 hover:opacity-100"
 		>
 			<svg
 				aria-hidden="true"

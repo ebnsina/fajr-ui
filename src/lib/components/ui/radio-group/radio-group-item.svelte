@@ -29,7 +29,7 @@
 	data-slot="radio-group-item"
 	data-state={selected ? 'checked' : 'unchecked'}
 	class={cn(
-		'relative inline-flex size-4.5 shrink-0 items-center justify-center rounded-full border border-input bg-background shadow-xs/5 ring-ring transition-shadow not-dark:bg-clip-padding before:pointer-events-none before:absolute before:inset-0 before:rounded-full not-data-[state=checked]:has-not-disabled:not-has-aria-invalid:before:shadow-[0_1px_--theme(--color-black/4%)] has-focus-visible:ring-2 has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-background has-disabled:cursor-not-allowed has-disabled:opacity-64 has-aria-invalid:border-destructive/36 has-focus-visible:has-aria-invalid:border-destructive/64 has-focus-visible:has-aria-invalid:ring-destructive/48 sm:size-4 dark:not-data-[state=checked]:bg-input/32 dark:has-aria-invalid:ring-destructive/24 [[data-state=checked],:has(:disabled),:has([aria-invalid])]:shadow-none',
+		'relative inline-flex size-4.5 shrink-0 items-center justify-center rounded-full border border-input bg-background ring-ring transition-shadow not-dark:bg-clip-padding has-focus-visible:ring-2 has-focus-visible:ring-offset-2 has-focus-visible:ring-offset-background has-disabled:cursor-not-allowed has-disabled:opacity-64 has-aria-invalid:border-destructive/36 has-focus-visible:has-aria-invalid:border-destructive/64 has-focus-visible:has-aria-invalid:ring-destructive/48 sm:size-4 dark:not-data-[state=checked]:bg-input/32 dark:has-aria-invalid:ring-destructive/24',
 		className
 	)}
 >

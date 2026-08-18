@@ -4,7 +4,7 @@
 	import { cva, type VariantProps } from 'class-variance-authority';
 
 	export const inputGroupAddonVariants = cva(
-		"flex h-auto cursor-text select-none items-center justify-center gap-2 [&>kbd]:rounded-[calc(var(--radius)-5px)] [&_svg]:-mx-0.5 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 not-has-[button]:**:[svg:not([class*='opacity-'])]:opacity-80",
+		"flex h-auto cursor-text select-none items-center justify-center gap-2 [&>kbd]:rounded-xs [&_svg]:-mx-0.5 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 not-has-[button]:**:[svg:not([class*='opacity-'])]:opacity-80",
 		{
 			defaultVariants: { align: 'inline-start' },
 			variants: {

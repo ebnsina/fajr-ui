@@ -18,6 +18,7 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
 	import Button from '../button.svelte';
+	import { setScrollLock } from '$lib/internal/scroll-lock';
 	import { DialogState, setDialogContext } from './context.svelte';
 
 	const baseId = $props.id();
@@ -50,6 +51,16 @@
 		if (open && !dialog.open) dialog.showModal();
 		else if (!open && dialog.open) dialog.close();
 	});
+
+	/*
+	 * `showModal` does not hold the page still — see `internal/scroll-lock`. It
+	 * is a separate effect from the one above so the release runs on teardown,
+	 * including when the component unmounts while still open.
+	 */
+	$effect(() => {
+		setScrollLock(dialog, open);
+		return () => setScrollLock(dialog, false);
+	});
 </script>
 
 <dialog
@@ -65,7 +76,21 @@
 		if (dismissible && event.target === dialog) open = false;
 	}}
 	class={cn(
-		'relative m-auto max-h-[calc(100svh-2rem)] w-[calc(100vw-2rem)] max-w-lg flex-col overflow-hidden rounded-2xl border bg-popover p-0 text-popover-foreground shadow-lg/5 not-dark:bg-clip-padding open:flex',
+		/*
+		 * `fixed`, not `relative`.
+		 *
+		 * An element in the top layer has `position: relative` computed as
+		 * `absolute`, so the box was laid out against the document's initial
+		 * containing block instead of the viewport. At the top of a page that is
+		 * indistinguishable from correct — which is why it survived — but scroll
+		 * down and open it and the dialog stays behind at the document origin,
+		 * measured at -3916px on a page scrolled 4000px.
+		 *
+		 * `relative` was presumably here to give the absolutely positioned close
+		 * button a containing block. `fixed` establishes one too, so nothing is
+		 * lost. Sheet already got this right.
+		 */
+		'fixed inset-0 m-auto max-h-[calc(100svh-2rem)] w-[calc(100vw-2rem)] max-w-lg flex-col overflow-hidden rounded-2xl border bg-popover p-0 text-popover-foreground shadow-lg/5 not-dark:bg-clip-padding open:flex',
 		className
 	)}
 	{...rest}

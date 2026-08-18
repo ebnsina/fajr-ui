@@ -15,6 +15,7 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
 	import Button from '../button.svelte';
+	import { setScrollLock } from '$lib/internal/scroll-lock';
 	import { useSheet } from './context.svelte';
 
 	let {
@@ -35,6 +36,16 @@
 		if (!dialog) return;
 		if (sheet.open && !dialog.open) dialog.showModal();
 		else if (!sheet.open && dialog.open) dialog.close();
+	});
+
+	/*
+	 * `showModal` does not hold the page still — see `internal/scroll-lock`. A
+	 * separate effect so the release runs on teardown, including when the sheet
+	 * unmounts while still open.
+	 */
+	$effect(() => {
+		setScrollLock(dialog, sheet.open);
+		return () => setScrollLock(dialog, false);
 	});
 
 	// The offscreen resting position, as a share of the panel's own size, so it

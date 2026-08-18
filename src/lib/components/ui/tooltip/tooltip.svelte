@@ -140,7 +140,7 @@
 		popover="manual"
 		class={cn(
 			'pointer-events-none fixed z-50 m-0 w-max max-w-64 rounded-md border bg-popover px-2 py-1 text-xs text-balance text-popover-foreground shadow-md/5 not-dark:bg-clip-padding',
-			'before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-md)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+			'',
 			!isInstant() &&
 				'animate-in fade-in-0 zoom-in-95 duration-(--duration-popover) motion-reduce:animate-none',
 			className

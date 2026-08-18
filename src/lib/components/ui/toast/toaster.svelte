@@ -233,7 +233,7 @@
 			)}; --drag: {dragging ? dragX : 0}px; z-index: {toaster.toasts.length -
 				index}; opacity: {buried ? 0 : dragging ? Math.max(0.4, 1 - dragX / 240) : 1};"
 			class={cn(
-				'pointer-events-auto absolute inset-x-4 flex touch-pan-y flex-col gap-1.5 rounded-lg border bg-[color-mix(in_srgb,var(--popover),var(--color-black)_calc(1%*max(0,var(--toast-index,0))))] px-3.5 py-3 text-popover-foreground shadow-lg/5 not-dark:bg-clip-padding before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] data-expanded:bg-popover dark:bg-[color-mix(in_srgb,var(--popover),var(--color-white)_calc(6%*max(0,var(--toast-index,0))))] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+				'pointer-events-auto absolute inset-x-4 flex touch-pan-y flex-col gap-1.5 rounded-lg border bg-[color-mix(in_srgb,var(--popover),var(--color-black)_calc(1%*max(0,var(--toast-index,0))))] px-3.5 py-3 text-popover-foreground shadow-lg/5 not-dark:bg-clip-padding data-expanded:bg-popover dark:bg-[color-mix(in_srgb,var(--popover),var(--color-white)_calc(6%*max(0,var(--toast-index,0))))]',
 				fromTop ? 'top-0 origin-top' : 'bottom-0 origin-bottom',
 				!dragging &&
 					'transition-[translate,scale,opacity] duration-(--duration-drawer) ease-drawer motion-reduce:transition-none'

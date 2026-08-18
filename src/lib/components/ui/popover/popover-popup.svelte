@@ -162,7 +162,7 @@
 	data-side={side}
 	style="left: {left}px; top: {top}px; transform-origin: {transformOrigin}; {style ?? ''}"
 	class={cn(
-		'fixed z-50 m-0 w-max max-w-[calc(100vw-1rem)] rounded-lg border bg-popover p-0 text-popover-foreground shadow-lg/5 outline-none not-dark:bg-clip-padding before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] dark:before:shadow-[0_-1px_--theme(--color-white/6%)]',
+		'fixed z-50 m-0 w-max max-w-[calc(100vw-1rem)] rounded-lg border bg-popover p-0 text-popover-foreground shadow-lg/5 outline-none not-dark:bg-clip-padding',
 		className
 	)}
 	{...rest}

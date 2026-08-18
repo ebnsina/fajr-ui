@@ -4,19 +4,19 @@
 	import type { Snippet } from 'svelte';
 
 	export const toggleVariants = cva(
-		"relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-transparent font-medium text-base text-foreground outline-none transition-[color,background-color,box-shadow,transform] duration-(--duration-press) ease-out before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] disabled:pointer-events-none disabled:opacity-64 aria-pressed:bg-input/64 aria-pressed:text-accent-foreground motion-reduce:active:scale-100 pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 sm:text-sm [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:-mx-0.5 [&_svg]:shrink-0",
+		"relative inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg border border-transparent font-medium text-base text-foreground outline-none transition-[color,background-color,box-shadow,transform] duration-(--duration-press) ease-out hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.97] disabled:pointer-events-none disabled:opacity-64 aria-pressed:bg-input/64 aria-pressed:text-accent-foreground motion-reduce:active:scale-100 pointer-coarse:after:absolute pointer-coarse:after:size-full pointer-coarse:after:min-h-11 pointer-coarse:after:min-w-11 sm:text-sm [&_svg:not([class*='opacity-'])]:opacity-80 [&_svg:not([class*='size-'])]:size-4.5 sm:[&_svg:not([class*='size-'])]:size-4 [&_svg]:-mx-0.5 [&_svg]:shrink-0",
 		{
 			defaultVariants: { size: 'default', variant: 'default' },
 			variants: {
 				size: {
-					sm: 'h-8 min-w-8 px-1.5 sm:h-7 sm:min-w-7',
+					sm: 'h-8 min-w-8 rounded-md px-1.5 sm:h-7 sm:min-w-7',
 					default: 'h-9 min-w-9 px-2 sm:h-8 sm:min-w-8',
 					lg: 'h-10 min-w-10 px-2.5 sm:h-9 sm:min-w-9'
 				},
 				variant: {
 					default: 'bg-transparent',
 					outline:
-						'border-input bg-background not-dark:bg-clip-padding shadow-xs/5 not-disabled:not-aria-pressed:before:shadow-[0_1px_--theme(--color-black/4%)] dark:bg-input/32 dark:not-disabled:not-aria-pressed:before:shadow-[0_-1px_--theme(--color-white/6%)] dark:aria-pressed:bg-input [:disabled,[aria-pressed=true]]:shadow-none'
+						'border-input bg-background not-dark:bg-clip-padding dark:bg-input/32 dark:aria-pressed:bg-input'
 				}
 			}
 		}

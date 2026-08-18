@@ -55,7 +55,15 @@
 		</SheetPopup>
 	</Sheet>
 {:else}
-	<div
+	<!--
+		An `aside`, not a `div`. Everything in here — the product mark, the nav, the
+		account row — sat outside every landmark, so a screen reader user jumping
+		by landmark could not reach the sidebar at all and anything in it was
+		announced as loose content. The label is what makes it addressable; pass
+		`aria-label` to override it.
+	-->
+	<aside
+		aria-label="Sidebar"
 		class="group peer hidden text-sidebar-foreground md:block"
 		data-collapsible={sidebar.state === 'collapsed' ? collapsible : ''}
 		data-side={side}
@@ -98,5 +106,5 @@
 				{@render children?.()}
 			</div>
 		</div>
-	</div>
+	</aside>
 {/if}

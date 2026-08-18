@@ -101,7 +101,20 @@
 	data-slot="form"
 	data-submitting={submitting ? '' : undefined}
 	onsubmit={handleSubmit}
-	class={cn(className)}
+	class={cn(
+		/*
+		 * A default vertical rhythm. The form used to carry no layout of its own,
+		 * so a field and the submit button under it sat flush against each other —
+		 * `Field` spaces its own label, control and description, but nothing was
+		 * spacing the field from what followed it.
+		 *
+		 * Margin rather than a flex `gap` on purpose: the children here size
+		 * themselves — full-width fields beside a shrink-to-fit button — and
+		 * turning the form into a flex column would stretch the button across it.
+		 */
+		'space-y-4',
+		className
+	)}
 	{...rest}
 >
 	{@render children?.()}

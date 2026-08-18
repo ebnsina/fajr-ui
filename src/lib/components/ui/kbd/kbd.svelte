@@ -13,7 +13,7 @@
 <kbd
 	data-slot="kbd"
 	class={cn(
-		"pointer-events-none inline-flex h-5 min-w-5 shrink-0 items-center justify-center gap-1 rounded-[.25rem] bg-muted px-1 font-sans text-xs font-medium text-muted-foreground select-none [&_svg:not([class*='size-'])]:size-3",
+		"pointer-events-none inline-flex h-5 min-w-5 shrink-0 items-center justify-center gap-1 rounded-xs bg-muted px-1 font-sans text-xs font-medium text-muted-foreground select-none [&_svg:not([class*='size-'])]:size-3",
 		className
 	)}
 	{...rest}

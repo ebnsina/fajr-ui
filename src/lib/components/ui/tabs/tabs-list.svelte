@@ -101,7 +101,7 @@
 			class={cn(
 				'pointer-events-none absolute top-0 left-0 transition-[translate,width,height] duration-200 ease-in-out motion-reduce:transition-none',
 				variant === 'default' &&
-					'-z-1 h-(--tab-height) w-(--tab-width) rounded-md bg-background shadow-sm/5 dark:bg-input',
+					'-z-1 h-(--tab-height) w-(--tab-width) rounded-lg bg-background shadow-sm/5 dark:bg-input',
 				variant === 'underline' && 'z-10 bg-primary',
 				variant === 'underline' && (vertical ? 'h-(--tab-height) w-0.5' : 'h-0.5 w-(--tab-width)')
 			)}

@@ -29,7 +29,7 @@
 		data-slot="data-table-column-header"
 		onclick={column.getToggleSortingHandler()}
 		class={cn(
-			'-mx-1.5 inline-flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-1 font-medium text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring data-[sorted]:text-foreground',
+			'-mx-1.5 inline-flex cursor-pointer items-center gap-1 rounded-sm px-1.5 py-1 font-medium text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring data-[sorted]:text-foreground',
 			className
 		)}
 		data-sorted={sorted || undefined}

@@ -73,10 +73,21 @@
 		do this. The rule cannot tell a scroll container from a static one.
 	-->
 	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+	<!--
+		`group`, not `region`. A region is a landmark, and these appear many times on
+		one page — every props table on a docs page is a scroll container named
+		"Table". That fills the landmark list with identical entries, which is what
+		`landmark-unique` reports and what makes landmark navigation useless. The
+		role still carries the accessible name, and `tabindex` still makes the
+		overflow reachable from the keyboard, which is the reason it is labelled.
+	
+		Accordion and Collapsible keep `region`: each is named by its own trigger, so
+		they are genuinely distinct sections rather than repeats of one control.
+	-->
 	<div
 		bind:this={viewport}
 		onscroll={scrollFade ? measure : undefined}
-		role="region"
+		role="group"
 		tabindex="0"
 		aria-label={label}
 		data-slot="scroll-area-viewport"

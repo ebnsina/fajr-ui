@@ -62,12 +62,18 @@
 	No open or close animation. A palette opened by a keyboard shortcut is used
 	dozens of times a day, and any delay between the keypress and a usable input
 	makes the whole app feel slower than it is.
+
+	Placed with margins, not `top`. Dialog centres itself with `m-auto`, and a
+	`top` on a box that is also being centred does nothing — the palette was
+	landing in the middle of the viewport instead of near its top, which is both
+	further from the caret and further from where the eye already is after a
+	keyboard shortcut. `mt`/`mb` override the shorthand; `top` never could.
 -->
 <Dialog
 	bind:open
 	title={label}
 	showCloseButton={false}
-	class="top-[10vh] max-h-105 max-w-xl [--duration-popover:0ms]"
+	class="mt-[10vh] mb-auto max-h-105 max-w-xl [--duration-popover:0ms]"
 >
 	<!--
 		A muted ground behind everything, so the results panel reads as raised and

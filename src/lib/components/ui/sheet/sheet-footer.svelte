@@ -19,7 +19,7 @@
 	data-slot="sheet-footer"
 	class={cn(
 		'flex flex-col-reverse gap-2 px-6 sm:flex-row sm:justify-end',
-		variant === 'default' && 'border-t bg-muted/72 py-4',
+		variant === 'default' && 'bg-muted/40 py-4',
 		variant === 'bare' &&
 			'pt-4 pb-6 in-[[data-slot=sheet-popup]:has([data-slot=sheet-panel])]:pt-3',
 		className

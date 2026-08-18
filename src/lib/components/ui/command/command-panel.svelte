@@ -19,7 +19,7 @@
 <div
 	data-slot="command-panel"
 	class={cn(
-		'relative -mx-px flex min-h-0 flex-col rounded-t-xl border border-b-0 bg-popover bg-clip-padding shadow-xs/5 not-has-[+[data-slot=command-footer]]:-mb-px not-has-[+[data-slot=command-footer]]:rounded-b-2xl',
+		'relative -mx-px flex min-h-0 flex-col rounded-t-xl border border-b-0 bg-popover bg-clip-padding not-has-[+[data-slot=command-footer]]:-mb-px not-has-[+[data-slot=command-footer]]:rounded-b-2xl',
 		className
 	)}
 	{...rest}

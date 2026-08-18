@@ -36,11 +36,22 @@
 	"Table, Table, Table" in the landmark menu with nothing to tell them apart.
 -->
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+<!--
+	`group`, not `region`. A region is a landmark, and these appear many times on
+	one page — every props table on a docs page is a scroll container named
+	"Table". That fills the landmark list with identical entries, which is what
+	`landmark-unique` reports and what makes landmark navigation useless. The
+	role still carries the accessible name, and `tabindex` still makes the
+	overflow reachable from the keyboard, which is the reason it is labelled.
+
+	Accordion and Collapsible keep `region`: each is named by its own trigger, so
+	they are genuinely distinct sections rather than repeats of one control.
+-->
 <div
 	data-slot="table-container"
 	data-variant={variant}
 	tabindex="0"
-	role="region"
+	role="group"
 	aria-label={label ?? 'Table'}
 	class="w-full overflow-x-auto rounded-[inherit] outline-none focus-visible:ring-2 focus-visible:ring-ring"
 >
