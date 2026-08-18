@@ -108,9 +108,7 @@
 		The reading column is the inset card. It scrolls with the page; the rails
 		either side stay put.
 	-->
-	<div
-		class="flex min-w-0 flex-1 flex-col rounded-2xl border bg-background px-4 pt-4 shadow-xs/5 not-dark:bg-clip-padding lg:my-4 lg:px-6 lg:pt-8"
-	>
+	<div class="flex min-w-0 flex-1 flex-col px-4 pt-4 lg:my-4 lg:px-6 lg:pt-8">
 		<div class="flex flex-1 flex-col gap-6">
 			<header class="flex flex-col gap-2">
 				<h1 class="scroll-m-20 font-heading text-3xl font-bold tracking-tight">{title}</h1>

@@ -7,7 +7,7 @@
 		<FieldItem>
 			<Checkbox />
 			<div>
-				<FieldLabel>Email me about new components</FieldLabel>
+				<FieldLabel>Tell me about new acquisitions</FieldLabel>
 				<FieldDescription>About one message a month.</FieldDescription>
 			</div>
 		</FieldItem>

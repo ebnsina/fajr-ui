@@ -1,19 +1,23 @@
 <script lang="ts">
 	import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '$lib/components/ui';
 
-	let value = $state<string | undefined>('what');
+	let value = $state<string | undefined>('entry');
 
 	const faqs = [
-		{ value: 'what', q: 'What is it?', a: 'A set of components you copy into your project.' },
 		{
-			value: 'why',
-			q: 'Why copy rather than install?',
-			a: 'Because you own the file and can edit it directly, with no configuration layer in between.'
+			value: 'entry',
+			q: 'Who may enter the reading room?',
+			a: 'Any reader with a letter from a recognised madrasa, and anyone the librarian has admitted in person.'
 		},
 		{
-			value: 'a11y',
-			q: 'Is it accessible?',
-			a: 'Each component owns its keyboard handling and ARIA wiring, and leans on the platform wherever the platform is already correct.'
+			value: 'loan',
+			q: 'How long may a volume be held?',
+			a: 'Forty days for a bound work, ten for loose folios. The librarian records both against your shelfmark.'
+		},
+		{
+			value: 'copy',
+			q: 'May folios be copied?',
+			a: 'At the copying desk, with the librarian’s seal. Nothing leaves the room to be copied elsewhere.'
 		}
 	];
 </script>

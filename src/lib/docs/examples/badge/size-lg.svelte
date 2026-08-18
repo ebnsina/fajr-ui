@@ -2,4 +2,4 @@
 	import { Badge } from '$lib/components/ui';
 </script>
 
-<Badge size="lg">Badge</Badge>
+<Badge size="lg">Bayt al-Hikma</Badge>

@@ -100,8 +100,15 @@
 		it could only be reached with a pointer (WCAG 2.1.1).
 	-->
 	<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+	<!--
+		`group`, not `region`. A region is a landmark, and a page with four code
+		blocks titled "Terminal" then carries four landmarks with the same name —
+		which is what `landmark-unique` reports and what makes a landmark list
+		useless to navigate by. A code snippet is a group, not a section of the
+		document.
+	-->
 	<div
-		role="region"
+		role="group"
 		tabindex="0"
 		aria-label={title ? `${title} code` : 'Code'}
 		class="code-block-body overflow-x-auto p-4 pe-12 font-mono text-[0.8125rem] leading-relaxed outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset"
@@ -131,8 +138,15 @@
 		font: inherit;
 	}
 
+	/*
+	 * 72%, not 52%. Comments are the one token that is deliberately quiet, and at
+	 * 52% of the foreground it measured about 3.1:1 on the code ground — under
+	 * the 4.5 floor, and the only contrast failure axe found in the components.
+	 * Italic already carries the "this is an aside" signal; the colour does not
+	 * have to do it too.
+	 */
 	.code-block-body :global(.th-comment) {
-		color: --alpha(var(--color-code-foreground) / 52%);
+		color: --alpha(var(--color-code-foreground) / 72%);
 		font-style: italic;
 	}
 

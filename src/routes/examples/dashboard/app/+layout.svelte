@@ -3,7 +3,6 @@
 	import { page } from '$app/state';
 	import { Icon, SearchIcon } from '$lib/icons';
 	import ModeSwitcher from '$lib/components/site/mode-switcher.svelte';
-	import AccentSwitcher from '$lib/components/site/accent-switcher.svelte';
 	import AppSidebar from '$lib/components/app/app-sidebar.svelte';
 	import LayoutSwitcher from '$lib/components/app/layout-switcher.svelte';
 	import { navMain, navSecondary } from '$lib/components/app/nav-data';
@@ -68,7 +67,6 @@
 					/>
 				</div>
 				<LayoutSwitcher bind:layout />
-				<AccentSwitcher />
 				<ModeSwitcher />
 			</div>
 		</header>

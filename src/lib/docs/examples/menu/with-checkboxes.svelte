@@ -3,8 +3,8 @@
 
 	let open = $state(false);
 	let trigger = $state<HTMLElement | null>(null);
-	let showGrid = $state(true);
-	let showRulers = $state(false);
+	let showFolioNumbers = $state(true);
+	let showMarginalia = $state(false);
 </script>
 
 <Button
@@ -14,11 +14,11 @@
 	aria-expanded={open}
 	onclick={() => (open = !open)}
 >
-	Open menu
+	Folio view
 </Button>
 
 <Menu bind:open anchor={trigger}>
-	<MenuLabel>Appearance</MenuLabel>
-	<MenuCheckboxItem bind:checked={showGrid}>Show grid</MenuCheckboxItem>
-	<MenuCheckboxItem bind:checked={showRulers}>Show rulers</MenuCheckboxItem>
+	<MenuLabel>Show on the page</MenuLabel>
+	<MenuCheckboxItem bind:checked={showFolioNumbers}>Folio numbers</MenuCheckboxItem>
+	<MenuCheckboxItem bind:checked={showMarginalia}>Marginalia</MenuCheckboxItem>
 </Menu>

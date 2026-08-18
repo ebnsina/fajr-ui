@@ -2,4 +2,4 @@
 	import { Badge } from '$lib/components/ui';
 </script>
 
-<Badge variant="warning">Warning</Badge>
+<Badge variant="warning">In review</Badge>

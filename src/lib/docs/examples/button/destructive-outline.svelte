@@ -2,4 +2,4 @@
 	import { Button } from '$lib/components/ui';
 </script>
 
-<Button variant="destructive-outline">Destructive outline</Button>
+<Button variant="destructive-outline">Withdraw from catalogue</Button>

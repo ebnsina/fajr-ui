@@ -10,10 +10,10 @@
 
 <div class="w-full max-w-md">
 	<Fieldset>
-		<FieldsetLegend>Notifications</FieldsetLegend>
-		<FieldsetDescription>Choose what we email you about.</FieldsetDescription>
+		<FieldsetLegend>Notices</FieldsetLegend>
+		<FieldsetDescription>Choose what the library writes to you about.</FieldsetDescription>
 		<Label><Checkbox checked /> Catalogue notices</Label>
-		<Label><Checkbox /> Weekly summary</Label>
-		<Label><Checkbox /> Product updates</Label>
+		<Label><Checkbox /> Weekly digest</Label>
+		<Label><Checkbox /> New acquisitions</Label>
 	</Fieldset>
 </div>

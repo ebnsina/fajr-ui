@@ -43,9 +43,13 @@
 			onclick={() => packageManager.set(manager)}
 			{onkeydown}
 			class={cn(
-				'cursor-pointer rounded-md px-2.5 py-1 font-mono text-xs transition-colors outline-none',
+				'cursor-pointer rounded-sm px-2.5 py-1 font-mono text-xs transition-colors outline-none',
 				selected
-					? 'bg-background text-foreground shadow-xs/5'
+					? // `bg-background` is near-black in the dark theme, and so is the muted
+						// track behind it, so the selected tab all but disappeared. `input`
+						// is the token that stays a step lighter than its surroundings —
+						// the library's own Tabs indicator solves it the same way.
+						'bg-background text-foreground shadow-xs/5 dark:bg-input'
 					: 'text-muted-foreground hover:text-foreground',
 				'focus-visible:ring-2 focus-visible:ring-ring'
 			)}

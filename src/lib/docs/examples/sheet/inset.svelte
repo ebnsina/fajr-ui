@@ -19,25 +19,25 @@
 </script>
 
 <Sheet bind:open side="right" variant="inset">
-	<SheetTrigger variant="outline">Open sheet</SheetTrigger>
+	<SheetTrigger variant="outline">Record an acquisition</SheetTrigger>
 	<SheetPopup class="w-[min(22rem,calc(100vw-3rem))]">
 		<SheetHeader>
-			<SheetTitle>Manuscript details</SheetTitle>
-			<SheetDescription>Press Escape or click the backdrop to close.</SheetDescription>
+			<SheetTitle>Acquisition record</SheetTitle>
+			<SheetDescription>Entered against the Samarkand bequest.</SheetDescription>
 		</SheetHeader>
 		<SheetPanel>
 			<div class="flex flex-col gap-4">
 				<Field>
 					<FieldLabel>Title</FieldLabel>
-					<Input value="The Canon of Medicine" />
+					<Input value="The Book of Optics" />
 				</Field>
 				<Field>
-					<FieldLabel>Scholar</FieldLabel>
-					<Input value="Ibn Sina" />
+					<FieldLabel>Acquired from</FieldLabel>
+					<Input value="The Nizamiyya, Baghdad" />
 				</Field>
 				<Field>
 					<FieldLabel>Notes</FieldLabel>
-					<Textarea placeholder="Provenance, condition, marginalia…" />
+					<Textarea placeholder="Price, donor, conditions of the gift…" />
 				</Field>
 			</div>
 		</SheetPanel>

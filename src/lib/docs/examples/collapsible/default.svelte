@@ -7,7 +7,7 @@
 <div class="w-full max-w-md">
 	<Collapsible bind:open class="gap-2 rounded-xl border p-4">
 		<CollapsibleTrigger class="flex w-full items-center justify-between text-sm font-medium">
-			Toggle details
+			Provenance
 			<svg
 				aria-hidden="true"
 				class="size-4 text-muted-foreground transition-transform duration-(--duration-drawer) ease-out motion-reduce:transition-none"
@@ -23,8 +23,8 @@
 			</svg>
 		</CollapsibleTrigger>
 		<CollapsibleContent class="pt-2 text-sm text-muted-foreground">
-			The panel animates to its natural height, and is inert while closed so it cannot be tabbed
-			into.
+			Copied in Bukhara, held by the Nizamiyya until the sack of Baghdad, and entered here with the
+			Samarkand bequest.
 		</CollapsibleContent>
 	</Collapsible>
 </div>

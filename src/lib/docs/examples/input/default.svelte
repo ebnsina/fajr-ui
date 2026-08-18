@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Input type="email" placeholder="you@example.com" />
+	<Input type="email" placeholder="scholar@bayt-al-hikma.org" />
 </div>

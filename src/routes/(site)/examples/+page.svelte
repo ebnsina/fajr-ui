@@ -30,9 +30,7 @@
 						class="group relative flex flex-col gap-4 rounded-2xl border bg-card p-6 text-card-foreground shadow-xs/5 transition-shadow not-dark:bg-clip-padding focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background hover:shadow-md/5"
 					>
 						<div class="flex flex-col gap-1">
-							<h2
-								class="font-heading text-lg font-bold [font-variation-settings:'GEOM'_50,'opsz'_32]"
-							>
+							<h2 class="font-heading text-lg font-bold">
 								<a
 									class="outline-none before:absolute before:inset-0 before:rounded-2xl"
 									href={example.href}

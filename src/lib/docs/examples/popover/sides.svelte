@@ -11,12 +11,12 @@
 </script>
 
 <Popover bind:open>
-	<PopoverTrigger variant="outline">Open popover</PopoverTrigger>
+	<PopoverTrigger variant="outline">Shelf location</PopoverTrigger>
 	<PopoverPopup side="right" align="start">
 		<div class="flex w-56 flex-col gap-1 p-4">
-			<PopoverTitle>Dimensions</PopoverTitle>
+			<PopoverTitle>Shelf location</PopoverTitle>
 			<PopoverDescription class="text-xs">
-				Set the width and height of the layer.
+				Third room, second case, top shelf — beside the astronomical tables.
 			</PopoverDescription>
 		</div>
 	</PopoverPopup>

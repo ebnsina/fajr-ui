@@ -2,4 +2,4 @@
 	import { Badge } from '$lib/components/ui';
 </script>
 
-<Badge variant="error">Error</Badge>
+<Badge variant="error">Water damage</Badge>

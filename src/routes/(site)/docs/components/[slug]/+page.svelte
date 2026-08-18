@@ -97,6 +97,17 @@
 		</div>
 	{:else if doc}
 		{#if doc.hero}
+			<!--
+				A heading for the lead preview, hidden visually because the page title
+				directly above it already says what is being previewed.
+
+				It is not decoration: the demos inside carry their own headings — an
+				accordion trigger is a real `h3` so it appears in the outline — and
+				without an `h2` between them the document jumped from `h1` straight to
+				`h3`. Anyone navigating by heading landed inside a demo with no idea
+				what section they were in.
+			-->
+			<h2 class="sr-only" id="preview">Preview</h2>
 			<!-- The example's own file is what is rendered and what is shown. -->
 			<PreviewTabs
 				code={exampleSource(component.slug, doc.hero.id) ?? ''}

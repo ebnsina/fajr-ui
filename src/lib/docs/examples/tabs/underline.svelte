@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { Tabs, TabsList, TabsPanel, TabsTrigger } from '$lib/components/ui';
 
-	let tab = $state('manuscript');
+	let tab = $state('folios');
 </script>
 
 <div class="w-full max-w-sm">
 	<Tabs bind:value={tab}>
 		<TabsList variant="underline">
-			<TabsTrigger value="manuscript">Manuscript</TabsTrigger>
-			<TabsTrigger value="provenance">Provenance</TabsTrigger>
+			<TabsTrigger value="folios">Folios</TabsTrigger>
+			<TabsTrigger value="conservation">Conservation</TabsTrigger>
 		</TabsList>
-		<TabsPanel value="manuscript" class="pt-2 text-sm text-muted-foreground">
-			Title, scholar and the discipline it belongs to.
+		<TabsPanel value="folios" class="pt-2 text-sm text-muted-foreground">
+			Collation, page size and which folios are missing.
 		</TabsPanel>
-		<TabsPanel value="provenance" class="pt-2 text-sm text-muted-foreground">
-			Where the copy came from, and who held it before.
+		<TabsPanel value="conservation" class="pt-2 text-sm text-muted-foreground">
+			Every visit to the bindery, and what was repaired.
 		</TabsPanel>
 	</Tabs>
 </div>

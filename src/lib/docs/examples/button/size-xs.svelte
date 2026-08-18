@@ -2,4 +2,4 @@
 	import { Button } from '$lib/components/ui';
 </script>
 
-<Button size="xs">Button</Button>
+<Button size="xs">Copy shelfmark</Button>

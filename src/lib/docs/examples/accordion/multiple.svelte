@@ -1,19 +1,23 @@
 <script lang="ts">
 	import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '$lib/components/ui';
 
-	let value = $state<string[]>(['what']);
+	let value = $state<string[]>(['shelfmark']);
 
 	const faqs = [
-		{ value: 'what', q: 'What is it?', a: 'A set of components you copy into your project.' },
 		{
-			value: 'why',
-			q: 'Why copy rather than install?',
-			a: 'Because you own the file and can edit it directly, with no configuration layer in between.'
+			value: 'shelfmark',
+			q: 'What does a shelfmark record?',
+			a: 'The room, the case and the position on the shelf — in that order, so a volume can be refiled without consulting the catalogue.'
 		},
 		{
-			value: 'a11y',
-			q: 'Is it accessible?',
-			a: 'Each component owns its keyboard handling and ARIA wiring, and leans on the platform wherever the platform is already correct.'
+			value: 'arrival',
+			q: 'How is a new acquisition entered?',
+			a: 'It is weighed, collated and given a provisional mark, then catalogued once the discipline has been settled.'
+		},
+		{
+			value: 'bequest',
+			q: 'Where do the Samarkand volumes sit?',
+			a: 'In the third room, alongside the astronomical tables they were bequeathed with.'
 		}
 	];
 </script>

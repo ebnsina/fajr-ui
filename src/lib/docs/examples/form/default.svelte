@@ -20,13 +20,13 @@
 		}}
 	>
 		<FormField name="email">
-			<FieldLabel>Work email</FieldLabel>
-			<Input name="email" type="email" placeholder="you@example.com" />
-			<FieldDescription>We only use this for confirmations.</FieldDescription>
+			<FieldLabel>Reader's email</FieldLabel>
+			<Input name="email" type="email" placeholder="scholar@bayt-al-hikma.org" />
+			<FieldDescription>Where the reading room confirmation is sent.</FieldDescription>
 		</FormField>
-		<Button type="submit">Save</Button>
+		<Button type="submit">Request a desk</Button>
 		{#if submitted}
-			<p class="text-sm text-muted-foreground">Submitted: {submitted}</p>
+			<p class="text-sm text-muted-foreground">Requested for: {submitted}</p>
 		{/if}
 	</Form>
 </div>

@@ -4,7 +4,7 @@
 </script>
 
 <div class="flex w-full max-w-sm flex-col text-sm">
-	<p class="font-heading font-bold [font-variation-settings:'GEOM'_50,'opsz'_32]">Fajr UI</p>
+	<p class="font-heading font-bold">Fajr UI</p>
 	<p class="mt-1 text-muted-foreground">
 		Accessible components you copy into your project and own outright.
 	</p>

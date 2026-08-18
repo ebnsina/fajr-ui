@@ -2,4 +2,4 @@
 	import { Label, Switch } from '$lib/components/ui';
 </script>
 
-<Label><Switch disabled /> Notifications</Label>
+<Label><Switch disabled /> Loan reminders</Label>

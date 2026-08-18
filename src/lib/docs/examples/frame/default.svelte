@@ -12,13 +12,13 @@
 <div class="w-full max-w-md">
 	<Frame>
 		<FrameHeader>
-			<FrameTitle>Section header</FrameTitle>
-			<FrameDescription>Brief description about the section</FrameDescription>
+			<FrameTitle>Acquisitions</FrameTitle>
+			<FrameDescription>What reached the library this month</FrameDescription>
 		</FrameHeader>
 		<FramePanel>
-			<FrameTitle>Section title</FrameTitle>
-			<FrameDescription>Section description</FrameDescription>
+			<FrameTitle>The Samarkand bequest</FrameTitle>
+			<FrameDescription>Fourteen volumes and two astrolabes, uncatalogued.</FrameDescription>
 		</FramePanel>
-		<FrameFooter class="text-sm text-muted-foreground">Footer</FrameFooter>
+		<FrameFooter class="text-sm text-muted-foreground">Recorded 12 Rajab</FrameFooter>
 	</Frame>
 </div>

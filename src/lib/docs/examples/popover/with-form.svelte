@@ -15,7 +15,7 @@
 </script>
 
 <Popover bind:open>
-	<PopoverTrigger variant="outline">Open popover</PopoverTrigger>
+	<PopoverTrigger variant="outline">Rename collection</PopoverTrigger>
 	<PopoverPopup side="bottom" align="center">
 		<form
 			class="flex w-64 flex-col gap-3 p-4"
@@ -24,10 +24,10 @@
 				open = false;
 			}}
 		>
-			<PopoverTitle>Rename</PopoverTitle>
+			<PopoverTitle>Rename collection</PopoverTitle>
 			<Field>
 				<FieldLabel>Name</FieldLabel>
-				<Input value="Untitled" />
+				<Input value="Astronomy, uncatalogued" />
 			</Field>
 			<div class="flex justify-end gap-2">
 				<PopoverClose size="sm" variant="outline">Cancel</PopoverClose>

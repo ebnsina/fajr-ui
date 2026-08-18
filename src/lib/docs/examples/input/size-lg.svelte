@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Input size="lg" placeholder="lg" />
+	<Input size="lg" placeholder="Manuscript title" />
 </div>

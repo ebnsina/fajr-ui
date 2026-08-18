@@ -2,4 +2,4 @@
 	import { Button } from '$lib/components/ui';
 </script>
 
-<Button size="lg">Button</Button>
+<Button size="lg">Open the reading room</Button>

@@ -27,7 +27,6 @@
 		ToggleGroupItem
 	} from '$lib/components/ui';
 	import { cn } from '$lib/utils';
-	import AccentSwitcher from '$lib/components/site/accent-switcher.svelte';
 	import ModeSwitcher from '$lib/components/site/mode-switcher.svelte';
 	import {
 		BUSINESS_END,
@@ -309,12 +308,7 @@
 <!-- Logical properties throughout mean an RTL locale needs only `dir`. -->
 <div dir={rtl ? 'rtl' : 'ltr'} class="flex h-svh flex-col bg-sidebar">
 	<header class="flex h-14 shrink-0 items-center gap-2 border-b bg-background px-4">
-		<a
-			href="{base}/examples/calendar"
-			class="font-heading font-bold [font-variation-settings:'GEOM'_50,'opsz'_32]"
-		>
-			Fajr UI
-		</a>
+		<a href="{base}/examples/calendar" class="font-heading font-bold"> Fajr UI </a>
 		<Separator orientation="vertical" class="mx-1 h-4" decorative />
 
 		<Button size="sm" variant="outline" onclick={goToday}>Today</Button>
@@ -363,7 +357,6 @@
 					<SelectItem value={entry.value}>{entry.label}</SelectItem>
 				{/each}
 			</Select>
-			<AccentSwitcher />
 			<ModeSwitcher />
 		</div>
 	</header>

@@ -19,25 +19,25 @@
 </script>
 
 <Sheet bind:open side="left">
-	<SheetTrigger variant="outline">Open sheet</SheetTrigger>
+	<SheetTrigger variant="outline">Log conservation work</SheetTrigger>
 	<SheetPopup class="w-[min(22rem,calc(100vw-3rem))]">
 		<SheetHeader>
-			<SheetTitle>Manuscript details</SheetTitle>
-			<SheetDescription>Press Escape or click the backdrop to close.</SheetDescription>
+			<SheetTitle>Conservation log</SheetTitle>
+			<SheetDescription>One entry per visit to the bindery.</SheetDescription>
 		</SheetHeader>
 		<SheetPanel>
 			<div class="flex flex-col gap-4">
 				<Field>
 					<FieldLabel>Title</FieldLabel>
-					<Input value="The Canon of Medicine" />
+					<Input value="Zij-i Ilkhani" />
 				</Field>
 				<Field>
-					<FieldLabel>Scholar</FieldLabel>
-					<Input value="Ibn Sina" />
+					<FieldLabel>Conservator</FieldLabel>
+					<Input value="Nasir al-Din al-Tusi" />
 				</Field>
 				<Field>
 					<FieldLabel>Notes</FieldLabel>
-					<Textarea placeholder="Provenance, condition, marginalia…" />
+					<Textarea placeholder="Repairs made, materials used, folios affected…" />
 				</Field>
 			</div>
 		</SheetPanel>

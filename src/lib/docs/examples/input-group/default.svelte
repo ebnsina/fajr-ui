@@ -6,7 +6,7 @@
 <div class="w-full max-w-sm">
 	<InputGroup>
 		<InputGroupAddon><Icon icon={SearchIcon} /></InputGroupAddon>
-		<InputGroupInput placeholder="Search…" />
+		<InputGroupInput placeholder="Search the catalogue…" />
 		<InputGroupAddon align="inline-end"><Kbd>⌘K</Kbd></InputGroupAddon>
 	</InputGroup>
 </div>

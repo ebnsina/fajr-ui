@@ -2,4 +2,4 @@
 	import { Button } from '$lib/components/ui';
 </script>
 
-<Button variant="destructive">Destructive</Button>
+<Button variant="destructive">Delete collection</Button>

@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Input size="sm" placeholder="sm" />
+	<Input size="sm" placeholder="Shelfmark" />
 </div>

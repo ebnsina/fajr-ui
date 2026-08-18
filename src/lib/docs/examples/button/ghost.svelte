@@ -2,4 +2,4 @@
 	import { Button } from '$lib/components/ui';
 </script>
 
-<Button variant="ghost">Ghost</Button>
+<Button variant="ghost">Dismiss</Button>

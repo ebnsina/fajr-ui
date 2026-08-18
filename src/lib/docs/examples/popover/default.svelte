@@ -11,12 +11,12 @@
 </script>
 
 <Popover bind:open>
-	<PopoverTrigger variant="outline">Open popover</PopoverTrigger>
+	<PopoverTrigger variant="outline">Folio size</PopoverTrigger>
 	<PopoverPopup side="bottom" align="center">
 		<div class="flex w-56 flex-col gap-1 p-4">
-			<PopoverTitle>Dimensions</PopoverTitle>
+			<PopoverTitle>Folio size</PopoverTitle>
 			<PopoverDescription class="text-xs">
-				Set the width and height of the layer.
+				Height and width of the page, measured at the widest folio.
 			</PopoverDescription>
 		</div>
 	</PopoverPopup>

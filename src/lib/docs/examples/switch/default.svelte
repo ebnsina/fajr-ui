@@ -4,4 +4,4 @@
 	let notify = $state(false);
 </script>
 
-<Label><Switch bind:checked={notify} /> Notifications</Label>
+<Label><Switch bind:checked={notify} /> Catalogue notices</Label>

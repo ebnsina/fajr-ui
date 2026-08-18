@@ -1,26 +1,30 @@
 <script lang="ts">
 	import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '$lib/components/ui';
 
-	let value = $state<string | undefined>('what');
+	let value = $state<string | undefined>('vault');
 
 	const faqs = [
-		{ value: 'what', q: 'What is it?', a: 'A set of components you copy into your project.' },
 		{
-			value: 'why',
-			q: 'Why copy rather than install?',
-			a: 'Because you own the file and can edit it directly, with no configuration layer in between.'
+			value: 'vault',
+			q: 'Which works stay in the vault?',
+			a: 'Anything older than four centuries, and every unique copy, whatever its age.'
 		},
 		{
-			value: 'a11y',
-			q: 'Is it accessible?',
-			a: 'Each component owns its keyboard handling and ARIA wiring, and leans on the platform wherever the platform is already correct.'
+			value: 'seal',
+			q: 'What does the librarian’s seal mean?',
+			a: 'That the volume was released deliberately, and that its return is somebody’s named responsibility.'
+		},
+		{
+			value: 'damage',
+			q: 'How is damage reported?',
+			a: 'On the conservation slip tucked into the binding, before the volume is refiled rather than after.'
 		}
 	];
 </script>
 
 <!-- `collapsible={false}` keeps one panel open at all times. -->
 <div class="w-full max-w-md">
-	<Accordion bind:value collapsible={false}>
+	<Accordion collapsible={false} bind:value>
 		{#each faqs as faq (faq.value)}
 			<AccordionItem value={faq.value}>
 				<AccordionTrigger>{faq.q}</AccordionTrigger>

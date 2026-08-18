@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { Tabs, TabsList, TabsPanel, TabsTrigger } from '$lib/components/ui';
 
-	let tab = $state('manuscript');
+	let tab = $state('acquisition');
 </script>
 
 <div class="w-full max-w-md">
 	<Tabs bind:value={tab} orientation="vertical">
 		<TabsList class="w-40 shrink-0">
-			<TabsTrigger value="manuscript">Manuscript</TabsTrigger>
-			<TabsTrigger value="provenance">Provenance</TabsTrigger>
+			<TabsTrigger value="acquisition">Acquisition</TabsTrigger>
+			<TabsTrigger value="loans">Loans</TabsTrigger>
 		</TabsList>
-		<TabsPanel value="manuscript" class="pt-2 text-sm text-muted-foreground">
-			Title, scholar and the discipline it belongs to.
+		<TabsPanel value="acquisition" class="pt-2 text-sm text-muted-foreground">
+			How the volume reached the library, and from whom.
 		</TabsPanel>
-		<TabsPanel value="provenance" class="pt-2 text-sm text-muted-foreground">
-			Where the copy came from, and who held it before.
+		<TabsPanel value="loans" class="pt-2 text-sm text-muted-foreground">
+			Who holds it now, and when it is due back on the shelf.
 		</TabsPanel>
 	</Tabs>
 </div>

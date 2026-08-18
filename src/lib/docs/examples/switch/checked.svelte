@@ -2,4 +2,4 @@
 	import { Label, Switch } from '$lib/components/ui';
 </script>
 
-<Label><Switch checked /> Notifications</Label>
+<Label><Switch checked /> Weekly digest</Label>

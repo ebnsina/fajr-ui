@@ -48,7 +48,6 @@
 		SparkleIcon,
 		TranslationIcon
 	} from '$lib/icons';
-	import AccentSwitcher from '$lib/components/site/accent-switcher.svelte';
 	import CodeBlock from '$lib/components/site/code-block.svelte';
 	import ModeSwitcher from '$lib/components/site/mode-switcher.svelte';
 	import {
@@ -145,7 +144,7 @@
 		<div class="mx-auto flex h-16 w-full max-w-6xl items-center gap-3 px-4 lg:px-6">
 			<a
 				href="{base}/examples/landing"
-				class="flex items-center gap-2 rounded-md font-heading text-lg font-bold outline-none [font-variation-settings:'GEOM'_50,'opsz'_32] focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+				class="flex items-center gap-2 rounded-md font-heading text-lg font-bold outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
 			>
 				<span
 					aria-hidden="true"
@@ -168,7 +167,6 @@
 			</nav>
 
 			<div class="ms-auto flex items-center gap-1.5">
-				<AccentSwitcher />
 				<ModeSwitcher />
 				<Separator orientation="vertical" class="mx-1 hidden h-5 sm:block" decorative />
 				<Button href="#pricing" variant="ghost" class="hidden sm:inline-flex">Sign in</Button>
@@ -324,9 +322,7 @@
 						class="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3"
 					>
 						{#each PARTNERS.slice(0, 6) as partner (partner.name)}
-							<li
-								class="font-heading text-base font-semibold text-muted-foreground [font-variation-settings:'GEOM'_50] sm:text-lg"
-							>
+							<li class="font-heading text-base font-semibold text-muted-foreground sm:text-lg">
 								{partner.name}
 							</li>
 						{/each}
@@ -660,9 +656,7 @@
 		<div class="mx-auto w-full max-w-6xl px-4 py-12 lg:px-6 lg:py-16">
 			<div class="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
 				<div class="flex flex-col gap-4">
-					<p
-						class="flex items-center gap-2 font-heading text-lg font-bold [font-variation-settings:'GEOM'_50,'opsz'_32]"
-					>
+					<p class="flex items-center gap-2 font-heading text-lg font-bold">
 						<span
 							aria-hidden="true"
 							class="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground"

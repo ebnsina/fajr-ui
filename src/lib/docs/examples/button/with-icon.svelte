@@ -3,4 +3,4 @@
 	import { Icon, PlusIcon } from '$lib/icons';
 </script>
 
-<Button><Icon icon={PlusIcon} />Add manuscript</Button>
+<Button><Icon icon={PlusIcon} />New acquisition</Button>

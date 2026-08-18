@@ -13,18 +13,18 @@
 	let open = $state(false);
 </script>
 
-<Button onclick={() => (open = true)}>Open dialog</Button>
+<Button onclick={() => (open = true)}>Discard changes</Button>
 
 <Dialog bind:open dismissible={true} showCloseButton={true}>
 	<DialogHeader>
-		<DialogTitle>Delete collection</DialogTitle>
-		<DialogDescription>This cannot be undone.</DialogDescription>
+		<DialogTitle>Discard this catalogue entry?</DialogTitle>
+		<DialogDescription>Nothing you have typed has been saved yet.</DialogDescription>
 	</DialogHeader>
 	<DialogPanel>
-		<p class="text-sm">Every manuscript catalogued under it will be removed.</p>
+		<p class="text-sm">The shelfmark, the collation and the conservation note will all be lost.</p>
 	</DialogPanel>
 	<DialogFooter>
-		<DialogClose variant="outline">Cancel</DialogClose>
-		<DialogClose variant="destructive">Delete</DialogClose>
+		<DialogClose variant="outline">Keep editing</DialogClose>
+		<DialogClose variant="destructive">Discard</DialogClose>
 	</DialogFooter>
 </Dialog>

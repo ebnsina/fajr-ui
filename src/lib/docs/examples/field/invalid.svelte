@@ -4,8 +4,8 @@
 
 <div class="w-full max-w-sm">
 	<Field invalid>
-		<FieldLabel>Work email</FieldLabel>
-		<Input type="email" value="not-an-email" />
+		<FieldLabel>Reader's email</FieldLabel>
+		<Input type="email" value="ibn.sina.bayt" />
 		<FieldError>Enter a valid email address.</FieldError>
 	</Field>
 </div>

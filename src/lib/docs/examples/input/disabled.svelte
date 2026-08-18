@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Input placeholder="Disabled" disabled />
+	<Input placeholder="Shelfmark assigned on save" disabled />
 </div>

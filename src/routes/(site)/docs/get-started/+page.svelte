@@ -85,9 +85,17 @@
 
 	<h2 id="tokens">Add the tokens</h2>
 	<p>
-		Copy <code>src/lib/styles/theme.css</code> into your project and import it after Tailwind. It
-		defines every colour, radius, font and motion curve the components read, in both light and dark
-		— see <a href="{base}/docs/theming">Theming</a> for what each one does.
+		<code>fajr-ui init</code> writes this file for you; the step is here for the by-hand path. Run
+		<code>fajr-ui add theme</code> to fetch it on its own, or copy
+		<code>src/lib/styles/theme.css</code> across. It defines every colour, radius, font and motion
+		curve the components read, in both light and dark — see
+		<a href="{base}/docs/theming">Theming</a> for what each one does.
+	</p>
+	<p>
+		Do this before adding a component rather than after. The components name their colours through
+		these tokens and carry no fallback of their own, so without the file every border falls through
+		to the surrounding text colour — which looks like a broken component rather than a missing
+		stylesheet.
 	</p>
 	<CodeBlock
 		code={`@import 'tailwindcss';

@@ -148,12 +148,15 @@
 				<CardDescription>The five volumes currently on the desks.</CardDescription>
 			</CardHeader>
 			<CardPanel class="pt-0">
+				<!--
+					The rules are drawn by the rows, not by a separator element between
+					them. A `<ul>` may only contain `<li>`, and a `Separator` interleaved
+					between the items put a `<div>` straight into the list — which breaks
+					the list semantics that make it announce as "list, 5 items" at all.
+				-->
 				<ul class="flex flex-col">
-					{#each translations as entry, index (entry.title)}
-						{#if index > 0}
-							<Separator decorative />
-						{/if}
-						<li class="flex items-center gap-3 py-3">
+					{#each translations as entry (entry.title)}
+						<li class="flex items-center gap-3 py-3 not-first:border-t">
 							<Avatar>{initials(entry.scholar)}</Avatar>
 							<div class="min-w-0 flex-1">
 								<p class="truncate text-sm font-medium">{entry.title}</p>

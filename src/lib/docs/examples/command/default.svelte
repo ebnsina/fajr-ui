@@ -6,31 +6,52 @@
 
 	const groups: CommandGroupData[] = [
 		{
-			heading: 'Pages',
+			heading: 'Manuscripts',
 			items: [
-				{ id: 'docs', label: 'Docs', keywords: 'documentation guide', icon: ManuscriptIcon },
-				{ id: 'dashboard', label: 'Dashboard', keywords: 'example app', icon: OverviewIcon }
+				{
+					id: 'canon',
+					label: 'The Canon of Medicine',
+					keywords: 'ibn sina bukhara medicine',
+					icon: ManuscriptIcon
+				},
+				{
+					id: 'optics',
+					label: 'The Book of Optics',
+					keywords: 'ibn al-haytham basra light',
+					icon: ManuscriptIcon
+				},
+				{
+					id: 'compendious',
+					label: 'The Compendious Book',
+					keywords: 'al-khwarizmi algebra baghdad',
+					icon: ManuscriptIcon
+				},
+				{
+					id: 'zij',
+					label: 'Zij-i Ilkhani',
+					keywords: 'al-tusi maragheh tables',
+					icon: ManuscriptIcon
+				}
 			]
 		},
 		{
-			heading: 'Overview',
+			heading: 'Actions',
 			items: [
-				{ id: 'introduction', label: 'Introduction', icon: ManuscriptIcon },
-				{ id: 'get-started', label: 'Get Started', icon: ManuscriptIcon },
-				{ id: 'styling', label: 'Styling', icon: ManuscriptIcon },
-				{ id: 'changelog', label: 'Changelog', icon: ManuscriptIcon },
-				{ id: 'roadmap', label: 'Roadmap', icon: ManuscriptIcon }
+				{ id: 'acquire', label: 'Record an acquisition', icon: OverviewIcon },
+				{ id: 'copy', label: 'Start a copy', icon: OverviewIcon },
+				{ id: 'bindery', label: 'Send to the bindery', icon: OverviewIcon },
+				{ id: 'shelf', label: 'Refile on the shelf', icon: OverviewIcon }
 			]
 		}
 	];
 </script>
 
 <Button variant="outline" onclick={() => (open = true)}>
-	Open palette <Kbd class="ms-2">⌘K</Kbd>
+	Search the archive <Kbd class="ms-2">⌘K</Kbd>
 </Button>
 
-<Command bind:open {groups} placeholder="Search documentation…">
+<Command bind:open {groups} placeholder="Search manuscripts and actions…">
 	{#snippet footer()}
-		<span class="flex items-center gap-1.5">Go to page <Kbd>⏎</Kbd></span>
+		<span class="flex items-center gap-1.5">Open <Kbd>⏎</Kbd></span>
 	{/snippet}
 </Command>

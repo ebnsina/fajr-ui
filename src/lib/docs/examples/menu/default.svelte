@@ -12,13 +12,13 @@
 	aria-expanded={open}
 	onclick={() => (open = !open)}
 >
-	Open menu
+	Manuscript actions
 </Button>
 
 <Menu bind:open anchor={trigger}>
-	<MenuItem>Rename<MenuShortcut>⌘R</MenuShortcut></MenuItem>
-	<MenuItem>Duplicate</MenuItem>
-	<MenuItem>Archive</MenuItem>
+	<MenuItem>Rename shelfmark<MenuShortcut>⌘R</MenuShortcut></MenuItem>
+	<MenuItem>Duplicate entry</MenuItem>
+	<MenuItem>Send to the bindery</MenuItem>
 	<MenuSeparator />
-	<MenuItem variant="destructive">Delete<MenuShortcut>⌘⌫</MenuShortcut></MenuItem>
+	<MenuItem variant="destructive">Delete manuscript<MenuShortcut>⌘⌫</MenuShortcut></MenuItem>
 </Menu>

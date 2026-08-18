@@ -2,4 +2,4 @@
 	import { Button } from '$lib/components/ui';
 </script>
 
-<Button variant="link">Link</Button>
+<Button variant="link">View provenance</Button>

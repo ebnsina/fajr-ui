@@ -5,5 +5,5 @@
 
 <Button size="icon-sm" variant="outline">
 	<Icon icon={PlusIcon} />
-	<span class="sr-only">Add manuscript</span>
+	<span class="sr-only">Add folio</span>
 </Button>

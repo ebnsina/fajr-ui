@@ -5,5 +5,8 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Textarea bind:value={note} placeholder="Type here — the box grows as you write." />
+	<Textarea
+		bind:value={note}
+		placeholder="Provenance, condition, marginalia — the box grows as you write."
+	/>
 </div>

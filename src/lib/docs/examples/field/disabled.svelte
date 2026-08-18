@@ -4,7 +4,7 @@
 
 <div class="w-full max-w-sm">
 	<Field disabled>
-		<FieldLabel>Work email</FieldLabel>
-		<Input type="email" placeholder="you@example.com" />
+		<FieldLabel>Reader's email</FieldLabel>
+		<Input type="email" placeholder="scholar@bayt-al-hikma.org" />
 	</Field>
 </div>

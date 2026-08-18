@@ -2,7 +2,7 @@
 	import { fromAction } from 'svelte/attachments';
 	import { Button, tooltip, type TooltipOptions } from '$lib/components/ui';
 
-	const hint: TooltipOptions = { content: 'Add to library', side: 'bottom' };
+	const hint: TooltipOptions = { content: 'Delivered to the reading room by noon', side: 'bottom' };
 </script>
 
 <!--
@@ -11,4 +11,4 @@
 	given onto its own element, so the tooltip lands there — no hand-rolled
 	trigger needed.
 -->
-<Button variant="outline" {@attach fromAction(tooltip, () => hint)}>Hover me</Button>
+<Button variant="outline" {@attach fromAction(tooltip, () => hint)}>Request folio</Button>

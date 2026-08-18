@@ -31,7 +31,7 @@
 		<h3 class="font-mono text-sm font-medium">{title}</h3>
 	{/if}
 	<!-- Scrolls on its own so a wide type signature never widens the page. -->
-	<div class="overflow-x-auto rounded-xl border">
+	<div class="overflow-x-auto rounded-xl border bg-background">
 		<Table class="min-w-[36rem]">
 			<TableHeader>
 				<TableRow>

@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Textarea size="sm" placeholder="sm" />
+	<Textarea size="sm" placeholder="Shelf note" />
 </div>

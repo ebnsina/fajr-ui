@@ -5,13 +5,13 @@
 
 <PreviewCard>
 	{#snippet trigger()}
-		<a href="{base}/docs" class="underline underline-offset-4">Hover this link</a>
+		<a href="{base}/docs" class="underline underline-offset-4">Ibn al-Haytham</a>
 	{/snippet}
 	<div class="flex flex-col gap-2">
-		<Avatar>FU</Avatar>
-		<p class="text-sm font-medium">Fajr UI</p>
+		<Avatar>IH</Avatar>
+		<p class="text-sm font-medium">Ibn al-Haytham</p>
 		<p class="text-sm text-muted-foreground">
-			Accessible components you copy into your project and own outright.
+			Basra, then Cairo. Seven volumes of the Book of Optics are held in this collection.
 		</p>
 	</div>
 </PreviewCard>

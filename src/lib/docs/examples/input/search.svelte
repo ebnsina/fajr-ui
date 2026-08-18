@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Input type="search" placeholder="Search…" />
+	<Input type="search" placeholder="Search the catalogue…" />
 </div>

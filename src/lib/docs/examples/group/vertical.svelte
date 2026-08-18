@@ -2,8 +2,8 @@
 	import { Button, Group } from '$lib/components/ui';
 </script>
 
-<Group orientation="vertical" label="Text alignment">
-	<Button variant="outline">Left</Button>
-	<Button variant="outline">Center</Button>
-	<Button variant="outline">Right</Button>
+<Group orientation="vertical" label="Page layout">
+	<Button variant="outline">Single</Button>
+	<Button variant="outline">Facing</Button>
+	<Button variant="outline">Scroll</Button>
 </Group>

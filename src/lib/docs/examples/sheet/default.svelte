@@ -19,7 +19,7 @@
 </script>
 
 <Sheet bind:open side="right">
-	<SheetTrigger variant="outline">Open sheet</SheetTrigger>
+	<SheetTrigger variant="outline">Edit manuscript</SheetTrigger>
 	<SheetPopup class="w-[min(22rem,calc(100vw-3rem))]">
 		<SheetHeader>
 			<SheetTitle>Manuscript details</SheetTitle>

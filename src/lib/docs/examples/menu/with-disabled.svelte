@@ -12,11 +12,11 @@
 	aria-expanded={open}
 	onclick={() => (open = !open)}
 >
-	Open menu
+	Collection actions
 </Button>
 
 <Menu bind:open anchor={trigger}>
-	<MenuItem>Rename</MenuItem>
-	<MenuItem disabled>Duplicate</MenuItem>
-	<MenuItem>Archive</MenuItem>
+	<MenuItem>Rename collection</MenuItem>
+	<MenuItem disabled>Merge with another collection</MenuItem>
+	<MenuItem>Export the catalogue</MenuItem>
 </Menu>

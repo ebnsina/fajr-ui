@@ -3,5 +3,5 @@
 </script>
 
 <div class="w-full max-w-sm">
-	<Textarea placeholder="Disabled" disabled />
+	<Textarea placeholder="Locked while the volume is on loan" disabled />
 </div>
