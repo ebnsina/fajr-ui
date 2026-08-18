@@ -16,6 +16,7 @@
 	import { getComponent } from '$lib/data/components';
 	import { docsNav } from '$lib/data/docs-nav';
 	import { mode } from '$lib/mode.svelte';
+	import { hero } from './hero.svelte';
 	import ModeSwitcher from './mode-switcher.svelte';
 
 	const navItems = [
@@ -114,13 +115,42 @@
 		}
 	}
 
+	/*
+	 * Whether the header is currently sitting on a hero.
+	 *
+	 * The route half is derived here rather than published from the page,
+	 * because the layout renders this header *before* the page that would do the
+	 * publishing — so a page-owned flag is always false in the prerendered HTML
+	 * and hydration swaps the bar visibly. `page.route.id` is already correct on
+	 * the server, and `scrolledPast` starts false, which is the state every load
+	 * begins in. Between them the first paint needs no correcting.
+	 */
+	const overHero = $derived(page.route.id === '/(site)' && !hero.scrolledPast);
+
 	function isCurrent(href: string): boolean {
 		return page.url.pathname.startsWith(href);
 	}
 </script>
 
+<!--
+	Over a hero the header drops its ground, and nothing else. It used to force
+	`dark` here as well, because the hero was pinned to near-black; now that the
+	hero follows the theme, forcing it would invert the header against the page
+	in light mode. The contents already read their colours from tokens, so the
+	page theme is the right answer in both.
+
+	`transition-colors` matters: the swap happens mid-scroll, and without it the
+	whole bar changes colour in a single frame.
+-->
 <header
-	class="sticky top-0 z-40 w-full bg-sidebar/80 backdrop-blur-sm before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-border/64"
+	class={[
+		// `text-foreground` is not redundant. Colour inherits as a computed value,
+		// so anything that merely inherits from `body` keeps the light-theme ink
+		// even inside `.dark` — the wordmark went invisible on the hero for
+		// exactly that reason. Naming the token here re-resolves it.
+		'sticky top-0 z-40 w-full text-foreground transition-colors duration-200',
+		overHero ? 'bg-transparent' : 'bg-sidebar/80 backdrop-blur-sm'
+	]}
 >
 	<div
 		class="relative container flex h-(--header-height) w-full items-center justify-between gap-2 px-4 sm:px-6"
@@ -136,7 +166,7 @@
 		</Button>
 
 		<div
-			class="flex shrink-0 items-center gap-1.5 font-heading text-[1.375em] font-bold [font-variation-settings:'GEOM'_50,'opsz'_32] sm:text-2xl"
+			class="flex shrink-0 items-center gap-1.5 font-heading text-[1.375em] font-bold sm:text-2xl"
 		>
 			<a href="{base}/" aria-label="Home">Fajr UI</a>
 		</div>

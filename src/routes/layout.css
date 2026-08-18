@@ -5,19 +5,33 @@
 @import '../lib/styles/theme.css';
 
 /*
- * The faces themselves, kept with the site rather than with the tokens.
+ * The text face, carrying headings and body both.
  *
- * The paths are relative so the bundler resolves them: it fingerprints each
- * file and rewrites the URL against whatever base the site is served from,
- * which an absolute `/fonts/…` could not do once the site moved off the root.
+ * `standard` rather than `wght` because it brings the width axis with it, 75%
+ * to 125%. That axis is what lets a heading be set wider than the paragraph
+ * under it from the same file — which is the reason a separate display face is
+ * not needed here, and the reason the one that used to sit alongside this was
+ * removed: it had a single weight and no width axis at all.
+ *
+ * It costs 58KB over the weight-only file, for the latin subset the browser
+ * actually fetches.
+ *
+ * OFL 1.1. The licence text ships in `lib/assets/fonts/OFL.txt`, which is the
+ * one condition it imposes on a project that is not selling the font.
  */
-@font-face {
-	font-family: 'Fajr Display';
-	src: url('../lib/assets/fonts/fajr-display.woff2') format('woff2');
-	font-weight: 300 700;
-	font-display: swap;
-}
+@import '@fontsource-variable/mona-sans/standard.css';
 
+/*
+ * The monospace face, kept with the site rather than with the tokens.
+ *
+ * The path is relative so the bundler resolves it: it fingerprints the file and
+ * rewrites the URL against whatever base the site is served from, which an
+ * absolute `/fonts/…` could not do once the site moved off the root.
+ *
+ * Its display counterpart used to sit here too. Nothing references it now that
+ * the sans resolves to the family above, so the face and its 186KB have gone
+ * with it.
+ */
 @font-face {
 	font-family: 'Fajr Mono';
 	src: url('../lib/assets/fonts/fajr-mono.woff2') format('woff2');
