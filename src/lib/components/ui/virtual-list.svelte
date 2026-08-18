@@ -101,7 +101,7 @@
 	bind:clientHeight={viewport}
 	style:height={typeof height === 'number' ? `${height}px` : height}
 	class={cn(
-		'relative overflow-y-auto overscroll-contain rounded-lg border outline-none focus-visible:ring-2 focus-visible:ring-ring',
+		'relative overflow-y-auto overscroll-contain rounded-lg border bg-card outline-none focus-visible:ring-2 focus-visible:ring-ring',
 		className
 	)}
 	{...rest}

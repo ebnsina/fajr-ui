@@ -80,7 +80,7 @@
 		'relative z-0 flex w-fit items-center justify-center gap-x-0.5 text-muted-foreground',
 		vertical && 'w-full flex-col items-stretch',
 		variant === 'default'
-			? 'rounded-lg bg-muted p-0.5'
+			? 'rounded-lg border bg-muted p-0.5'
 			: 'gap-x-1 *:data-[slot=tabs-trigger]:hover:bg-accent',
 		variant === 'underline' && (vertical ? 'px-1' : 'py-1'),
 		className

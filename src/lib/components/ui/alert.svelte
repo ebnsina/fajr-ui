@@ -4,7 +4,7 @@
 	import type { Snippet } from 'svelte';
 
 	export const alertVariants = cva(
-		'relative grid w-full grid-cols-[0_1fr] items-start gap-x-2 gap-y-0.5 rounded-xl border px-3.5 py-3 text-card-foreground text-sm has-[>svg]:grid-cols-[calc(--spacing(4))_1fr] has-data-[slot=alert-action]:grid-cols-[1fr_auto] has-[>svg]:has-data-[slot=alert-action]:grid-cols-[calc(--spacing(4))_1fr_auto] [&>svg]:h-lh [&>svg]:w-4 [&>svg]:shrink-0',
+		'relative grid w-full grid-cols-[0_1fr] items-start gap-x-2 gap-y-0.5 rounded-xl border bg-card px-3.5 py-3 text-card-foreground text-sm has-[>svg]:grid-cols-[calc(--spacing(4))_1fr] has-data-[slot=alert-action]:grid-cols-[1fr_auto] has-[>svg]:has-data-[slot=alert-action]:grid-cols-[calc(--spacing(4))_1fr_auto] [&>svg]:h-lh [&>svg]:w-4 [&>svg]:shrink-0',
 		{
 			defaultVariants: { variant: 'default' },
 			variants: {
