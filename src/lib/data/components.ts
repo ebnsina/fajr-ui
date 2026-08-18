@@ -102,3 +102,93 @@ export const builtComponents: ComponentEntry[] = components.filter((entry) => en
 export function getComponent(slug: string): ComponentEntry | undefined {
 	return components.find((entry) => entry.slug === slug);
 }
+
+/**
+ * The catalogue's shelves, in reading order.
+ *
+ * The roster above is alphabetical, which is the right order to look something
+ * up in and the wrong one to browse: it puts Accordion beside Alert and Table
+ * beside Tabs, so nothing about the list tells you what a component is *for*.
+ * These groups are the browsing order, and the index on the home page reads
+ * from them.
+ *
+ * Every built component belongs to exactly one shelf, and a test enforces that
+ * — a component added to the roster without a shelf would otherwise vanish from
+ * the home page with nothing failing to say so.
+ */
+export const CATEGORIES: { name: string; blurb: string; slugs: string[] }[] = [
+	{
+		name: 'Forms',
+		blurb: 'Taking input, and telling the reader what went wrong.',
+		slugs: [
+			'autocomplete',
+			'checkbox',
+			'checkbox-group',
+			'combobox',
+			'date-picker',
+			'field',
+			'fieldset',
+			'form',
+			'input',
+			'input-group',
+			'label',
+			'number-field',
+			'otp-field',
+			'radio-group',
+			'select',
+			'slider',
+			'switch',
+			'textarea',
+			'toggle',
+			'toggle-group'
+		]
+	},
+	{
+		name: 'Actions',
+		blurb: 'The things a reader presses, and the menus behind them.',
+		slugs: ['button', 'command', 'context-menu', 'group', 'menu', 'toolbar']
+	},
+	{
+		name: 'Overlays',
+		blurb: 'Surfaces that arrive over the page and hand focus back when they leave.',
+		slugs: ['alert-dialog', 'dialog', 'drawer', 'popover', 'preview-card', 'sheet', 'tooltip']
+	},
+	{
+		name: 'Navigation',
+		blurb: 'Saying where the reader is, and moving them somewhere else.',
+		slugs: ['breadcrumb', 'pagination', 'sidebar', 'tabs']
+	},
+	{
+		name: 'Data',
+		blurb: 'Rows, series and long lists that stay fast and stay readable.',
+		slugs: ['calendar', 'chart', 'data-table', 'table', 'virtual-list']
+	},
+	{
+		name: 'Feedback',
+		blurb: 'Progress, state and the messages that report it.',
+		slugs: ['alert', 'empty', 'meter', 'progress', 'skeleton', 'spinner', 'toast']
+	},
+	{
+		name: 'Layout',
+		blurb: 'Surfaces, dividers and the containers everything else sits in.',
+		slugs: [
+			'accordion',
+			'avatar',
+			'badge',
+			'card',
+			'collapsible',
+			'frame',
+			'kbd',
+			'scroll-area',
+			'separator'
+		]
+	}
+];
+
+/** The roster regrouped onto its shelves, ready to render. */
+export const shelves = CATEGORIES.map((category) => ({
+	...category,
+	components: category.slugs
+		.map((slug) => components.find((component) => component.slug === slug))
+		.filter((component): component is ComponentEntry => Boolean(component))
+}));

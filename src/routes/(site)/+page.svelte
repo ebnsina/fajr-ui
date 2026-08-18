@@ -2,120 +2,166 @@
 	import PageMeta from '$lib/components/site/page-meta.svelte';
 	import { base } from '$app/paths';
 	import { Badge, Button } from '$lib/components/ui';
-	import { cn } from '$lib/utils';
-	import ComponentThumbnail from '$lib/components/site/component-thumbnail.svelte';
-	import PageHeader from '$lib/components/site/page-header.svelte';
+	import ComponentGlyph from '$lib/components/site/component-glyph.svelte';
+	import ShaderGradient from '$lib/components/site/shader-gradient.svelte';
+	import { hero } from '$lib/components/site/hero.svelte';
 	import SiteFooter from '$lib/components/site/site-footer.svelte';
-	import { builtComponents, components } from '$lib/data/components';
+	import { builtComponents, shelves } from '$lib/data/components';
 
 	const description =
 		'Accessible components you copy into your project and own outright — no runtime, no lock-in.';
 
-	/**
-	 * The handful of examples that genuinely need more than one column's width.
-	 * Measured rather than guessed: everything else renders under 330px, so a
-	 * wider tile would only add empty space around it.
+	let heroEl = $state<HTMLElement | null>(null);
+
+	/*
+	 * Publishes how far the hero has been scrolled past. The header owns the
+	 * other half of the question — whether a hero exists at all — because that
+	 * one has to be right before hydration. See `hero.svelte.ts`.
+	 *
+	 * Measured against the hero's own height rather than a fixed scroll offset,
+	 * because the hero's height is type-dependent — the headline wraps to three
+	 * lines on a narrow window and two on a wide one, and a hardcoded threshold
+	 * would hand back an unreadable header at one of those widths.
 	 */
-	const WIDE = new Set([
-		'table',
-		'data-table',
-		'calendar',
-		'command',
-		'pagination',
-		'sidebar',
-		'toolbar',
-		'otp-field'
-	]);
+	function sync() {
+		if (!heroEl) return;
+		hero.scrolledPast = window.scrollY >= heroEl.offsetHeight - 64;
+	}
+
+	$effect(() => {
+		sync();
+		// Cleared on unmount: this state outlives the page, and a stale `true`
+		// would leave every other route with an invisible header.
+		return () => (hero.scrolledPast = false);
+	});
 </script>
 
 <PageMeta title="A modern Svelte UI component library" {description} />
 
+<svelte:window onscroll={sync} onresize={sync} />
+
 <main id="main-content" tabindex="-1" class="outline-none">
-	<div class="container w-full">
-		<PageHeader class="max-w-2xl *:items-start *:text-left">
-			<h1 class="font-heading text-4xl font-bold lg:text-5xl">
-				Components for <span class="text-primary">Svelte</span> that feel finished.
-			</h1>
-			<p class="text-muted-foreground lg:text-lg">{description}</p>
-			<div class="mt-2 flex gap-2">
-				<Button href="{base}/docs" size="lg">Get started</Button>
-				<Button href="{base}/examples" size="lg" variant="outline">View Examples</Button>
-			</div>
-		</PageHeader>
-	</div>
+	<!--
+		The hero follows the theme rather than pinning itself to near-black. The
+		shader reads its ramp off `--color-background` and `--color-foreground`,
+		so the same surface is light-on-dark in one theme and ink-on-paper in the
+		other, and the controls on top can be the library's own rather than a set
+		of white overrides that only work against one ground.
 
-	<div
-		class="relative before:absolute before:inset-x-0 before:top-0 before:h-px before:bg-border/64"
+		It runs up under the header, which drops its own ground while this is
+		behind it — see `hero.svelte.ts` for why that is published state rather
+		than the header checking the route.
+	-->
+	<section
+		bind:this={heroEl}
+		class="relative isolate -mt-(--header-height) overflow-clip bg-background pt-(--header-height)"
 	>
-		<div class="container w-full">
-			<p class="pt-8 text-sm text-muted-foreground">
-				{#if builtComponents.length === components.length}
-					{components.length} components, with more coming.
-				{:else}
-					{builtComponents.length} of {components.length} components built.
-				{/if}
-			</p>
-			<!--
-			A specimen-first grid. Measured across every example, only two want more
-			than 330px — so the previous half-card-wide preview panel was mostly empty,
-			and the 200px column of prose beside it was answering a question nobody
-			asks while scanning a catalogue. The example is the content; the name is
-			its caption.
-
-			Those exceptions span a second column rather than being cropped, so the
-			layout follows the content instead of forcing one shape onto all of it.
-			`grid-flow-dense` lets a single-width tile backfill the gap a wide one
-			leaves when it cannot fit in the columns remaining.
-		-->
+		<div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10">
+			<ShaderGradient class="size-full" seed={1.7} speed={0.85} intensity={0.95} />
 			<div
-				class="grid grid-flow-dense grid-cols-1 gap-3 pt-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4 2xl:grid-cols-4"
-			>
-				{#each components as component (component.slug)}
-					<article
-						class={cn(
-							'group relative flex flex-col overflow-hidden rounded-xl border bg-card text-card-foreground shadow-xs/5 transition-[box-shadow,transform] duration-(--duration-press) ease-out not-dark:bg-clip-padding focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background hover:-translate-y-0.5 hover:shadow-md/5 motion-reduce:hover:translate-y-0',
-							WIDE.has(component.slug) && 'sm:col-span-2 lg:col-span-2'
-						)}
-					>
-						<div
-							class="pointer-events-none relative flex h-40 items-center justify-center overflow-hidden bg-[color-mix(in_srgb,var(--color-card),var(--color-sidebar))] px-5 dark:bg-background"
-						>
-							{#if component.isNew}
-								<Badge class="absolute end-2.5 top-2.5 z-10" variant="info">New</Badge>
-							{:else if !component.built}
-								<Badge class="absolute end-2.5 top-2.5 z-10" variant="secondary">Planned</Badge>
-							{/if}
-							<!--
-							The specimen is scenery. It is already `pointer-events-none`, so
-							it could not be clicked — but it was still tabbable, and between
-							them the previews held 136 of this page's 206 tab stops. Reaching
-							the second card meant tabbing through an accordion, a slider and
-							a menu that do nothing. `inert` takes the whole subtree out of
-							the tab order and the accessibility tree, which also settles the
-							outline: the demos brought their own `h3`s, so the first heading
-							on the page after the `h1` was a level three.
-						-->
-							<div class="contents" inert>
-								<ComponentThumbnail slug={component.slug} />
-							</div>
-						</div>
+				class="absolute inset-0"
+				style="background: linear-gradient(to bottom, color-mix(in srgb, var(--color-background) 30%, transparent) 0%, color-mix(in srgb, var(--color-background) 58%, transparent) 45%, color-mix(in srgb, var(--color-background) 94%, transparent) 82%, var(--color-background) 100%);"
+			></div>
+		</div>
 
-						<!-- The caption reads as a label for the specimen above it, not a heading. -->
-						<div class="flex flex-col gap-0.5 border-t px-4 py-3">
-							<h2 class="text-sm font-medium">
-								<a
-									class="outline-none before:absolute before:inset-0 before:rounded-xl"
-									href="{base}/docs/components/{component.slug}"
-								>
-									{component.name}
-								</a>
-							</h2>
-							<p class="truncate text-xs text-muted-foreground">{component.description}</p>
-						</div>
-					</article>
-				{/each}
+		<div class="container flex w-full flex-col items-center text-center">
+			<div class="max-w-3xl px-2 pt-20 pb-24">
+				<p
+					class="inline-flex items-center gap-2 rounded-full border border-border bg-background/48 px-3.5 py-1.5 text-xs font-semibold tracking-[0.1em] text-foreground uppercase backdrop-blur-sm"
+				>
+					<span aria-hidden="true" class="size-1.5 rounded-full bg-foreground"></span>
+					{builtComponents.length} components, zero runtime
+				</p>
+
+				<h1
+					class="mt-7 font-heading text-[clamp(2.5rem,6.5vw,4.5rem)] leading-[1.02] font-bold tracking-[-0.03em]"
+				>
+					Components for Svelte that feel finished.
+				</h1>
+
+				<p class="mx-auto mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
+					{description}
+				</p>
+
+				<div class="mt-9 flex flex-wrap justify-center gap-3">
+					<Button href="{base}/docs" size="lg">Get started</Button>
+					<Button href="{base}/examples" size="lg" variant="outline">View examples</Button>
+				</div>
 			</div>
 		</div>
+	</section>
+
+	<!--
+		The catalogue, shelved rather than alphabetised.
+
+		The roster itself is alphabetical, which is the right order to look a name
+		up in and the wrong one to browse: it puts Table beside Tabs and tells you
+		nothing about what either is for. These groups are the browsing order.
+
+		Each card carries a wireframe, not a working component. Mounting 58 live
+		instances on the first screen of the site meant several calendars and a
+		chart booting before anything was scrolled, each of them cropped or scaled
+		to a size it was never designed for. At this size the useful thing is the
+		*shape* — a field is a bar over a box — and a drawing says that faster
+		than a shrunken copy does. See `$lib/data/glyphs.ts`.
+	-->
+	<div class="container w-full pt-16 pb-8">
+		{#each shelves as shelf (shelf.name)}
+			<section class="pt-12 first:pt-0">
+				<div class="flex items-baseline justify-between gap-4 border-b pb-3">
+					<h2 class="font-heading text-lg font-semibold tracking-tight">{shelf.name}</h2>
+					<p class="hidden text-sm text-muted-foreground sm:block">{shelf.blurb}</p>
+				</div>
+
+				<ul class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					{#each shelf.components as component (component.slug)}
+						<li>
+							<a
+								href="{base}/docs/components/{component.slug}"
+								class="group relative block overflow-hidden rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+							>
+								<!--
+									One surface, fixed height. The tile carried a lit gradient with the
+									wireframe floating on a panel above it, and two layers of decoration
+									under a drawing that is itself an abstraction was one too many — the
+									light was the loudest thing in a grid whose subject is the component.
+
+									The height is fixed rather than derived so every tile in a row lines
+									up regardless of how tall its wireframe happens to be, and the
+									centring keeps a short one — Badge is a single pill — off the top
+									edge of a tall box.
+								-->
+								<span
+									class="flex h-52 items-center justify-center bg-muted px-10 transition-colors duration-200 group-hover:bg-accent"
+								>
+									<ComponentGlyph slug={component.slug} />
+								</span>
+
+								<!--
+									The name arrives on hover, over the tile rather than beside it.
+
+									It fades rather than mounts, and it is `opacity-0` rather than
+									`hidden`: this is the link's entire accessible name, so it has to
+									stay in the accessibility tree whether or not a pointer is over the
+									card. A `display: none` here would leave 58 links announced as their
+									href.
+								-->
+								<span
+									class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-2 bg-gradient-to-t from-background via-background/80 to-transparent px-4 pt-10 pb-3 text-sm font-medium text-foreground opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+								>
+									<span class="truncate">{component.name}</span>
+									{#if component.isNew}
+										<Badge variant="info" size="sm">New</Badge>
+									{:else if !component.built}
+										<Badge variant="secondary" size="sm">Planned</Badge>
+									{/if}
+								</span>
+							</a>
+						</li>
+					{/each}
+				</ul>
+			</section>
+		{/each}
 	</div>
 </main>
 
