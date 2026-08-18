@@ -20,6 +20,13 @@ const DEFAULT_REGISTRY = process.env.FAJR_UI_REGISTRY ?? 'https://ebnsina.github
 const CONFIG_FILE = 'fajr-ui.json';
 const LOCK_FILE = 'fajr-ui.lock.json';
 
+/**
+ * The registry item holding the design tokens. Named rather than inlined
+ * because `init` installs it and `add` checks for it, and those two agreeing is
+ * the whole point.
+ */
+const THEME_ITEM = 'theme';
+
 /*
  * Colour, unless the output is not a terminal or the user has asked for none.
  *
@@ -187,6 +194,19 @@ async function inspect(cwd, config, item, lock) {
 	return results;
 }
 
+/**
+ * Whether the token stylesheet is in place.
+ *
+ * Checks the path `init` writes to, and nothing cleverer. A project that moved
+ * the file or brought its own tokens under another name will be told once that
+ * they are missing, which is a great deal better than the alternative failure:
+ * silence, and a component whose borders are the wrong colour for reasons that
+ * lead nowhere.
+ */
+function hasTheme(cwd, config) {
+	return existsSync(resolve(rootsOf(cwd, config).lib, 'styles/theme.css'));
+}
+
 function summarise(files) {
 	const counts = { current: 0, outdated: 0, modified: 0, missing: 0 };
 	for (const file of files) counts[file.status]++;
@@ -243,9 +263,35 @@ async function init(cwd, args) {
 	};
 	await writeFile(path, `${JSON.stringify(config, null, '\t')}\n`);
 	console.log(`${green('added')} ${bold(CONFIG_FILE)}`);
+
+	/*
+	 * The tokens are installed here rather than left as a step in the docs.
+	 * Every component reads `--border`, `--input` and `--ring` with no fallback
+	 * of its own, so a project that added a component without them got borders
+	 * in their own text colour — Preflight's `currentColor` default showing
+	 * through. That failure names nothing that would lead you back to a missing
+	 * stylesheet, so the CLI stopped relying on anyone reading the instruction.
+	 */
+	const lock = await readLock(cwd);
+	const item = await fetchItem(config.registry, THEME_ITEM);
+	const files = await inspect(cwd, config, item, lock);
+	const { written, kept } = await applyFiles(files, { overwriteModified: false });
+	recordLock(lock, item, files, written);
+	await writeLock(cwd, lock);
+
+	for (const file of written) console.log(`${green('added')} ${bold(file.display)}`);
+	for (const file of kept) console.log(`${dim('kept')}  ${bold(file.display)} ${dim('(edited)')}`);
+
+	const themeFile = files[0];
 	console.log();
 	console.log(`  Components will be written to ${cyan(config.aliases.components)}.`);
-	console.log(`  Add one with ${cyan('npx fajr-ui add button')}.`);
+	console.log();
+	console.log(`  Import the tokens after Tailwind, in your app's stylesheet:`);
+	console.log();
+	console.log(`    ${dim("@import 'tailwindcss';")}`);
+	console.log(`    ${cyan(`@import './${themeFile.display.replace(/^src\//, '')}';`)}`);
+	console.log();
+	console.log(`  Then add a component with ${cyan('npx fajr-ui add button')}.`);
 	console.log();
 }
 
@@ -324,6 +370,19 @@ async function add(cwd, args) {
 		console.log(
 			`  ${dim('Review with')} ${cyan('npx fajr-ui diff')} ${dim('or replace with --force.')}`
 		);
+	}
+
+	/*
+	 * Said here because the symptom does not point at the cause. Without the
+	 * tokens the components still render — they just render with every border in
+	 * the surrounding text colour, which reads as a broken component rather than
+	 * as a missing stylesheet. Cheaper to say it than to have it debugged.
+	 */
+	if (!hasTheme(cwd, config)) {
+		console.log();
+		console.log(`${yellow('warning')} the design tokens are not installed.`);
+		console.log(`  ${dim('Borders and focus rings will fall back to the current text colour.')}`);
+		console.log(`  ${dim('Install them with')} ${cyan('npx fajr-ui add theme')}${dim('.')}`);
 	}
 	if (packages.size) {
 		console.log();

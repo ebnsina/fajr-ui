@@ -28,7 +28,7 @@ export type RegistryItem = {
 	name: string;
 	title: string;
 	description: string;
-	type: 'registry:ui';
+	type: 'registry:ui' | 'registry:style';
 	/**
 	 * npm packages this component imports, each carrying the exact version it
 	 * was built against — see `./versions`. The CLI passes these to the package
@@ -76,6 +76,40 @@ const extrasByPath: Record<string, Record<string, string>> = {
 };
 
 const UI_ROOT = '/src/lib/components/ui/';
+
+/**
+ * The design tokens, as an installable item.
+ *
+ * Every component reads `--border`, `--input`, `--ring` and the rest, and none
+ * of them carry a fallback — a border whose token is missing renders in the
+ * element's own text colour rather than not rendering at all. So a project that
+ * ran `add button` without first copying this file by hand got a button that
+ * looked broken in a way that pointed nowhere near the cause.
+ *
+ * Shipping it as an item is what lets `init` install it and `add` check for it,
+ * instead of the instruction living only in prose on the get-started page.
+ */
+const THEME_NAME = 'theme';
+const THEME_PATH = 'styles/theme.css';
+
+const themeSource = import.meta.glob('/src/lib/styles/theme.css', {
+	query: '?raw',
+	import: 'default',
+	eager: true
+}) as Record<string, string>;
+
+function themeItem(): RegistryItem {
+	const [content] = Object.values(themeSource);
+	return {
+		name: THEME_NAME,
+		title: 'Theme',
+		description: 'The design tokens every component reads, in both light and dark.',
+		type: 'registry:style',
+		dependencies: [],
+		registryDependencies: [],
+		files: [{ root: 'lib', path: THEME_PATH, content }]
+	};
+}
 
 /**
  * Tests and their fixtures live beside the components they cover, and the globs
@@ -151,6 +185,8 @@ function ownerOf(specifier: string, fromPath: string): string | undefined {
 }
 
 export function buildItem(name: string): RegistryItem | undefined {
+	if (name === THEME_NAME) return themeItem();
+
 	const entry = components.find((component) => component.slug === name);
 	const files = filesFor(name);
 	if (!entry || files.length === 0) return undefined;
@@ -245,6 +281,16 @@ export function registryIndex() {
 		}));
 }
 
+/**
+ * Everything served under `/r/`, which is what the prerenderer walks.
+ *
+ * The theme is here but deliberately absent from `registryIndex` above: it has
+ * to be fetchable at `/r/theme.json`, but it is not a component and listing it
+ * among them would put a stylesheet in the middle of `fajr-ui list`.
+ */
 export function allItemNames(): string[] {
-	return components.filter((component) => component.built).map((component) => component.slug);
+	return [
+		...components.filter((component) => component.built).map((component) => component.slug),
+		THEME_NAME
+	];
 }

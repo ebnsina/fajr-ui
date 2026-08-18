@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
@@ -49,6 +49,46 @@ test('init writes a config pointing at a schema that exists', async ({ request }
 	const schema = await request.get(config.$schema);
 	expect(schema.ok()).toBe(true);
 	expect((await schema.json()).title).toContain('Fajr UI');
+});
+
+test('init installs the design tokens, with their content intact', () => {
+	const dir = project();
+	const output = run(dir, 'init', '-y');
+
+	/*
+	 * Two failures this covers, both of which render as "the borders look wrong"
+	 * and neither of which points at a stylesheet.
+	 *
+	 * The tokens used to be a manual copy step described only in prose, so
+	 * `init` followed by `add button` produced a button whose every border fell
+	 * through to Preflight's `currentColor`.
+	 *
+	 * And the file has to arrive with its contents. Vite's CSS pipeline answers
+	 * `?raw` with an empty string in some environments, which would ship a
+	 * perfectly well-formed registry item wrapping nothing at all — the unit
+	 * tests cannot tell the difference, because that is the environment they run
+	 * in.
+	 */
+	const theme = join(dir, 'src/lib/styles/theme.css');
+	expect(existsSync(theme)).toBe(true);
+
+	const css = readFileSync(theme, 'utf8');
+	expect(css).toContain('--border');
+	expect(css).toContain('--ring');
+	expect(css.length).toBeGreaterThan(1000);
+
+	// The import line is the half the CLI cannot do for the user, so it has to
+	// be said rather than left to the docs.
+	expect(output).toContain('theme.css');
+});
+
+test('add warns when the tokens are missing', () => {
+	const dir = project();
+	run(dir, 'init', '-y');
+	rmSync(join(dir, 'src/lib/styles/theme.css'));
+
+	const output = run(dir, 'add', 'button');
+	expect(output).toContain('design tokens are not installed');
 });
 
 test('add installs a component and everything it composes', () => {
@@ -176,7 +216,12 @@ test('a component that does not exist fails without writing anything', () => {
 	const dir = project();
 	run(dir, 'init', '-y');
 	expect(() => run(dir, 'add', 'not-a-component')).toThrow();
-	expect(existsSync(join(dir, 'src'))).toBe(false);
+
+	// The component root, not `src` — `init` now writes the tokens there, so the
+	// absence of `src` stopped meaning "nothing was installed" and started
+	// meaning "init did its job". What this test is actually about is that a
+	// resolve failure leaves no half-written component behind.
+	expect(existsSync(join(dir, 'src/lib/components'))).toBe(false);
 });
 
 test('skill writes the agent instructions and refreshes them in place', () => {

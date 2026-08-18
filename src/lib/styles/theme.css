@@ -77,10 +77,24 @@
 	--color-code-function: var(--code-function);
 	--color-code-tag: var(--code-tag);
 	--color-code-attr: var(--code-attr);
+	/*
+	 * The bottom rung, for the 20px tier — badges, kbd keys, table chips. It was
+	 * previously written as one-off literals (`.25rem`, `.375rem`, `calc(--radius
+	 * - 5px)`), which is how three things the same height ended up with three
+	 * different corners.
+	 */
+	--radius-xs: calc(var(--radius) - 6px);
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
 	--radius-xl: calc(var(--radius) + 4px);
+	/*
+	 * Added so the ladder has a rung above `xl`. Cards, dialogs and sheets
+	 * already asked for `rounded-2xl` and were silently getting Tailwind's own
+	 * 1rem — the same value as `--radius-xl`, so the largest two steps of the
+	 * scale were identical and a surface could not be rounder than a control.
+	 */
+	--radius-2xl: calc(var(--radius) + 8px);
 	--animate-skeleton: skeleton 2s -1s infinite linear;
 	--animate-caret-blink: 1s ease-out infinite caret-blink;
 	--tw-shadow-color: #000;
@@ -143,16 +157,33 @@
 	 * in dark mode — the theme class alone does not reach them.
 	 */
 	color-scheme: light;
-	--radius: 0.625rem;
 	/*
-	 * Fajr Display carries no Arabic, so Arabic falls through to the next family
+	 * 12px — Tailwind's own `rounded-xl`.
+	 *
+	 * Every other radius derives from this one, so the whole library moves with
+	 * it: sm at 8px, md at 10px, lg at 12px for buttons and inputs, xl at 16px
+	 * for cards.
+	 *
+	 * This sat here once before and read as inflated, but the radius was not
+	 * what was wrong — the buttons were also carrying a coloured glow, a deep
+	 * gradient and a bright highlight, and the corners took the blame for the
+	 * bulk. With those pulled back, 12px reads as softened rather than swollen.
+	 */
+	--radius: 0.75rem;
+	/*
+	 * Mona Sans carries no Arabic, so Arabic falls through to the next family
 	 * that does. Naming them explicitly makes that choice ours rather than the
 	 * operating system's — otherwise the same page is Geeza Pro on a Mac, Tahoma
 	 * on Windows and whatever Fontconfig decides on Linux. Latin still resolves
-	 * to Fajr Display, because fallback is per glyph, not per string.
+	 * to Mona Sans, because fallback is per glyph, not per string.
+	 *
+	 * One family for headings and body both. The display face that used to sit
+	 * above this carried a single weight and no width axis, so every heading had
+	 * to be set at exactly one weight and could not be tuned at all — a second
+	 * file to download for less control than the family below already gives.
 	 */
 	--font-sans:
-		'Fajr Display', ui-sans-serif, system-ui, -apple-system, 'Noto Sans Arabic',
+		'Mona Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Noto Sans Arabic',
 		'Noto Naskh Arabic', 'Geeza Pro', 'Segoe UI', Tahoma, Roboto, sans-serif;
 	--font-mono: 'Fajr Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 	--background: #fff;
@@ -163,7 +194,13 @@
 	--popover-foreground: oklch(26.9% 0 0);
 	--primary: oklch(26.9% 0 0);
 	--primary-foreground: oklch(98.5% 0 0);
-	--secondary: color-mix(in oklab, #000 4%, transparent);
+	/*
+	 * 9%, up from 4%. At 4% the fill landed around #f5f5f5 on a white panel —
+	 * close enough to the page that a secondary button had no edge, no fill you
+	 * could point at, and nothing marking it as pressable. A quiet surface still
+	 * has to be a surface.
+	 */
+	--secondary: color-mix(in oklab, #000 9%, transparent);
 	--secondary-foreground: oklch(26.9% 0 0);
 	--muted: color-mix(in oklab, #000 4%, transparent);
 	--muted-foreground: color-mix(in srgb, oklch(55.6% 0 0) 90%, #000);
@@ -184,8 +221,23 @@
 	--success-foreground: oklch(50.8% 0.118 165.612);
 	--warning: oklch(76.9% 0.188 70.08);
 	--warning-foreground: oklch(55.5% 0.163 48.998);
-	--border: color-mix(in oklab, #000 8%, transparent);
-	--input: color-mix(in oklab, #000 10%, transparent);
+	/*
+	 * Softened from 8% and 10%.
+	 *
+	 * A border is the loudest way to say "edge", and most surfaces here no longer
+	 * need one — cards, the docs column, the header and the modal footers are all
+	 * separated by a tint or by space instead. What is left is the case a tint
+	 * cannot cover: a control that has no fill of its own, like the outline
+	 * button, where the line *is* the control. Those want the line present and
+	 * quiet, not absent.
+	 *
+	 * `--input` is deliberately much stronger than `--border`, not a step above
+	 * it. A region has a fill to be recognised by; a checkbox or a text field has
+	 * only its outline, so softening both together made the controls disappear
+	 * into the surface behind them. Regions whisper, controls do not.
+	 */
+	--border: color-mix(in oklab, #000 5%, transparent);
+	--input: color-mix(in oklab, #000 12%, transparent);
 	--ring: oklch(70.8% 0 0);
 	/*
 	 * The categorical series palette.
@@ -254,7 +306,7 @@
 	--popover-foreground: oklch(97% 0 0);
 	--primary: oklch(97% 0 0);
 	--primary-foreground: oklch(26.9% 0 0);
-	--secondary: color-mix(in oklab, #fff 4%, transparent);
+	--secondary: color-mix(in oklab, #fff 9%, transparent);
 	--secondary-foreground: oklch(97% 0 0);
 	--muted: color-mix(in oklab, #fff 4%, transparent);
 	/* Mixed further toward white than the light theme's counterpart: at 90% it
@@ -271,8 +323,8 @@
 	--success-foreground: oklch(76.5% 0.177 163.223);
 	--warning: oklch(76.9% 0.188 70.08);
 	--warning-foreground: oklch(82.8% 0.189 84.429);
-	--border: color-mix(in oklab, #fff 6%, transparent);
-	--input: color-mix(in oklab, #fff 8%, transparent);
+	--border: color-mix(in oklab, #fff 4%, transparent);
+	--input: color-mix(in oklab, #fff 10%, transparent);
 	--ring: oklch(55.6% 0 0);
 	/*
 	 * Only the lightnesses change for the dark surface — the hues, the chroma and
@@ -368,8 +420,31 @@
 }
 
 @layer base {
-	* {
-		@apply border-border outline-ring/50;
+	/*
+	 * Preflight resets every border to `0 solid` and leaves the colour at
+	 * `currentColor`, so a component that draws a border without naming one
+	 * inherits whatever text colour it happens to sit in. This restores a
+	 * neutral default.
+	 *
+	 * Two details that both came from real breakage in a consuming project:
+	 *
+	 * Written as plain CSS rather than `@apply border-border`, for the fallback.
+	 * `@apply` of a utility whose token is missing compiles to nothing, so a
+	 * project that copies a component in before it copies these tokens gets
+	 * every border in its own text colour — black hairlines around every input
+	 * and button, with no clue as to why. Naming `currentColor` explicitly makes
+	 * that state Preflight's documented default instead of a silent surprise.
+	 *
+	 * The pseudo-element selectors match Preflight's own list, and are not
+	 * decoration: the inputs, buttons, toggles and checkboxes here all draw their
+	 * inner hairline on `::before`, which `*` alone does not reach.
+	 */
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-border, currentColor);
 	}
 
 	/*

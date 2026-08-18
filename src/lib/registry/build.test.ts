@@ -82,6 +82,13 @@ describe('every built component', () => {
 	it('ships no empty file', () => {
 		for (const [name, item] of items) {
 			for (const file of item!.files) {
+				// Stylesheets are exempt here and only here. Vite's CSS pipeline
+				// intercepts `?raw` under this project's node environment and hands
+				// back an empty string, though a real build resolves the file
+				// correctly. Asserting on it would only ever measure vitest.
+				// `e2e/install.e2e.ts` covers the same ground where it means
+				// something — against the built registry, over HTTP.
+				if (file.path.endsWith('.css')) continue;
 				expect(file.content.length, `${name} → ${file.path}`).toBeGreaterThan(0);
 			}
 		}
